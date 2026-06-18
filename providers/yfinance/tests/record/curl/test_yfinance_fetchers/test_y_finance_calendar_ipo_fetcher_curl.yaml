@@ -1,0 +1,132 @@
+interactions:
+- request:
+    body:
+      entityIdType: ipo_info
+      includeFields:
+      - ticker
+      - companyshortname
+      - exchange_short_name
+      - filingdate
+      - startdatetime
+      - amendeddate
+      - pricefrom
+      - priceto
+      - offerprice
+      - currencyname
+      - shares
+      - dealtype
+      offset: 0
+      query:
+        operands:
+        - operands:
+          - startdatetime
+          - '2026-06-13'
+          - '2026-06-20'
+          operator: GTELT
+        - operands:
+          - filingdate
+          - '2026-06-13'
+          - '2026-06-20'
+          operator: GTELT
+        - operands:
+          - amendeddate
+          - '2026-06-13'
+          - '2026-06-20'
+          operator: GTELT
+        operator: OR
+      size: 12
+      sortField: startdatetime
+      sortType: DESC
+    headers: {}
+    method: POST
+    uri: https://query1.finance.yahoo.com/v1/finance/visualization
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJmaW5hbmNlIjp7InJlc3VsdCI6W3siY3JpdGVyaWFNZXRhIjp7InNpemUiOjEyLCJvZmZzZXQi
+        OjAsInNvcnRGaWVsZCI6InN0YXJ0ZGF0ZXRpbWUiLCJzb3J0VHlwZSI6IkRFU0MiLCJlbnRpdHlJ
+        ZFR5cGUiOiJJUE9fSU5GTyIsImNyaXRlcmlhIjpbeyJmaWVsZCI6InN0YXJ0ZGF0ZXRpbWUiLCJz
+        dWJGaWVsZCI6bnVsbCwib3BlcmF0b3JzIjpbIkdURUxUIl0sInZhbHVlcyI6WyIyMDI2LTA2LTEz
+        VDAwOjAwOjAwLjAwMC0wNDowMCIsIjIwMjYtMDYtMjBUMDA6MDA6MDAuMDAwLTA0OjAwIl0sImxh
+        YmVsc1NlbGVjdGVkIjpbXSwiZGVwZW5kZW50VmFsdWVzIjpbXX0seyJmaWVsZCI6ImZpbGluZ2Rh
+        dGUiLCJzdWJGaWVsZCI6bnVsbCwib3BlcmF0b3JzIjpbIkdURUxUIl0sInZhbHVlcyI6WyIyMDI2
+        LTA2LTEzVDAwOjAwOjAwLjAwMC0wNDowMCIsIjIwMjYtMDYtMjBUMDA6MDA6MDAuMDAwLTA0OjAw
+        Il0sImxhYmVsc1NlbGVjdGVkIjpbXSwiZGVwZW5kZW50VmFsdWVzIjpbXX0seyJmaWVsZCI6ImFt
+        ZW5kZWRkYXRlIiwic3ViRmllbGQiOm51bGwsIm9wZXJhdG9ycyI6WyJHVEVMVCJdLCJ2YWx1ZXMi
+        OlsiMjAyNi0wNi0xM1QwMDowMDowMC4wMDAtMDQ6MDAiLCIyMDI2LTA2LTIwVDAwOjAwOjAwLjAw
+        MC0wNDowMCJdLCJsYWJlbHNTZWxlY3RlZCI6W10sImRlcGVuZGVudFZhbHVlcyI6W119XSwidG9w
+        T3BlcmF0b3IiOiJPUiJ9LCJyYXdDcml0ZXJpYSI6IntcInNvcnRUeXBlXCI6XCJERVNDXCIsXCJl
+        bnRpdHlJZFR5cGVcIjpcImlwb19pbmZvXCIsXCJzb3J0RmllbGRcIjpcInN0YXJ0ZGF0ZXRpbWVc
+        IixcImluY2x1ZGVGaWVsZHNcIjpbXCJ0aWNrZXJcIixcImNvbXBhbnlzaG9ydG5hbWVcIixcImV4
+        Y2hhbmdlX3Nob3J0X25hbWVcIixcImZpbGluZ2RhdGVcIixcInN0YXJ0ZGF0ZXRpbWVcIixcImFt
+        ZW5kZWRkYXRlXCIsXCJwcmljZWZyb21cIixcInByaWNldG9cIixcIm9mZmVycHJpY2VcIixcImN1
+        cnJlbmN5bmFtZVwiLFwic2hhcmVzXCIsXCJkZWFsdHlwZVwiXSxcInNpemVcIjoxMixcIm9mZnNl
+        dFwiOjAsXCJxdWVyeVwiOntcIm9wZXJhdG9yXCI6XCJPUlwiLFwib3BlcmFuZHNcIjpbe1wib3Bl
+        cmF0b3JcIjpcIkdURUxUXCIsXCJvcGVyYW5kc1wiOltcInN0YXJ0ZGF0ZXRpbWVcIixcIjIwMjYt
+        MDYtMTNcIixcIjIwMjYtMDYtMjBcIl19LHtcIm9wZXJhdG9yXCI6XCJHVEVMVFwiLFwib3BlcmFu
+        ZHNcIjpbXCJmaWxpbmdkYXRlXCIsXCIyMDI2LTA2LTEzXCIsXCIyMDI2LTA2LTIwXCJdfSx7XCJv
+        cGVyYXRvclwiOlwiR1RFTFRcIixcIm9wZXJhbmRzXCI6W1wiYW1lbmRlZGRhdGVcIixcIjIwMjYt
+        MDYtMTNcIixcIjIwMjYtMDYtMjBcIl19XX19IiwidG90YWwiOjE5LCJkb2N1bWVudHMiOlt7ImVu
+        dGl0eUlkVHlwZSI6IklQT19JTkZPIiwiY29sdW1ucyI6W3siaWQiOiJ0aWNrZXIiLCJsYWJlbCI6
+        IlN5bWJvbCIsInR5cGUiOiJTVFJJTkcifSx7ImlkIjoiY29tcGFueXNob3J0bmFtZSIsImxhYmVs
+        IjoiQ29tcGFueSIsInR5cGUiOiJTVFJJTkcifSx7ImlkIjoiZXhjaGFuZ2Vfc2hvcnRfbmFtZSIs
+        ImxhYmVsIjoiRXhjaGFuZ2UgU2hvcnQgTmFtZSIsInR5cGUiOiJTVFJJTkcifSx7ImlkIjoiZmls
+        aW5nZGF0ZSIsImxhYmVsIjoiRmlsaW5nIERhdGUiLCJ0eXBlIjoiREFURSJ9LHsiaWQiOiJzdGFy
+        dGRhdGV0aW1lIiwibGFiZWwiOiJEYXRlIiwidHlwZSI6IkRBVEUifSx7ImlkIjoiYW1lbmRlZGRh
+        dGUiLCJsYWJlbCI6IkFtZW5kZWQgRGF0ZSIsInR5cGUiOiJEQVRFIn0seyJpZCI6InByaWNlZnJv
+        bSIsImxhYmVsIjoiUHJpY2UgRnJvbSIsInR5cGUiOiJOVU1CRVIifSx7ImlkIjoicHJpY2V0byIs
+        ImxhYmVsIjoiUHJpY2UgVG8iLCJ0eXBlIjoiTlVNQkVSIn0seyJpZCI6Im9mZmVycHJpY2UiLCJs
+        YWJlbCI6IlByaWNlIiwidHlwZSI6Ik5VTUJFUiJ9LHsiaWQiOiJjdXJyZW5jeW5hbWUiLCJsYWJl
+        bCI6IkN1cnJlbmN5IiwidHlwZSI6IlNUUklORyJ9LHsiaWQiOiJzaGFyZXMiLCJsYWJlbCI6IlNo
+        YXJlcyIsInR5cGUiOiJOVU1CRVIifSx7ImlkIjoiZGVhbHR5cGUiLCJsYWJlbCI6IkFjdGlvbiIs
+        InR5cGUiOiJTVFJJTkcifV0sInJvd3MiOltbIlBMVU4iLCJQbHV0b25pYW4gQWNxdWlzaXRpb24g
+        Q29ycCBJSSIsIk5ZU0UiLG51bGwsIjIwMjYtMDYtMThUMDQ6MDA6MDAuMDAwWiIsbnVsbCxudWxs
+        LG51bGwsbnVsbCwiIixudWxsLCJFeHBlY3RlZCJdLFsiTlZBIiwiTm92YSBNaW5lcmFscyBDb3Jw
+        IiwiTllTRSBBbWVyaWNhbiIsbnVsbCwiMjAyNi0wNi0xN1QwNDowMDowMC4wMDBaIixudWxsLG51
+        bGwsbnVsbCxudWxsLCIiLG51bGwsIkV4cGVjdGVkIl0sWyJCTU5QIiwiQml0TWluZSBJbW1lcnNp
+        b24gVGVjaG5vbG9naWVzLCBJbmMuIiwiTllTRSIsbnVsbCwiMjAyNi0wNi0xNlQwNDowMDowMC4w
+        MDBaIixudWxsLG51bGwsbnVsbCxudWxsLCIiLG51bGwsIkV4cGVjdGVkIl0sWyJUVklWVSIsIlRl
+        eGFzIFZlbnR1cmVzIEFjcXVpc2l0aW9uIElWIENvcnAgVW5pdHMiLCJOYXNkYXEiLG51bGwsIjIw
+        MjYtMDYtMTZUMDQ6MDA6MDAuMDAwWiIsbnVsbCxudWxsLG51bGwsbnVsbCwiVVNEIixudWxsLCJF
+        eHBlY3RlZCJdLFsiQ1NFTiIsIkNvaGVuICYgU3RlZXJzIEZ1dHVyZSBvZiBFbmVyZ3kgQWN0aXZl
+        IEVURiIsIk5hc2RhcSIsbnVsbCwiMjAyNi0wNi0xNVQwNDowMDowMC4wMDBaIixudWxsLG51bGws
+        bnVsbCxudWxsLCJVU0QiLG51bGwsIkV4cGVjdGVkIl0sWyJHQ1NIIiwiR3VnZ2VuaGVpbSBGdW5k
+        cyBUcnVzdCIsIk5ZU0VBcmNhIixudWxsLCIyMDI2LTA2LTE1VDA0OjAwOjAwLjAwMFoiLG51bGws
+        bnVsbCxudWxsLG51bGwsIiIsbnVsbCwiRXhwZWN0ZWQiXSxbIkdJU0MiLCJHdWdnZW5oZWltIEZ1
+        bmRzIFRydXN0IiwiTllTRUFyY2EiLG51bGwsIjIwMjYtMDYtMTVUMDQ6MDA6MDAuMDAwWiIsbnVs
+        bCxudWxsLG51bGwsbnVsbCwiIixudWxsLCJFeHBlY3RlZCJdLFsiSE9OQVYiLCJIb25leXdlbGwg
+        QWVyb3NwYWNlIEluYy4gQ29tbW9uIFN0b2NrIFdoZW4gSXNzdWVkIiwiTmFzZGFxIixudWxsLCIy
+        MDI2LTA2LTE1VDA0OjAwOjAwLjAwMFoiLG51bGwsbnVsbCxudWxsLG51bGwsIlVTRCIsbnVsbCwi
+        RXhwZWN0ZWQiXSxbIkhPTklWIiwiSG9uZXl3ZWxsIEludGVybmF0aW9uYWwgSW5jLiBDb21tb24g
+        U3RvY2sgRXggRGlzdHJpYnV0aW9uIFdoZW4gSXNzdWVkIiwiTmFzZGFxIixudWxsLCIyMDI2LTA2
+        LTE1VDA0OjAwOjAwLjAwMFoiLG51bGwsbnVsbCxudWxsLG51bGwsIlVTRCIsbnVsbCwiRXhwZWN0
+        ZWQiXSxbIkhSU0siLCJOb3J0aGVybiBMaWdodHMgRnVuZCBUcnVzdCIsIk5ZU0VBcmNhIixudWxs
+        LCIyMDI2LTA2LTE1VDA0OjAwOjAwLjAwMFoiLG51bGwsbnVsbCxudWxsLG51bGwsIiIsbnVsbCwi
+        RXhwZWN0ZWQiXSxbIkpDQUwiLCJKLlAuIE1vcmdhbiBFeGNoYW5nZS1UcmFkZWQgRnVuZCBUcnVz
+        dCIsIk5ZU0VBcmNhIixudWxsLCIyMDI2LTA2LTE1VDA0OjAwOjAwLjAwMFoiLG51bGwsbnVsbCxu
+        dWxsLG51bGwsIiIsbnVsbCwiRXhwZWN0ZWQiXSxbIkpUTlkiLCJKLlAuIE1vcmdhbiBFeGNoYW5n
+        ZS1UcmFkZWQgRnVuZCBUcnVzdCIsIk5ZU0VBcmNhIixudWxsLCIyMDI2LTA2LTE1VDA0OjAwOjAw
+        LjAwMFoiLG51bGwsbnVsbCxudWxsLG51bGwsIiIsbnVsbCwiRXhwZWN0ZWQiXV19XX1dLCJlcnJv
+        ciI6bnVsbH19
+    headers:
+      age: '0'
+      cache-control: private, no-cache, no-store
+      content-encoding: gzip
+      content-length: '1016'
+      content-type: application/json;charset=utf-8
+      date: Sat, 13 Jun 2026 18:39:01 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '18'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync

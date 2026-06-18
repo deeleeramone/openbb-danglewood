@@ -1,0 +1,95 @@
+[project]
+name = "openbb-yfinance"
+version = "2.0.0"
+description = "yfinance extension for OpenBB"
+authors = [{ name = "OpenBB Team", email = "hello@openbb.co" }]
+license = { text = "AGPL-3.0-only" }
+readme = "README.md"
+requires-python = ">=3.10,<4"
+dependencies = [
+    "openbb-core>=1.6.13",
+    "yfinance>=1.3",
+    "pywry>=2.0.4",
+    "fastmcp>=3",
+]
+
+[project.entry-points."openbb_provider_extension"]
+yfinance = "openbb_yfinance:yfinance_provider"
+
+[project.entry-points."openbb_core_extension"]
+yfinance = "openbb_yfinance.yfinance_router:router"
+
+[project.urls]
+Homepage = "https://openbb.co"
+Repository = "https://github.com/OpenBB-finance/OpenBB"
+
+[dependency-groups]
+dev = ["openbb-devtools>=1.6.8"]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["openbb_yfinance"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "openbb_yfinance",
+    "README.md",
+    "pyproject.toml",
+]
+
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+fix = true
+
+[tool.ruff.lint]
+select = ["D", "E", "W", "F", "S", "UP", "I", "PLC", "PLE", "PLR", "PLW", "SIM", "T20"]
+ignore = [
+    "PLR2004", "PLR0913", "PLR0915", "PLC0415",
+    "E402", "E501",
+    "D202", "D203", "D205", "D206", "D210", "D212", "D213", "D214",
+    "D215", "D300", "D400", "D404", "D405", "D406", "D407", "D408",
+    "D409", "D410", "D411", "D413", "D415", "D416", "D417",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"openbb_yfinance/yfinance_router.py" = ["ARG001", "PLC0415", "SLF001", "PLR0911", "PLR0912", "PLR0913", "PLR0914", "PLR0915", "PLR0917"]
+"openbb_yfinance/routers/*.py" = ["ARG001", "PLC0415"]
+"openbb_yfinance/utils/tvchart_datafeed.py" = ["PLR0911", "PLR0912", "PLR0913", "PLR0914", "PLR0915", "PLR0917", "BLE001", "S110", "T201"]
+"openbb_yfinance/utils/tvchart_native.py" = ["PLR0911", "PLR0912", "PLR0913", "PLR0914", "PLR0915", "PLR0917", "SLF001", "BLE001", "S110", "T201"]
+"openbb_yfinance/utils/helpers.py" = ["PLR0912", "PLR0915"]
+"openbb_yfinance/utils/asset_info.py" = ["PLR0912"]
+"openbb_yfinance/models/*.py" = ["ARG002", "PLC0415", "PLR0912", "PLW0108"]
+"tests/**" = ["S101", "S108", "D", "SIM105", "SIM117"]
+"integration/**" = ["S101", "S108", "D", "SIM105", "SIM117", "PLC0415", "ARG001"]
+"**/__init__.py" = ["F401"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-wrap-aliases = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ty]
+[tool.ty.environment]
+python-version = "3.10"
+
+[tool.ty.src]
+include = ["openbb_yfinance"]
+exclude = ["tests", "integration"]
+
+[tool.ty.rules]
+unresolved-import = "ignore"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "record_curl: pytest-recorder curl_cffi cassette tests",
+    "record_http: pytest-recorder HTTP cassette tests",
+    "integration: live integration tests against Yahoo Finance",
+]

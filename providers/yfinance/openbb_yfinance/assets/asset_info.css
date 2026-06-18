@@ -1,0 +1,258 @@
+.ai-root {
+  padding: 18px 24px 28px;
+  color: var(--pywry-text-primary, #ebebed);
+  font-family: var(--pywry-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ai-empty {
+  padding: 40px;
+  text-align: center;
+  color: var(--pywry-text-muted, #707070);
+}
+
+.ai-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px 40px;
+  border-bottom: 1px solid var(--pywry-border-color, #2a2e39);
+  padding-bottom: 16px;
+  margin-bottom: 18px;
+}
+
+.ai-head-main {
+  min-width: 240px;
+}
+
+.ai-head-stats {
+  flex: 1 1 420px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0 32px;
+  align-content: end;
+}
+
+.ai-head-stats .ai-stat {
+  padding: 5px 0;
+}
+
+.ai-exch {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--pywry-text-secondary, #a0a0a0);
+}
+
+.ai-name {
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.ai-sym {
+  color: var(--pywry-text-secondary, #a0a0a0);
+  font-weight: 600;
+}
+
+.ai-quote {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.ai-price {
+  font-size: 30px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ai-change {
+  font-size: 16px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.ai-up {
+  color: #2bb673;
+}
+
+.ai-down {
+  color: #ef5350;
+}
+
+.ai-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 18px;
+}
+
+.ai-summary {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 860px) {
+  .ai-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ai-card {
+  background: var(--pywry-bg-secondary, #1a1d26);
+  border: 1px solid var(--pywry-border-color, #2a2e39);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+
+.ai-card h2 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.ai-summary p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--pywry-text-secondary, #c4c4c8);
+}
+
+.ai-perf-card {
+  grid-column: 1 / -1;
+}
+
+.ai-perf {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(108px, 1fr));
+  gap: 16px 24px;
+}
+
+.ai-perf-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ai-perf-label {
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--pywry-text-secondary, #a0a0a0);
+}
+
+.ai-perf-val {
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ai-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0 28px;
+}
+
+.ai-stat {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px dotted var(--pywry-border-color, #2a2e39);
+}
+
+.ai-stat:last-child {
+  border-bottom: none;
+}
+
+.ai-stat-label {
+  color: var(--pywry-text-secondary, #a0a0a0);
+  font-size: 13px;
+}
+
+.ai-stat-value {
+  font-weight: 700;
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.ai-holdings {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.ai-holdings td {
+  padding: 8px 0;
+  border-bottom: 1px dotted var(--pywry-border-color, #2a2e39);
+  vertical-align: middle;
+}
+
+.ai-holdings tr:last-child td {
+  border-bottom: none;
+}
+
+.ai-h-sym {
+  font-weight: 700;
+  color: var(--pywry-accent, #669dcb);
+  white-space: nowrap;
+  width: 1%;
+  padding-right: 14px;
+}
+
+.ai-h-name {
+  color: var(--pywry-text-secondary, #c4c4c8);
+}
+
+.ai-h-pct {
+  text-align: right;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ai-sectors {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ai-sec-row {
+  display: grid;
+  grid-template-columns: 150px 1fr 56px;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+}
+
+.ai-sec-name {
+  color: var(--pywry-text-secondary, #c4c4c8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ai-sec-bar {
+  height: 10px;
+  border-radius: 5px;
+  background: var(--pywry-bg-tertiary, #2a2e39);
+  overflow: hidden;
+}
+
+.ai-sec-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: 5px;
+  background: var(--pywry-accent, #f0b90b);
+}
+
+.ai-sec-pct {
+  text-align: right;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}

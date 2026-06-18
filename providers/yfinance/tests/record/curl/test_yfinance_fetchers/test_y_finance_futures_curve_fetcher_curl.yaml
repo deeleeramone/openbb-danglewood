@@ -1,0 +1,697 @@
+interactions:
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query1.finance.yahoo.com/v1/test/getcrumb
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        OUJWR0pHY1FwLkM=
+    headers:
+      age: '0'
+      cache-control: private, max-age=60, stale-while-revalidate=30
+      content-length: '11'
+      content-type: text/plain;charset=utf-8
+      date: Sun, 14 Jun 2026 05:47:37 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      set-cookie: MOCK_COOKIE
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '0'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query2.finance.yahoo.com/v10/finance/quoteSummary/ES=F
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJxdW90ZVN1bW1hcnkiOnsicmVzdWx0IjpbeyJmdXR1cmVzQ2hhaW4iOnsiZnV0dXJlcyI6WyJF
+        U00yNi5DTUUiLCJFU1UyNi5DTUUiLCJFU1oyNi5DTUUiLCJFU0gyNy5DTUUiXSwiZnV0dXJlc0No
+        YWluRGV0YWlscyI6eyJFU00yNi5DTUUiOnsibGFuZ3VhZ2UiOiJlbi1VUyIsInJlZ2lvbiI6IlVT
+        IiwicXVvdGVUeXBlIjoiRlVUVVJFIiwidHlwZURpc3AiOiJGdXR1cmVzIiwicXVvdGVTb3VyY2VO
+        YW1lIjoiRGVsYXllZCBRdW90ZSIsInRyaWdnZXJhYmxlIjpmYWxzZSwiY3VzdG9tUHJpY2VBbGVy
+        dENvbmZpZGVuY2UiOiJOT05FIiwiaGVhZFN5bWJvbEFzU3RyaW5nIjoiRVM9RiIsImNvbnRyYWN0
+        U3ltYm9sIjp0cnVlLCJoYXNQcmVQb3N0TWFya2V0RGF0YSI6ZmFsc2UsImZpcnN0VHJhZGVEYXRl
+        TWlsbGlzZWNvbmRzIjoxNjkyMzMxMjAwMDAwLCJyZWd1bGFyTWFya2V0Q2hhbmdlIjozOS4wLCJy
+        ZWd1bGFyTWFya2V0Q2hhbmdlUGVyY2VudCI6MC41MjczMTIwNCwicmVndWxhck1hcmtldFRpbWUi
+        OjE3ODEyOTc5OTksInJlZ3VsYXJNYXJrZXRQcmljZSI6NzQzNS4wLCJyZWd1bGFyTWFya2V0UHJl
+        dmlvdXNDbG9zZSI6NzM5Ni4wLCJleGNoYW5nZSI6IkNNRSIsIm1hcmtldCI6InVzMjRfbWFya2V0
+        IiwiZnVsbEV4Y2hhbmdlTmFtZSI6IkNNRSIsInNob3J0TmFtZSI6IkUtTWluaSBTJlAgNTAwIEp1
+        biAyNiIsIm1hcmtldFN0YXRlIjoiUkVHVUxBUiIsImV4cGlyZURhdGUiOjE3ODE3NDA4MDAsImV4
+        cGlyZUlzb0RhdGUiOiIyMDI2LTA2LTE4VDAwOjAwOjAwWiIsInNvdXJjZUludGVydmFsIjoxMCwi
+        ZXhjaGFuZ2VEYXRhRGVsYXllZEJ5IjoxMCwiZXhjaGFuZ2VUaW1lem9uZU5hbWUiOiJBbWVyaWNh
+        L05ld19Zb3JrIiwiZXhjaGFuZ2VUaW1lem9uZVNob3J0TmFtZSI6IkVEVCIsImdtdE9mZlNldE1p
+        bGxpc2Vjb25kcyI6LTE0NDAwMDAwLCJlc2dQb3B1bGF0ZWQiOmZhbHNlLCJ0cmFkZWFibGUiOmZh
+        bHNlLCJjcnlwdG9UcmFkZWFibGUiOmZhbHNlLCJzeW1ib2wiOiJFU00yNi5DTUUifSwiRVNaMjYu
+        Q01FIjp7Imxhbmd1YWdlIjoiZW4tVVMiLCJyZWdpb24iOiJVUyIsInF1b3RlVHlwZSI6IkZVVFVS
+        RSIsInR5cGVEaXNwIjoiRnV0dXJlcyIsInF1b3RlU291cmNlTmFtZSI6IkRlbGF5ZWQgUXVvdGUi
+        LCJ0cmlnZ2VyYWJsZSI6ZmFsc2UsImN1c3RvbVByaWNlQWxlcnRDb25maWRlbmNlIjoiTk9ORSIs
+        ImhlYWRTeW1ib2xBc1N0cmluZyI6IkVTPUYiLCJjb250cmFjdFN5bWJvbCI6dHJ1ZSwiaGFzUHJl
+        UG9zdE1hcmtldERhdGEiOmZhbHNlLCJmaXJzdFRyYWRlRGF0ZU1pbGxpc2Vjb25kcyI6MTYzMTc2
+        NDgwMDAwMCwicmVndWxhck1hcmtldENoYW5nZSI6NDAuMCwicmVndWxhck1hcmtldENoYW5nZVBl
+        cmNlbnQiOjAuNTMxODI2NSwicmVndWxhck1hcmtldFRpbWUiOjE3ODEyOTc5ODIsInJlZ3VsYXJN
+        YXJrZXRQcmljZSI6NzU2MS4yNSwicmVndWxhck1hcmtldFByZXZpb3VzQ2xvc2UiOjc1MjEuMjUs
+        ImV4Y2hhbmdlIjoiQ01FIiwibWFya2V0IjoidXMyNF9tYXJrZXQiLCJmdWxsRXhjaGFuZ2VOYW1l
+        IjoiQ01FIiwic2hvcnROYW1lIjoiRS1NaW5pIFMmUCA1MDAgRGVjIDI2IiwibWFya2V0U3RhdGUi
+        OiJSRUdVTEFSIiwiZXhwaXJlRGF0ZSI6MTc5NzU1MjAwMCwiZXhwaXJlSXNvRGF0ZSI6IjIwMjYt
+        MTItMThUMDA6MDA6MDBaIiwic291cmNlSW50ZXJ2YWwiOjEwLCJleGNoYW5nZURhdGFEZWxheWVk
+        QnkiOjEwLCJleGNoYW5nZVRpbWV6b25lTmFtZSI6IkFtZXJpY2EvTmV3X1lvcmsiLCJleGNoYW5n
+        ZVRpbWV6b25lU2hvcnROYW1lIjoiRURUIiwiZ210T2ZmU2V0TWlsbGlzZWNvbmRzIjotMTQ0MDAw
+        MDAsImVzZ1BvcHVsYXRlZCI6ZmFsc2UsInRyYWRlYWJsZSI6ZmFsc2UsImNyeXB0b1RyYWRlYWJs
+        ZSI6ZmFsc2UsInN5bWJvbCI6IkVTWjI2LkNNRSJ9LCJFU1UyNi5DTUUiOnsibGFuZ3VhZ2UiOiJl
+        bi1VUyIsInJlZ2lvbiI6IlVTIiwicXVvdGVUeXBlIjoiRlVUVVJFIiwidHlwZURpc3AiOiJGdXR1
+        cmVzIiwicXVvdGVTb3VyY2VOYW1lIjoiRGVsYXllZCBRdW90ZSIsInRyaWdnZXJhYmxlIjpmYWxz
+        ZSwiY3VzdG9tUHJpY2VBbGVydENvbmZpZGVuY2UiOiJOT05FIiwiaGVhZFN5bWJvbEFzU3RyaW5n
+        IjoiRVM9RiIsImNvbnRyYWN0U3ltYm9sIjp0cnVlLCJoYXNQcmVQb3N0TWFya2V0RGF0YSI6ZmFs
+        c2UsImZpcnN0VHJhZGVEYXRlTWlsbGlzZWNvbmRzIjoxNjkyMzMxMjAwMDAwLCJyZWd1bGFyTWFy
+        a2V0Q2hhbmdlIjozOS4wLCJyZWd1bGFyTWFya2V0Q2hhbmdlUGVyY2VudCI6MC41MjI4OTMzNywi
+        cmVndWxhck1hcmtldFRpbWUiOjE3ODEyOTc5OTksInJlZ3VsYXJNYXJrZXRQcmljZSI6NzQ5Ny41
+        LCJyZWd1bGFyTWFya2V0UHJldmlvdXNDbG9zZSI6NzQ1OC41LCJleGNoYW5nZSI6IkNNRSIsIm1h
+        cmtldCI6InVzMjRfbWFya2V0IiwiZnVsbEV4Y2hhbmdlTmFtZSI6IkNNRSIsInNob3J0TmFtZSI6
+        IkUtTWluaSBTJlAgNTAwIFNlcCAyNiIsIm1hcmtldFN0YXRlIjoiUkVHVUxBUiIsImV4cGlyZURh
+        dGUiOjE3ODk2ODk2MDAsImV4cGlyZUlzb0RhdGUiOiIyMDI2LTA5LTE4VDAwOjAwOjAwWiIsInNv
+        dXJjZUludGVydmFsIjoxMCwiZXhjaGFuZ2VEYXRhRGVsYXllZEJ5IjoxMCwiZXhjaGFuZ2VUaW1l
+        em9uZU5hbWUiOiJBbWVyaWNhL05ld19Zb3JrIiwiZXhjaGFuZ2VUaW1lem9uZVNob3J0TmFtZSI6
+        IkVEVCIsImdtdE9mZlNldE1pbGxpc2Vjb25kcyI6LTE0NDAwMDAwLCJlc2dQb3B1bGF0ZWQiOmZh
+        bHNlLCJ0cmFkZWFibGUiOmZhbHNlLCJjcnlwdG9UcmFkZWFibGUiOmZhbHNlLCJzeW1ib2wiOiJF
+        U1UyNi5DTUUifSwiRVNIMjcuQ01FIjp7Imxhbmd1YWdlIjoiZW4tVVMiLCJyZWdpb24iOiJVUyIs
+        InF1b3RlVHlwZSI6IkZVVFVSRSIsInR5cGVEaXNwIjoiRnV0dXJlcyIsInF1b3RlU291cmNlTmFt
+        ZSI6IkRlbGF5ZWQgUXVvdGUiLCJ0cmlnZ2VyYWJsZSI6ZmFsc2UsImN1c3RvbVByaWNlQWxlcnRD
+        b25maWRlbmNlIjoiTk9ORSIsImhlYWRTeW1ib2xBc1N0cmluZyI6IkVTPUYiLCJjb250cmFjdFN5
+        bWJvbCI6dHJ1ZSwiaGFzUHJlUG9zdE1hcmtldERhdGEiOmZhbHNlLCJmaXJzdFRyYWRlRGF0ZU1p
+        bGxpc2Vjb25kcyI6MTY5MjMzMTIwMDAwMCwicmVndWxhck1hcmtldENoYW5nZSI6NDEuMjUsInJl
+        Z3VsYXJNYXJrZXRDaGFuZ2VQZXJjZW50IjowLjU0MzMzNTEsInJlZ3VsYXJNYXJrZXRUaW1lIjox
+        NzgxMTQyNzY0LCJyZWd1bGFyTWFya2V0UHJpY2UiOjc2MzMuMjUsInJlZ3VsYXJNYXJrZXRQcmV2
+        aW91c0Nsb3NlIjo3NTkyLjAsImV4Y2hhbmdlIjoiQ01FIiwibWFya2V0IjoidXMyNF9tYXJrZXQi
+        LCJmdWxsRXhjaGFuZ2VOYW1lIjoiQ01FIiwic2hvcnROYW1lIjoiRS1NaW5pIFMmUCA1MDAgTWFy
+        IDI3IiwibWFya2V0U3RhdGUiOiJSRUdVTEFSIiwiZXhwaXJlRGF0ZSI6MTgwNTQxNDQwMCwiZXhw
+        aXJlSXNvRGF0ZSI6IjIwMjctMDMtMTlUMDA6MDA6MDBaIiwic291cmNlSW50ZXJ2YWwiOjEwLCJl
+        eGNoYW5nZURhdGFEZWxheWVkQnkiOjEwLCJleGNoYW5nZVRpbWV6b25lTmFtZSI6IkFtZXJpY2Ev
+        TmV3X1lvcmsiLCJleGNoYW5nZVRpbWV6b25lU2hvcnROYW1lIjoiRURUIiwiZ210T2ZmU2V0TWls
+        bGlzZWNvbmRzIjotMTQ0MDAwMDAsImVzZ1BvcHVsYXRlZCI6ZmFsc2UsInRyYWRlYWJsZSI6ZmFs
+        c2UsImNyeXB0b1RyYWRlYWJsZSI6ZmFsc2UsInN5bWJvbCI6IkVTSDI3LkNNRSJ9fSwibWF4QWdl
+        IjoxfX1dLCJlcnJvciI6bnVsbH19
+    headers:
+      age: '0'
+      cache-control: public, max-age=1, stale-while-revalidate=9
+      content-encoding: gzip
+      content-length: '765'
+      content-type: application/json;charset=utf-8
+      date: Sun, 14 Jun 2026 05:47:37 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '5'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query2.finance.yahoo.com/v10/finance/quoteSummary/ESZ26.CME
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJxdW90ZVN1bW1hcnkiOnsicmVzdWx0IjpbeyJzdW1tYXJ5RGV0YWlsIjp7Im1heEFnZSI6MSwi
+        cHJpY2VIaW50IjoyLCJwcmV2aW91c0Nsb3NlIjo3NTIxLjI1LCJvcGVuIjo3NTMyLjAsImRheUxv
+        dyI6NzQ5Ni4wLCJkYXlIaWdoIjo3NTg4LjAsInJlZ3VsYXJNYXJrZXRQcmV2aW91c0Nsb3NlIjo3
+        NTIxLjI1LCJyZWd1bGFyTWFya2V0T3BlbiI6NzUzMi4wLCJyZWd1bGFyTWFya2V0RGF5TG93Ijo3
+        NDk2LjAsInJlZ3VsYXJNYXJrZXREYXlIaWdoIjo3NTg4LjAsInZvbHVtZSI6NTUwLCJyZWd1bGFy
+        TWFya2V0Vm9sdW1lIjo1NTAsImF2ZXJhZ2VWb2x1bWUiOjk1LCJhdmVyYWdlVm9sdW1lMTBkYXlz
+        IjoyMTcsImF2ZXJhZ2VEYWlseVZvbHVtZTEwRGF5IjoyMTcsImJpZCI6NzQxNS4wLCJhc2siOjc0
+        MTcuNSwiZXhwaXJlRGF0ZSI6MTc5NzU1MjAwMCwib3BlbkludGVyZXN0IjoxNTEyLCJmaWZ0eVR3
+        b1dlZWtMb3ciOjYyNTguNzUsImZpZnR5VHdvV2Vla0hpZ2giOjc3NTguMCwiYWxsVGltZUhpZ2gi
+        Ojc3NTguMCwiYWxsVGltZUxvdyI6NDAwOS4wLCJmaWZ0eURheUF2ZXJhZ2UiOjc0MDkuNjEsInR3
+        b0h1bmRyZWREYXlBdmVyYWdlIjo3MDc5LjE4NzUsImN1cnJlbmN5IjoiVVNEIiwiZnJvbUN1cnJl
+        bmN5IjpudWxsLCJ0b0N1cnJlbmN5IjpudWxsLCJsYXN0TWFya2V0IjpudWxsLCJjb2luTWFya2V0
+        Q2FwTGluayI6bnVsbCwiYWxnb3JpdGhtIjpudWxsLCJ0cmFkZWFibGUiOmZhbHNlfSwicXVvdGVU
+        eXBlIjp7ImV4Y2hhbmdlIjoiQ01FIiwicXVvdGVUeXBlIjoiRlVUVVJFIiwic3ltYm9sIjoiRVNa
+        MjYuQ01FIiwidW5kZXJseWluZ1N5bWJvbCI6IkVTPUYiLCJzaG9ydE5hbWUiOiJFLU1pbmkgUyZQ
+        IDUwMCBEZWMgMjYiLCJsb25nTmFtZSI6IkUtTWluaSBTJlAgNTAwIERlYyAyNiIsImZpcnN0VHJh
+        ZGVEYXRlRXBvY2hVdGMiOjE2MzE3NjQ4MDAsInRpbWVab25lRnVsbE5hbWUiOiJBbWVyaWNhL05l
+        d19Zb3JrIiwidGltZVpvbmVTaG9ydE5hbWUiOiJFRFQiLCJ1dWlkIjoiNTEyZWM1MzktZmVlZS0z
+        YjNhLWI0NTQtZDlkMjY5ZjNjMTU3IiwiZ210T2ZmU2V0TWlsbGlzZWNvbmRzIjotMTQ0MDAwMDAs
+        Im1heEFnZSI6MX19XSwiZXJyb3IiOm51bGx9fQ==
+    headers:
+      age: '0'
+      cache-control: public, max-age=1, stale-while-revalidate=9
+      content-length: '1111'
+      content-type: application/json;charset=utf-8
+      date: Sun, 14 Jun 2026 05:47:37 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '3'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query2.finance.yahoo.com/v10/finance/quoteSummary/ESM26.CME
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJxdW90ZVN1bW1hcnkiOnsicmVzdWx0IjpbeyJzdW1tYXJ5RGV0YWlsIjp7Im1heEFnZSI6MSwi
+        cHJpY2VIaW50IjoyLCJwcmV2aW91c0Nsb3NlIjo3Mzk2LjAsIm9wZW4iOjczOTcuNSwiZGF5TG93
+        Ijo3MzY2LjUsImRheUhpZ2giOjc0NjEuNzUsInJlZ3VsYXJNYXJrZXRQcmV2aW91c0Nsb3NlIjo3
+        Mzk2LjAsInJlZ3VsYXJNYXJrZXRPcGVuIjo3Mzk3LjUsInJlZ3VsYXJNYXJrZXREYXlMb3ciOjcz
+        NjYuNSwicmVndWxhck1hcmtldERheUhpZ2giOjc0NjEuNzUsInZvbHVtZSI6MTc1NjYxMCwicmVn
+        dWxhck1hcmtldFZvbHVtZSI6MTc1NjYxMCwiYXZlcmFnZVZvbHVtZSI6MTYyMjgyNCwiYXZlcmFn
+        ZVZvbHVtZTEwZGF5cyI6MTgyNDA2NywiYXZlcmFnZURhaWx5Vm9sdW1lMTBEYXkiOjE4MjQwNjcs
+        ImJpZCI6NzI5My4wLCJhc2siOjcyOTMuMjUsImV4cGlyZURhdGUiOjE3ODE3NDA4MDAsIm9wZW5J
+        bnRlcmVzdCI6MTkwNTkyNSwiZmlmdHlUd29XZWVrTG93Ijo2MTY3LjAsImZpZnR5VHdvV2Vla0hp
+        Z2giOjc2MzIuMjUsImFsbFRpbWVIaWdoIjo3NjMyLjI1LCJhbGxUaW1lTG93Ijo0NTE5LjAsImZp
+        ZnR5RGF5QXZlcmFnZSI6NzI5Mi40MDUsInR3b0h1bmRyZWREYXlBdmVyYWdlIjo2OTc5Ljk4MjQs
+        ImN1cnJlbmN5IjoiVVNEIiwiZnJvbUN1cnJlbmN5IjpudWxsLCJ0b0N1cnJlbmN5IjpudWxsLCJs
+        YXN0TWFya2V0IjpudWxsLCJjb2luTWFya2V0Q2FwTGluayI6bnVsbCwiYWxnb3JpdGhtIjpudWxs
+        LCJ0cmFkZWFibGUiOmZhbHNlfSwicXVvdGVUeXBlIjp7ImV4Y2hhbmdlIjoiQ01FIiwicXVvdGVU
+        eXBlIjoiRlVUVVJFIiwic3ltYm9sIjoiRVNNMjYuQ01FIiwidW5kZXJseWluZ1N5bWJvbCI6IkVT
+        PUYiLCJzaG9ydE5hbWUiOiJFLU1pbmkgUyZQIDUwMCBKdW4gMjYiLCJsb25nTmFtZSI6IkUtTWlu
+        aSBTJlAgNTAwIEp1biAyNiIsImZpcnN0VHJhZGVEYXRlRXBvY2hVdGMiOjE2OTIzMzEyMDAsInRp
+        bWVab25lRnVsbE5hbWUiOiJBbWVyaWNhL05ld19Zb3JrIiwidGltZVpvbmVTaG9ydE5hbWUiOiJF
+        RFQiLCJ1dWlkIjoiYzhjZDBiM2YtNDYwYy0zOTczLTlmMTQtMDJiNzU3MjljYTIyIiwiZ210T2Zm
+        U2V0TWlsbGlzZWNvbmRzIjotMTQ0MDAwMDAsIm1heEFnZSI6MX19XSwiZXJyb3IiOm51bGx9fQ==
+    headers:
+      age: '0'
+      cache-control: public, max-age=1, stale-while-revalidate=9
+      content-length: '1138'
+      content-type: application/json;charset=utf-8
+      date: Sun, 14 Jun 2026 05:47:37 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '3'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query2.finance.yahoo.com/v10/finance/quoteSummary/ESU26.CME
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJxdW90ZVN1bW1hcnkiOnsicmVzdWx0IjpbeyJzdW1tYXJ5RGV0YWlsIjp7Im1heEFnZSI6MSwi
+        cHJpY2VIaW50IjoyLCJwcmV2aW91c0Nsb3NlIjo3NDU4LjUsIm9wZW4iOjc0NTkuMjUsImRheUxv
+        dyI6NzQyOS4wLCJkYXlIaWdoIjo3NTI1LjAsInJlZ3VsYXJNYXJrZXRQcmV2aW91c0Nsb3NlIjo3
+        NDU4LjUsInJlZ3VsYXJNYXJrZXRPcGVuIjo3NDU5LjI1LCJyZWd1bGFyTWFya2V0RGF5TG93Ijo3
+        NDI5LjAsInJlZ3VsYXJNYXJrZXREYXlIaWdoIjo3NTI1LjAsInZvbHVtZSI6OTYzODE2LCJyZWd1
+        bGFyTWFya2V0Vm9sdW1lIjo5NjM4MTYsImF2ZXJhZ2VWb2x1bWUiOjI2MDQ2LCJhdmVyYWdlVm9s
+        dW1lMTBkYXlzIjoxNDc3MDMsImF2ZXJhZ2VEYWlseVZvbHVtZTEwRGF5IjoxNDc3MDMsImJpZCI6
+        NzM1Mi43NSwiYXNrIjo3MzUzLjUsImFza1NpemUiOjUwMCwiZXhwaXJlRGF0ZSI6MTc4OTY4OTYw
+        MCwib3BlbkludGVyZXN0IjozMDY2NjAsImZpZnR5VHdvV2Vla0xvdyI6NjIxMy4wLCJmaWZ0eVR3
+        b1dlZWtIaWdoIjo3NjkzLjc1LCJhbGxUaW1lSGlnaCI6NzY5My43NSwiYWxsVGltZUxvdyI6NDUz
+        Ny4wLCJmaWZ0eURheUF2ZXJhZ2UiOjczNDkuOTc1LCJ0d29IdW5kcmVkRGF5QXZlcmFnZSI6NzAy
+        OC4yOTc0LCJjdXJyZW5jeSI6IlVTRCIsImZyb21DdXJyZW5jeSI6bnVsbCwidG9DdXJyZW5jeSI6
+        bnVsbCwibGFzdE1hcmtldCI6bnVsbCwiY29pbk1hcmtldENhcExpbmsiOm51bGwsImFsZ29yaXRo
+        bSI6bnVsbCwidHJhZGVhYmxlIjpmYWxzZX0sInF1b3RlVHlwZSI6eyJleGNoYW5nZSI6IkNNRSIs
+        InF1b3RlVHlwZSI6IkZVVFVSRSIsInN5bWJvbCI6IkVTVTI2LkNNRSIsInVuZGVybHlpbmdTeW1i
+        b2wiOiJFUz1GIiwic2hvcnROYW1lIjoiRS1NaW5pIFMmUCA1MDAgU2VwIDI2IiwibG9uZ05hbWUi
+        OiJFLU1pbmkgUyZQIDUwMCBTZXAgMjYiLCJmaXJzdFRyYWRlRGF0ZUVwb2NoVXRjIjoxNjkyMzMx
+        MjAwLCJ0aW1lWm9uZUZ1bGxOYW1lIjoiQW1lcmljYS9OZXdfWW9yayIsInRpbWVab25lU2hvcnRO
+        YW1lIjoiRURUIiwidXVpZCI6ImEzN2UxMWY0LWU0YzQtMzNhZS05MzgwLTE3Y2Y1MTkzMGI0NyIs
+        ImdtdE9mZlNldE1pbGxpc2Vjb25kcyI6LTE0NDAwMDAwLCJtYXhBZ2UiOjF9fV0sImVycm9yIjpu
+        dWxsfX0=
+    headers:
+      age: '0'
+      cache-control: public, max-age=1, stale-while-revalidate=9
+      content-length: '1145'
+      content-type: application/json;charset=utf-8
+      date: Sun, 14 Jun 2026 05:47:37 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '4'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query2.finance.yahoo.com/v10/finance/quoteSummary/ESH27.CME
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJxdW90ZVN1bW1hcnkiOnsicmVzdWx0IjpbeyJzdW1tYXJ5RGV0YWlsIjp7Im1heEFnZSI6MSwi
+        cHJpY2VIaW50IjoyLCJwcmV2aW91c0Nsb3NlIjo3NTkyLjAsIm9wZW4iOjc0OTAuMCwiZGF5TG93
+        Ijo3NDkwLjAsImRheUhpZ2giOjc0OTAuMCwicmVndWxhck1hcmtldFByZXZpb3VzQ2xvc2UiOjc1
+        OTIuMCwicmVndWxhck1hcmtldE9wZW4iOjc0OTAuMCwicmVndWxhck1hcmtldERheUxvdyI6NzQ5
+        MC4wLCJyZWd1bGFyTWFya2V0RGF5SGlnaCI6NzQ5MC4wLCJ2b2x1bWUiOjEsInJlZ3VsYXJNYXJr
+        ZXRWb2x1bWUiOjEsImF2ZXJhZ2VWb2x1bWUiOjMsImF2ZXJhZ2VWb2x1bWUxMGRheXMiOjQsImF2
+        ZXJhZ2VEYWlseVZvbHVtZTEwRGF5Ijo0LCJiaWQiOjc0NjQuMjUsImFzayI6NzUxNC4yNSwiZXhw
+        aXJlRGF0ZSI6MTgwNTQxNDQwMCwib3BlbkludGVyZXN0IjoxNDIsImZpZnR5VHdvV2Vla0xvdyI6
+        NjMwMC4yNSwiZmlmdHlUd29XZWVrSGlnaCI6NzgyMi41LCJhbGxUaW1lSGlnaCI6NzgyMi41LCJh
+        bGxUaW1lTG93Ijo0NjMzLjAsImZpZnR5RGF5QXZlcmFnZSI6NzQ1NS43MjUsInR3b0h1bmRyZWRE
+        YXlBdmVyYWdlIjo3MTI5LjM2NCwiY3VycmVuY3kiOiJVU0QiLCJmcm9tQ3VycmVuY3kiOm51bGws
+        InRvQ3VycmVuY3kiOm51bGwsImxhc3RNYXJrZXQiOm51bGwsImNvaW5NYXJrZXRDYXBMaW5rIjpu
+        dWxsLCJhbGdvcml0aG0iOm51bGwsInRyYWRlYWJsZSI6ZmFsc2V9LCJxdW90ZVR5cGUiOnsiZXhj
+        aGFuZ2UiOiJDTUUiLCJxdW90ZVR5cGUiOiJGVVRVUkUiLCJzeW1ib2wiOiJFU0gyNy5DTUUiLCJ1
+        bmRlcmx5aW5nU3ltYm9sIjoiRVM9RiIsInNob3J0TmFtZSI6IkUtTWluaSBTJlAgNTAwIE1hciAy
+        NyIsImxvbmdOYW1lIjoiRS1NaW5pIFMmUCA1MDAgTWFyIDI3IiwiZmlyc3RUcmFkZURhdGVFcG9j
+        aFV0YyI6MTY5MjMzMTIwMCwidGltZVpvbmVGdWxsTmFtZSI6IkFtZXJpY2EvTmV3X1lvcmsiLCJ0
+        aW1lWm9uZVNob3J0TmFtZSI6IkVEVCIsInV1aWQiOiJlZGRiYWQ2Zi1lNzQ0LTM4OGEtYTljYi0y
+        YjFjY2MzMmQxYjMiLCJnbXRPZmZTZXRNaWxsaXNlY29uZHMiOi0xNDQwMDAwMCwibWF4QWdlIjox
+        fX1dLCJlcnJvciI6bnVsbH19
+    headers:
+      age: '0'
+      cache-control: public, max-age=1, stale-while-revalidate=9
+      content-length: '1101'
+      content-type: application/json;charset=utf-8
+      date: Sun, 14 Jun 2026 05:47:37 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '4'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query1.finance.yahoo.com/v7/finance/quote
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJxdW90ZVJlc3BvbnNlIjp7InJlc3VsdCI6W3sibGFuZ3VhZ2UiOiJlbi1VUyIsInJlZ2lvbiI6
+        IlVTIiwicXVvdGVUeXBlIjoiRlVUVVJFIiwidHlwZURpc3AiOiJGdXR1cmVzIiwicXVvdGVTb3Vy
+        Y2VOYW1lIjoiRGVsYXllZCBRdW90ZSIsInRyaWdnZXJhYmxlIjpmYWxzZSwiY3VzdG9tUHJpY2VB
+        bGVydENvbmZpZGVuY2UiOiJOT05FIiwiaGVhZFN5bWJvbEFzU3RyaW5nIjoiRVM9RiIsImNvbnRy
+        YWN0U3ltYm9sIjp0cnVlLCJjdXJyZW5jeSI6IlVTRCIsImNvcnBvcmF0ZUFjdGlvbnMiOltdLCJy
+        ZWd1bGFyTWFya2V0VGltZSI6MTc4MTI5Nzk4MiwidW5kZXJseWluZ1N5bWJvbCI6IkVTLkNNRSIs
+        Imhhc1ByZVBvc3RNYXJrZXREYXRhIjpmYWxzZSwiZmlyc3RUcmFkZURhdGVNaWxsaXNlY29uZHMi
+        OjE2MzE3NjQ4MDAwMDAsInByaWNlSGludCI6MiwicmVndWxhck1hcmtldENoYW5nZSI6NDAuMCwi
+        cmVndWxhck1hcmtldERheUhpZ2giOjc1ODguMCwicmVndWxhck1hcmtldERheVJhbmdlIjoiNzQ5
+        Ni4wIC0gNzU4OC4wIiwicmVndWxhck1hcmtldERheUxvdyI6NzQ5Ni4wLCJyZWd1bGFyTWFya2V0
+        Vm9sdW1lIjo1NTAsInJlZ3VsYXJNYXJrZXRDaGFuZ2VQZXJjZW50IjowLjUzMTgyNjUsInJlZ3Vs
+        YXJNYXJrZXRQcmljZSI6NzU2MS4yNSwibWFya2V0U3RhdGUiOiJSRUdVTEFSIiwidW5kZXJseWlu
+        Z0V4Y2hhbmdlU3ltYm9sIjoiRVNaMjYuQ01FIiwiZXhjaGFuZ2UiOiJDTUUiLCJleGNoYW5nZVRp
+        bWV6b25lTmFtZSI6IkFtZXJpY2EvTmV3X1lvcmsiLCJleGNoYW5nZVRpbWV6b25lU2hvcnROYW1l
+        IjoiRURUIiwiZ210T2ZmU2V0TWlsbGlzZWNvbmRzIjotMTQ0MDAwMDAsIm1hcmtldCI6InVzMjRf
+        bWFya2V0IiwiZXNnUG9wdWxhdGVkIjpmYWxzZSwic2hvcnROYW1lIjoiRS1NaW5pIFMmUCA1MDAg
+        RGVjIDI2IiwibG9uZ05hbWUiOiJFLU1pbmkgUyZQIDUwMCBEZWMgMjYiLCJyZWd1bGFyTWFya2V0
+        UHJldmlvdXNDbG9zZSI6NzUyMS4yNSwiYmlkIjo3NDE1LjAsImFzayI6NzQxNy41LCJmdWxsRXhj
+        aGFuZ2VOYW1lIjoiQ01FIiwicmVndWxhck1hcmtldE9wZW4iOjc1MzIuMCwiYXZlcmFnZURhaWx5
+        Vm9sdW1lM01vbnRoIjo5NSwiYXZlcmFnZURhaWx5Vm9sdW1lMTBEYXkiOjIxNywiZmlmdHlUd29X
+        ZWVrTG93Q2hhbmdlIjoxMzAyLjUsImZpZnR5VHdvV2Vla0xvd0NoYW5nZVBlcmNlbnQiOjAuMjA4
+        MTA4NjUsImZpZnR5VHdvV2Vla1JhbmdlIjoiNjI1OC43NSAtIDc3NTguMCIsImZpZnR5VHdvV2Vl
+        a0hpZ2hDaGFuZ2UiOi0xOTYuNzUsImZpZnR5VHdvV2Vla0hpZ2hDaGFuZ2VQZXJjZW50IjotMC4w
+        MjUzNjA5MTgsImZpZnR5VHdvV2Vla0xvdyI6NjI1OC43NSwiZmlmdHlUd29XZWVrSGlnaCI6Nzc1
+        OC4wLCJmaWZ0eVR3b1dlZWtDaGFuZ2VQZXJjZW50IjoxOS4zNjYxNjksIm9wZW5JbnRlcmVzdCI6
+        MTUxMiwiZXhwaXJlRGF0ZSI6MTc5NzU1MjAwMCwiZXhwaXJlSXNvRGF0ZSI6IjIwMjYtMTItMThU
+        MDA6MDA6MDBaIiwiZmlmdHlEYXlBdmVyYWdlIjo3NDA5LjYxLCJmaWZ0eURheUF2ZXJhZ2VDaGFu
+        Z2UiOjE1MS42NDAxNCwiZmlmdHlEYXlBdmVyYWdlQ2hhbmdlUGVyY2VudCI6MC4wMjA0NjUzMzMs
+        InR3b0h1bmRyZWREYXlBdmVyYWdlIjo3MDc5LjE4NzUsInR3b0h1bmRyZWREYXlBdmVyYWdlQ2hh
+        bmdlIjo0ODIuMDYyNSwidHdvSHVuZHJlZERheUF2ZXJhZ2VDaGFuZ2VQZXJjZW50IjowLjA2ODA5
+        NTczNiwic291cmNlSW50ZXJ2YWwiOjEwLCJleGNoYW5nZURhdGFEZWxheWVkQnkiOjEwLCJ0cmFk
+        ZWFibGUiOmZhbHNlLCJjcnlwdG9UcmFkZWFibGUiOmZhbHNlLCJzeW1ib2wiOiJFU1oyNi5DTUUi
+        fV0sImVycm9yIjpudWxsfX0=
+    headers:
+      age: '0'
+      cache-control: public, max-age=1, stale-while-revalidate=9
+      content-length: '1841'
+      content-type: application/json;charset=utf-8
+      date: Sun, 14 Jun 2026 05:47:37 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '3'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/ESZ26.CME?symbol=ESZ26.CME&type=trailingPegRatio&period1=MOCK_PERIOD_1&period2=MOCK_PERIOD_2
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJ0aW1lc2VyaWVzIjp7InJlc3VsdCI6W3sibWV0YSI6eyJzeW1ib2wiOlsiRVNaMjYuQ01FIl0s
+        InR5cGUiOlsidHJhaWxpbmdQZWdSYXRpbyJdfX1dLCJlcnJvciI6bnVsbH19
+    headers:
+      age: '0'
+      cache-control: public, max-age=60, stale-while-revalidate=30
+      content-length: '102'
+      content-type: application/json;charset=utf-8
+      date: Sun, 14 Jun 2026 05:47:37 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '2'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query1.finance.yahoo.com/v7/finance/quote
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJxdW90ZVJlc3BvbnNlIjp7InJlc3VsdCI6W3sibGFuZ3VhZ2UiOiJlbi1VUyIsInJlZ2lvbiI6
+        IlVTIiwicXVvdGVUeXBlIjoiRlVUVVJFIiwidHlwZURpc3AiOiJGdXR1cmVzIiwicXVvdGVTb3Vy
+        Y2VOYW1lIjoiRGVsYXllZCBRdW90ZSIsInRyaWdnZXJhYmxlIjpmYWxzZSwiY3VzdG9tUHJpY2VB
+        bGVydENvbmZpZGVuY2UiOiJOT05FIiwiaGVhZFN5bWJvbEFzU3RyaW5nIjoiRVM9RiIsImNvbnRy
+        YWN0U3ltYm9sIjp0cnVlLCJjdXJyZW5jeSI6IlVTRCIsInVuZGVybHlpbmdFeGNoYW5nZVN5bWJv
+        bCI6IkVTVTI2LkNNRSIsImV4Y2hhbmdlIjoiQ01FIiwiZXhjaGFuZ2VUaW1lem9uZU5hbWUiOiJB
+        bWVyaWNhL05ld19Zb3JrIiwiZXhjaGFuZ2VUaW1lem9uZVNob3J0TmFtZSI6IkVEVCIsImdtdE9m
+        ZlNldE1pbGxpc2Vjb25kcyI6LTE0NDAwMDAwLCJtYXJrZXQiOiJ1czI0X21hcmtldCIsImVzZ1Bv
+        cHVsYXRlZCI6ZmFsc2UsIm9wZW5JbnRlcmVzdCI6MzA2NjYwLCJleHBpcmVEYXRlIjoxNzg5Njg5
+        NjAwLCJleHBpcmVJc29EYXRlIjoiMjAyNi0wOS0xOFQwMDowMDowMFoiLCJmaWZ0eURheUF2ZXJh
+        Z2UiOjczNDkuOTc1LCJmaWZ0eURheUF2ZXJhZ2VDaGFuZ2UiOjE0Ny41MjQ5LCJmaWZ0eURheUF2
+        ZXJhZ2VDaGFuZ2VQZXJjZW50IjowLjAyMDA3MTQ4NCwidHdvSHVuZHJlZERheUF2ZXJhZ2UiOjcw
+        MjguMjk3NCwidHdvSHVuZHJlZERheUF2ZXJhZ2VDaGFuZ2UiOjQ2OS4yMDI2NCwidHdvSHVuZHJl
+        ZERheUF2ZXJhZ2VDaGFuZ2VQZXJjZW50IjowLjA2Njc1OTA3LCJzb3VyY2VJbnRlcnZhbCI6MTAs
+        ImV4Y2hhbmdlRGF0YURlbGF5ZWRCeSI6MTAsInRyYWRlYWJsZSI6ZmFsc2UsImNyeXB0b1RyYWRl
+        YWJsZSI6ZmFsc2UsInJlZ3VsYXJNYXJrZXRDaGFuZ2VQZXJjZW50IjowLjUyMjg5MzM3LCJyZWd1
+        bGFyTWFya2V0UHJpY2UiOjc0OTcuNSwibWFya2V0U3RhdGUiOiJSRUdVTEFSIiwiaGFzUHJlUG9z
+        dE1hcmtldERhdGEiOmZhbHNlLCJmaXJzdFRyYWRlRGF0ZU1pbGxpc2Vjb25kcyI6MTY5MjMzMTIw
+        MDAwMCwicHJpY2VIaW50IjoyLCJyZWd1bGFyTWFya2V0Q2hhbmdlIjozOS4wLCJyZWd1bGFyTWFy
+        a2V0RGF5SGlnaCI6NzUyNS4wLCJyZWd1bGFyTWFya2V0RGF5UmFuZ2UiOiI3NDI5LjAgLSA3NTI1
+        LjAiLCJyZWd1bGFyTWFya2V0RGF5TG93Ijo3NDI5LjAsInJlZ3VsYXJNYXJrZXRWb2x1bWUiOjk2
+        MzgxNiwicmVndWxhck1hcmtldFByZXZpb3VzQ2xvc2UiOjc0NTguNSwiYmlkIjo3MzUyLjc1LCJh
+        c2siOjczNTMuNSwiYXNrU2l6ZSI6NSwiZnVsbEV4Y2hhbmdlTmFtZSI6IkNNRSIsInJlZ3VsYXJN
+        YXJrZXRPcGVuIjo3NDU5LjI1LCJhdmVyYWdlRGFpbHlWb2x1bWUzTW9udGgiOjI2MDQ2LCJhdmVy
+        YWdlRGFpbHlWb2x1bWUxMERheSI6MTQ3NzAzLCJmaWZ0eVR3b1dlZWtMb3dDaGFuZ2UiOjEyODQu
+        NSwiZmlmdHlUd29XZWVrTG93Q2hhbmdlUGVyY2VudCI6MC4yMDY3NDM5MywiZmlmdHlUd29XZWVr
+        UmFuZ2UiOiI2MjEzLjAgLSA3NjkzLjc1IiwiZmlmdHlUd29XZWVrSGlnaENoYW5nZSI6LTE5Ni4y
+        NSwiZmlmdHlUd29XZWVrSGlnaENoYW5nZVBlcmNlbnQiOi0wLjAyNTUwNzcxNiwiZmlmdHlUd29X
+        ZWVrTG93Ijo2MjEzLjAsImZpZnR5VHdvV2Vla0hpZ2giOjc2OTMuNzUsImZpZnR5VHdvV2Vla0No
+        YW5nZVBlcmNlbnQiOjE5LjIyMDgyOSwibG9uZ05hbWUiOiJFLU1pbmkgUyZQIDUwMCBTZXAgMjYi
+        LCJjb3Jwb3JhdGVBY3Rpb25zIjpbXSwicmVndWxhck1hcmtldFRpbWUiOjE3ODEyOTc5OTksInVu
+        ZGVybHlpbmdTeW1ib2wiOiJFUy5DTUUiLCJzaG9ydE5hbWUiOiJFLU1pbmkgUyZQIDUwMCBTZXAg
+        MjYiLCJzeW1ib2wiOiJFU1UyNi5DTUUifV0sImVycm9yIjpudWxsfX0=
+    headers:
+      age: '0'
+      cache-control: public, max-age=1, stale-while-revalidate=9
+      content-length: '1865'
+      content-type: application/json;charset=utf-8
+      date: Sun, 14 Jun 2026 05:47:37 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '4'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query1.finance.yahoo.com/v7/finance/quote
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJxdW90ZVJlc3BvbnNlIjp7InJlc3VsdCI6W3sibGFuZ3VhZ2UiOiJlbi1VUyIsInJlZ2lvbiI6
+        IlVTIiwicXVvdGVUeXBlIjoiRlVUVVJFIiwidHlwZURpc3AiOiJGdXR1cmVzIiwicXVvdGVTb3Vy
+        Y2VOYW1lIjoiRGVsYXllZCBRdW90ZSIsInRyaWdnZXJhYmxlIjpmYWxzZSwiY3VzdG9tUHJpY2VB
+        bGVydENvbmZpZGVuY2UiOiJOT05FIiwiY29udHJhY3RTeW1ib2wiOnRydWUsImhlYWRTeW1ib2xB
+        c1N0cmluZyI6IkVTPUYiLCJjdXJyZW5jeSI6IlVTRCIsInNob3J0TmFtZSI6IkUtTWluaSBTJlAg
+        NTAwIEp1biAyNiIsImxvbmdOYW1lIjoiRS1NaW5pIFMmUCA1MDAgSnVuIDI2IiwiY29ycG9yYXRl
+        QWN0aW9ucyI6W10sInJlZ3VsYXJNYXJrZXRUaW1lIjoxNzgxMjk3OTk5LCJ1bmRlcmx5aW5nU3lt
+        Ym9sIjoiRVMuQ01FIiwidW5kZXJseWluZ0V4Y2hhbmdlU3ltYm9sIjoiRVNNMjYuQ01FIiwiZXhj
+        aGFuZ2UiOiJDTUUiLCJleGNoYW5nZVRpbWV6b25lTmFtZSI6IkFtZXJpY2EvTmV3X1lvcmsiLCJl
+        eGNoYW5nZVRpbWV6b25lU2hvcnROYW1lIjoiRURUIiwiZ210T2ZmU2V0TWlsbGlzZWNvbmRzIjot
+        MTQ0MDAwMDAsIm1hcmtldCI6InVzMjRfbWFya2V0IiwiZXNnUG9wdWxhdGVkIjpmYWxzZSwidHJh
+        ZGVhYmxlIjpmYWxzZSwiY3J5cHRvVHJhZGVhYmxlIjpmYWxzZSwibWFya2V0U3RhdGUiOiJSRUdV
+        TEFSIiwicmVndWxhck1hcmtldENoYW5nZVBlcmNlbnQiOjAuNTI3MzEyMDQsInJlZ3VsYXJNYXJr
+        ZXRQcmljZSI6NzQzNS4wLCJyZWd1bGFyTWFya2V0Q2hhbmdlIjozOS4wLCJyZWd1bGFyTWFya2V0
+        RGF5SGlnaCI6NzQ2MS43NSwicmVndWxhck1hcmtldERheVJhbmdlIjoiNzM2Ni41IC0gNzQ2MS43
+        NSIsInJlZ3VsYXJNYXJrZXREYXlMb3ciOjczNjYuNSwicmVndWxhck1hcmtldFZvbHVtZSI6MTc1
+        NjYxMCwicmVndWxhck1hcmtldFByZXZpb3VzQ2xvc2UiOjczOTYuMCwiYmlkIjo3MjkzLjAsImFz
+        ayI6NzI5My4yNSwiZnVsbEV4Y2hhbmdlTmFtZSI6IkNNRSIsInJlZ3VsYXJNYXJrZXRPcGVuIjo3
+        Mzk3LjUsImF2ZXJhZ2VEYWlseVZvbHVtZTNNb250aCI6MTYyMjgyNCwiYXZlcmFnZURhaWx5Vm9s
+        dW1lMTBEYXkiOjE4MjQwNjcsImZpZnR5VHdvV2Vla0xvd0NoYW5nZSI6MTI2OC4wLCJmaWZ0eVR3
+        b1dlZWtMb3dDaGFuZ2VQZXJjZW50IjowLjIwNTYxMDUxLCJmaWZ0eVR3b1dlZWtSYW5nZSI6IjYx
+        NjcuMCAtIDc2MzIuMjUiLCJmaWZ0eVR3b1dlZWtIaWdoQ2hhbmdlIjotMTk3LjI1LCJmaWZ0eVR3
+        b1dlZWtIaWdoQ2hhbmdlUGVyY2VudCI6LTAuMDI1ODQ0MjgsImZpZnR5VHdvV2Vla0xvdyI6NjE2
+        Ny4wLCJmaWZ0eVR3b1dlZWtIaWdoIjo3NjMyLjI1LCJmaWZ0eVR3b1dlZWtDaGFuZ2VQZXJjZW50
+        IjoxOS4wOTgxNSwib3BlbkludGVyZXN0IjoxOTA1OTI1LCJleHBpcmVEYXRlIjoxNzgxNzQwODAw
+        LCJleHBpcmVJc29EYXRlIjoiMjAyNi0wNi0xOFQwMDowMDowMFoiLCJmaWZ0eURheUF2ZXJhZ2Ui
+        OjcyOTIuNDA1LCJmaWZ0eURheUF2ZXJhZ2VDaGFuZ2UiOjE0Mi41OTUyMSwiZmlmdHlEYXlBdmVy
+        YWdlQ2hhbmdlUGVyY2VudCI6MC4wMTk1NTM5MzUsInR3b0h1bmRyZWREYXlBdmVyYWdlIjo2OTc5
+        Ljk4MjQsInR3b0h1bmRyZWREYXlBdmVyYWdlQ2hhbmdlIjo0NTUuMDE3NTgsInR3b0h1bmRyZWRE
+        YXlBdmVyYWdlQ2hhbmdlUGVyY2VudCI6MC4wNjUxODg5Mywic291cmNlSW50ZXJ2YWwiOjEwLCJl
+        eGNoYW5nZURhdGFEZWxheWVkQnkiOjEwLCJoYXNQcmVQb3N0TWFya2V0RGF0YSI6ZmFsc2UsImZp
+        cnN0VHJhZGVEYXRlTWlsbGlzZWNvbmRzIjoxNjkyMzMxMjAwMDAwLCJwcmljZUhpbnQiOjIsInN5
+        bWJvbCI6IkVTTTI2LkNNRSJ9XSwiZXJyb3IiOm51bGx9fQ==
+    headers:
+      age: '0'
+      cache-control: public, max-age=1, stale-while-revalidate=9
+      content-length: '1858'
+      content-type: application/json;charset=utf-8
+      date: Sun, 14 Jun 2026 05:47:37 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '2'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/ESU26.CME?symbol=ESU26.CME&type=trailingPegRatio&period1=MOCK_PERIOD_1&period2=MOCK_PERIOD_2
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJ0aW1lc2VyaWVzIjp7InJlc3VsdCI6W3sibWV0YSI6eyJzeW1ib2wiOlsiRVNVMjYuQ01FIl0s
+        InR5cGUiOlsidHJhaWxpbmdQZWdSYXRpbyJdfX1dLCJlcnJvciI6bnVsbH19
+    headers:
+      age: '0'
+      cache-control: public, max-age=60, stale-while-revalidate=30
+      content-length: '102'
+      content-type: application/json;charset=utf-8
+      date: Sun, 14 Jun 2026 05:47:37 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '2'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query1.finance.yahoo.com/v7/finance/quote
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJxdW90ZVJlc3BvbnNlIjp7InJlc3VsdCI6W3sibGFuZ3VhZ2UiOiJlbi1VUyIsInJlZ2lvbiI6
+        IlVTIiwicXVvdGVUeXBlIjoiRlVUVVJFIiwidHlwZURpc3AiOiJGdXR1cmVzIiwicXVvdGVTb3Vy
+        Y2VOYW1lIjoiRGVsYXllZCBRdW90ZSIsInRyaWdnZXJhYmxlIjpmYWxzZSwiY3VzdG9tUHJpY2VB
+        bGVydENvbmZpZGVuY2UiOiJOT05FIiwiaGVhZFN5bWJvbEFzU3RyaW5nIjoiRVM9RiIsImNvbnRy
+        YWN0U3ltYm9sIjp0cnVlLCJjdXJyZW5jeSI6IlVTRCIsImNvcnBvcmF0ZUFjdGlvbnMiOltdLCJy
+        ZWd1bGFyTWFya2V0VGltZSI6MTc4MTE0Mjc2NCwidW5kZXJseWluZ1N5bWJvbCI6IkVTLkNNRSIs
+        Imhhc1ByZVBvc3RNYXJrZXREYXRhIjpmYWxzZSwiZmlyc3RUcmFkZURhdGVNaWxsaXNlY29uZHMi
+        OjE2OTIzMzEyMDAwMDAsInByaWNlSGludCI6MiwicmVndWxhck1hcmtldENoYW5nZSI6NDEuMjUs
+        InJlZ3VsYXJNYXJrZXREYXlIaWdoIjo3NDkwLjAsInJlZ3VsYXJNYXJrZXREYXlSYW5nZSI6Ijc0
+        OTAuMCAtIDc0OTAuMCIsInJlZ3VsYXJNYXJrZXREYXlMb3ciOjc0OTAuMCwicmVndWxhck1hcmtl
+        dFZvbHVtZSI6MSwicmVndWxhck1hcmtldENoYW5nZVBlcmNlbnQiOjAuNTQzMzM1MSwicmVndWxh
+        ck1hcmtldFByaWNlIjo3NjMzLjI1LCJtYXJrZXRTdGF0ZSI6IlJFR1VMQVIiLCJ1bmRlcmx5aW5n
+        RXhjaGFuZ2VTeW1ib2wiOiJFU0gyNy5DTUUiLCJleGNoYW5nZSI6IkNNRSIsImV4Y2hhbmdlVGlt
+        ZXpvbmVOYW1lIjoiQW1lcmljYS9OZXdfWW9yayIsImV4Y2hhbmdlVGltZXpvbmVTaG9ydE5hbWUi
+        OiJFRFQiLCJnbXRPZmZTZXRNaWxsaXNlY29uZHMiOi0xNDQwMDAwMCwibWFya2V0IjoidXMyNF9t
+        YXJrZXQiLCJlc2dQb3B1bGF0ZWQiOmZhbHNlLCJzaG9ydE5hbWUiOiJFLU1pbmkgUyZQIDUwMCBN
+        YXIgMjciLCJsb25nTmFtZSI6IkUtTWluaSBTJlAgNTAwIE1hciAyNyIsInJlZ3VsYXJNYXJrZXRQ
+        cmV2aW91c0Nsb3NlIjo3NTkyLjAsImJpZCI6NzQ2NC4yNSwiYXNrIjo3NTE0LjI1LCJmdWxsRXhj
+        aGFuZ2VOYW1lIjoiQ01FIiwicmVndWxhck1hcmtldE9wZW4iOjc0OTAuMCwiYXZlcmFnZURhaWx5
+        Vm9sdW1lM01vbnRoIjozLCJhdmVyYWdlRGFpbHlWb2x1bWUxMERheSI6NCwiZmlmdHlUd29XZWVr
+        TG93Q2hhbmdlIjoxMzMzLjAsImZpZnR5VHdvV2Vla0xvd0NoYW5nZVBlcmNlbnQiOjAuMjExNTc4
+        OSwiZmlmdHlUd29XZWVrUmFuZ2UiOiI2MzAwLjI1IC0gNzgyMi41IiwiZmlmdHlUd29XZWVrSGln
+        aENoYW5nZSI6LTE4OS4yNSwiZmlmdHlUd29XZWVrSGlnaENoYW5nZVBlcmNlbnQiOi0wLjAyNDE5
+        MzAzNCwiZmlmdHlUd29XZWVrTG93Ijo2MzAwLjI1LCJmaWZ0eVR3b1dlZWtIaWdoIjo3ODIyLjUs
+        ImZpZnR5VHdvV2Vla0NoYW5nZVBlcmNlbnQiOjE5LjU0OTcyOCwib3BlbkludGVyZXN0IjoxNDIs
+        ImV4cGlyZURhdGUiOjE4MDU0MTQ0MDAsImV4cGlyZUlzb0RhdGUiOiIyMDI3LTAzLTE5VDAwOjAw
+        OjAwWiIsImZpZnR5RGF5QXZlcmFnZSI6NzQ1NS43MjUsImZpZnR5RGF5QXZlcmFnZUNoYW5nZSI6
+        MTc3LjUyNDksImZpZnR5RGF5QXZlcmFnZUNoYW5nZVBlcmNlbnQiOjAuMDIzODEwNTQ5LCJ0d29I
+        dW5kcmVkRGF5QXZlcmFnZSI6NzEyOS4zNjQsInR3b0h1bmRyZWREYXlBdmVyYWdlQ2hhbmdlIjo1
+        MDMuODg2MjMsInR3b0h1bmRyZWREYXlBdmVyYWdlQ2hhbmdlUGVyY2VudCI6MC4wNzA2Nzc1ODYs
+        InNvdXJjZUludGVydmFsIjoxMCwiZXhjaGFuZ2VEYXRhRGVsYXllZEJ5IjoxMCwidHJhZGVhYmxl
+        IjpmYWxzZSwiY3J5cHRvVHJhZGVhYmxlIjpmYWxzZSwic3ltYm9sIjoiRVNIMjcuQ01FIn1dLCJl
+        cnJvciI6bnVsbH19
+    headers:
+      age: '0'
+      cache-control: public, max-age=1, stale-while-revalidate=9
+      content-length: '1836'
+      content-type: application/json;charset=utf-8
+      date: Sun, 14 Jun 2026 05:47:37 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '3'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/ESM26.CME?symbol=ESM26.CME&type=trailingPegRatio&period1=MOCK_PERIOD_1&period2=MOCK_PERIOD_2
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJ0aW1lc2VyaWVzIjp7InJlc3VsdCI6W3sibWV0YSI6eyJzeW1ib2wiOlsiRVNNMjYuQ01FIl0s
+        InR5cGUiOlsidHJhaWxpbmdQZWdSYXRpbyJdfX1dLCJlcnJvciI6bnVsbH19
+    headers:
+      age: '0'
+      cache-control: public, max-age=60, stale-while-revalidate=30
+      content-length: '102'
+      content-type: application/json;charset=utf-8
+      date: Sun, 14 Jun 2026 05:47:37 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '1'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/ESH27.CME?symbol=ESH27.CME&type=trailingPegRatio&period1=MOCK_PERIOD_1&period2=MOCK_PERIOD_2
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJ0aW1lc2VyaWVzIjp7InJlc3VsdCI6W3sibWV0YSI6eyJzeW1ib2wiOlsiRVNIMjcuQ01FIl0s
+        InR5cGUiOlsidHJhaWxpbmdQZWdSYXRpbyJdfX1dLCJlcnJvciI6bnVsbH19
+    headers:
+      age: '0'
+      cache-control: public, max-age=60, stale-while-revalidate=30
+      content-length: '102'
+      content-type: application/json;charset=utf-8
+      date: Sun, 14 Jun 2026 05:47:37 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '2'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync

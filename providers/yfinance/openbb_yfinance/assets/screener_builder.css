@@ -1,0 +1,369 @@
+/* Let the results content fill the PyWry content area so the grid owns it. */
+.pywry-content,
+.pywry-content > .pywry-scroll-container {
+  height: 100%;
+  min-height: 0;
+}
+
+.ob-results {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.ob-filterbar {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--pywry-bg-primary, #161616);
+  border-bottom: 1px solid var(--pywry-border-color, #333);
+}
+
+.ob-filter-empty {
+  color: var(--pywry-text-muted, #707070);
+  font-size: 12.5px;
+}
+
+.ob-chip-join {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--pywry-accent, #669dcb);
+  background: transparent;
+  border: 1px solid var(--pywry-border-color, #333);
+  border-radius: 4px;
+  user-select: none;
+}
+
+.ob-chip {
+  display: inline-flex;
+  align-items: stretch;
+  overflow: hidden;
+  background: var(--pywry-bg-tertiary, #1f1e23);
+  border: 1px solid var(--pywry-border-color, #333);
+  border-radius: 6px;
+  font-size: 12.5px;
+  line-height: 1.2;
+}
+
+.ob-chip-cat {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--pywry-text-secondary, #a0a0a0);
+  background: var(--pywry-bg-secondary, #151518);
+  border-right: 1px solid var(--pywry-border-color, #333);
+  white-space: nowrap;
+}
+
+.ob-chip-body {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  color: var(--pywry-text-primary, #ebebed);
+  white-space: nowrap;
+}
+
+.ob-chip-x {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  padding: 0;
+  border: none;
+  border-left: 1px solid var(--pywry-border-color, #333);
+  background: transparent;
+  color: var(--pywry-text-muted, #707070);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.12s ease, background-color 0.12s ease;
+}
+
+.ob-chip-x:hover {
+  color: var(--pywry-text-primary, #ebebed);
+  background: var(--pywry-bg-hover, #2a2a2e);
+}
+
+.ob-results-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 8px 14px;
+  background: var(--pywry-bg-secondary, #151518);
+  border-bottom: 1px solid var(--pywry-border-color, #333);
+}
+
+.ob-results-head .ob-results-title {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--pywry-text-secondary, #a0a0a0);
+  font-weight: 600;
+}
+
+.ob-results-head #ob-results-status {
+  color: var(--pywry-text-muted, #707070);
+  font-size: 12px;
+}
+
+.ob-results-head .ob-count {
+  margin-left: auto;
+  color: var(--pywry-text-muted, #707070);
+  font-size: 12px;
+}
+
+.ob-grid-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.ob-grid-wrap .pywry-grid {
+  width: 100%;
+  height: 100%;
+}
+
+.pywry-toolbar.ob-templates {
+  border-bottom: 1px solid var(--pywry-border-color, #333);
+}
+
+.ob-modal-hint {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--pywry-text-muted, #707070);
+}
+
+.pywry-modal-md {
+  width: 560px;
+  max-width: 92vw;
+}
+
+.pywry-modal-sm {
+  width: 420px;
+  max-width: 92vw;
+}
+
+.pywry-modal-body {
+  gap: 14px;
+  overflow-x: hidden;
+}
+
+.pywry-modal-body,
+.pywry-modal-body * {
+  box-sizing: border-box;
+}
+
+.pywry-modal-body .pywry-dropdown,
+.pywry-modal-body .pywry-dropdown-selected,
+.pywry-modal-body .pywry-dropdown-menu,
+.pywry-modal-body .pywry-input,
+.pywry-modal-body .pywry-button,
+.pywry-modal-body .ob-mf-input,
+.pywry-modal-body .ob-mf-search,
+.pywry-modal-body .ob-mf-value,
+.pywry-modal-body .ob-mf-value-wrap {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.pywry-modal-body .pywry-input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 5px;
+  width: 100%;
+  min-width: 0;
+}
+
+.pywry-modal-body .pywry-input-label {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--pywry-text-secondary, #a0a0a0);
+}
+
+.pywry-modal-body .pywry-dropdown {
+  width: 100%;
+  min-width: 0;
+}
+
+.pywry-modal-body .pywry-dropdown-selected {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.pywry-modal-body .pywry-button {
+  align-self: stretch;
+  margin-top: 2px;
+}
+
+.ob-mf-join-row {
+  width: 100%;
+}
+
+.ob-mf-value-wrap,
+.ob-mf-value {
+  width: 100%;
+  min-width: 0;
+}
+
+.ob-mf-input,
+.ob-mf-search {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--pywry-spacing-sm, 8px) var(--pywry-spacing-md, 12px);
+  background: var(--pywry-bg-secondary, #151518);
+  color: var(--pywry-text-primary, #ebebed);
+  border: 1px solid var(--pywry-border-color, #333);
+  border-radius: var(--pywry-radius-lg, 8px);
+  font-family: var(--pywry-font-family, inherit);
+  font-size: var(--pywry-font-size, 13px);
+  transition: border-color 0.12s ease;
+}
+
+.ob-mf-input:hover,
+.ob-mf-search:hover,
+.ob-mf-input:focus,
+.ob-mf-search:focus {
+  outline: none;
+  border-color: var(--pywry-border-focus, #669dcb);
+}
+
+.ob-mf-search {
+  margin-bottom: 6px;
+}
+
+.ob-mf-range {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ob-mf-range label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.ob-mf-range label > span {
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--pywry-text-muted, #707070);
+}
+
+.ob-msi-list {
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid var(--pywry-border-color, #333);
+  border-radius: var(--pywry-radius-lg, 8px);
+  background: var(--pywry-bg-secondary, #151518);
+}
+
+.ob-msi {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: var(--pywry-text-primary, #ebebed);
+  font-size: 13px;
+  transition: background-color 0.12s ease;
+}
+
+.ob-msi:hover {
+  background: var(--pywry-bg-hover, #2a2a2e);
+}
+
+.ob-msi-cb {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--pywry-accent, #669dcb);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.pywry-dropdown-menu,
+.pywry-select-options,
+.pywry-multiselect-options,
+.ob-msi-list {
+  scrollbar-width: thin;
+  scrollbar-color: var(--pywry-scrollbar-thumb, rgba(155, 155, 155, 0.5)) transparent;
+}
+
+.pywry-dropdown-menu::-webkit-scrollbar,
+.pywry-select-options::-webkit-scrollbar,
+.pywry-multiselect-options::-webkit-scrollbar,
+.ob-msi-list::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.pywry-dropdown-menu::-webkit-scrollbar-track,
+.pywry-select-options::-webkit-scrollbar-track,
+.pywry-multiselect-options::-webkit-scrollbar-track,
+.ob-msi-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pywry-dropdown-menu::-webkit-scrollbar-thumb,
+.pywry-select-options::-webkit-scrollbar-thumb,
+.pywry-multiselect-options::-webkit-scrollbar-thumb,
+.ob-msi-list::-webkit-scrollbar-thumb {
+  background: var(--pywry-scrollbar-thumb, rgba(155, 155, 155, 0.5));
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.pywry-dropdown-menu::-webkit-scrollbar-thumb:hover,
+.pywry-select-options::-webkit-scrollbar-thumb:hover,
+.pywry-multiselect-options::-webkit-scrollbar-thumb:hover,
+.ob-msi-list::-webkit-scrollbar-thumb:hover {
+  background: var(--pywry-scrollbar-thumb-hover, rgba(175, 175, 175, 0.7));
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.ag-body-vertical-scroll-viewport,
+.ag-body-horizontal-scroll-viewport {
+  scrollbar-width: thin;
+  scrollbar-color: var(--pywry-scrollbar-thumb, rgba(155, 155, 155, 0.5))
+    var(--pywry-bg-secondary, #212124);
+}
+
+.ag-body-vertical-scroll-viewport::-webkit-scrollbar,
+.ag-body-horizontal-scroll-viewport::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.ag-body-vertical-scroll-viewport::-webkit-scrollbar-track,
+.ag-body-horizontal-scroll-viewport::-webkit-scrollbar-track {
+  background: var(--pywry-bg-secondary, #212124);
+  border-radius: 5px;
+}
+
+.ag-body-vertical-scroll-viewport::-webkit-scrollbar-thumb,
+.ag-body-horizontal-scroll-viewport::-webkit-scrollbar-thumb {
+  background: var(--pywry-scrollbar-thumb, rgba(155, 155, 155, 0.5));
+  border-radius: 5px;
+}
+
+.ag-body-vertical-scroll-viewport::-webkit-scrollbar-thumb:hover,
+.ag-body-horizontal-scroll-viewport::-webkit-scrollbar-thumb:hover {
+  background: var(--pywry-scrollbar-thumb-hover, rgba(175, 175, 175, 0.7));
+}

@@ -1,0 +1,94 @@
+interactions:
+- request:
+    body:
+      entityIdType: splits
+      includeFields:
+      - ticker
+      - companyshortname
+      - startdatetime
+      - optionable
+      - old_share_worth
+      - share_worth
+      offset: 0
+      query:
+        operands:
+        - operands:
+          - startdatetime
+          - '2026-06-13'
+          operator: GTE
+        - operands:
+          - startdatetime
+          - '2026-06-20'
+          operator: LTE
+        operator: AND
+      size: 12
+      sortField: startdatetime
+      sortType: DESC
+    headers: {}
+    method: POST
+    uri: https://query1.finance.yahoo.com/v1/finance/visualization
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJmaW5hbmNlIjp7InJlc3VsdCI6W3siY3JpdGVyaWFNZXRhIjp7InNpemUiOjEyLCJvZmZzZXQi
+        OjAsInNvcnRGaWVsZCI6InN0YXJ0ZGF0ZXRpbWUiLCJzb3J0VHlwZSI6IkRFU0MiLCJlbnRpdHlJ
+        ZFR5cGUiOiJTUExJVFMiLCJjcml0ZXJpYSI6W3siZmllbGQiOiJzdGFydGRhdGV0aW1lIiwic3Vi
+        RmllbGQiOm51bGwsIm9wZXJhdG9ycyI6WyJHVEUiXSwidmFsdWVzIjpbIjIwMjYtMDYtMTNUMDA6
+        MDA6MDAuMDAwLTA0OjAwIl0sImxhYmVsc1NlbGVjdGVkIjpbXSwiZGVwZW5kZW50VmFsdWVzIjpb
+        XX0seyJmaWVsZCI6InN0YXJ0ZGF0ZXRpbWUiLCJzdWJGaWVsZCI6bnVsbCwib3BlcmF0b3JzIjpb
+        IkxURSJdLCJ2YWx1ZXMiOlsiMjAyNi0wNi0yMFQwMDowMDowMC4wMDAtMDQ6MDAiXSwibGFiZWxz
+        U2VsZWN0ZWQiOltdLCJkZXBlbmRlbnRWYWx1ZXMiOltdfV0sInRvcE9wZXJhdG9yIjoiQU5EIn0s
+        InJhd0NyaXRlcmlhIjoie1wic29ydFR5cGVcIjpcIkRFU0NcIixcImVudGl0eUlkVHlwZVwiOlwi
+        c3BsaXRzXCIsXCJzb3J0RmllbGRcIjpcInN0YXJ0ZGF0ZXRpbWVcIixcImluY2x1ZGVGaWVsZHNc
+        IjpbXCJ0aWNrZXJcIixcImNvbXBhbnlzaG9ydG5hbWVcIixcInN0YXJ0ZGF0ZXRpbWVcIixcIm9w
+        dGlvbmFibGVcIixcIm9sZF9zaGFyZV93b3J0aFwiLFwic2hhcmVfd29ydGhcIl0sXCJzaXplXCI6
+        MTIsXCJvZmZzZXRcIjowLFwicXVlcnlcIjp7XCJvcGVyYXRvclwiOlwiQU5EXCIsXCJvcGVyYW5k
+        c1wiOlt7XCJvcGVyYXRvclwiOlwiR1RFXCIsXCJvcGVyYW5kc1wiOltcInN0YXJ0ZGF0ZXRpbWVc
+        IixcIjIwMjYtMDYtMTNcIl19LHtcIm9wZXJhdG9yXCI6XCJMVEVcIixcIm9wZXJhbmRzXCI6W1wi
+        c3RhcnRkYXRldGltZVwiLFwiMjAyNi0wNi0yMFwiXX1dfX0iLCJ0b3RhbCI6MTQ2LCJkb2N1bWVu
+        dHMiOlt7ImVudGl0eUlkVHlwZSI6IlNQTElUUyIsImNvbHVtbnMiOlt7ImlkIjoidGlja2VyIiwi
+        bGFiZWwiOiJTeW1ib2wiLCJ0eXBlIjoiU1RSSU5HIn0seyJpZCI6ImNvbXBhbnlzaG9ydG5hbWUi
+        LCJsYWJlbCI6IkNvbXBhbnkiLCJ0eXBlIjoiU1RSSU5HIn0seyJpZCI6InN0YXJ0ZGF0ZXRpbWUi
+        LCJsYWJlbCI6IlBheWFibGUgT24iLCJ0eXBlIjoiREFURSJ9LHsiaWQiOiJvcHRpb25hYmxlIiwi
+        bGFiZWwiOiJPcHRpb25hYmxlPyIsInR5cGUiOiJCT09MRUFOIn0seyJpZCI6Im9sZF9zaGFyZV93
+        b3J0aCIsImxhYmVsIjoiT2xkIFNoYXJlIFdvcnRoIiwidHlwZSI6Ik5VTUJFUiJ9LHsiaWQiOiJz
+        aGFyZV93b3J0aCIsImxhYmVsIjoiU2hhcmUgV29ydGgiLCJ0eXBlIjoiTlVNQkVSIn1dLCJyb3dz
+        IjpbWyIwMDk3MzAuS1EiLCJJUkVNIENvIEx0ZCIsIjIwMjYtMDYtMTlUMDQ6MDA6MDAuMDAwWiIs
+        ZmFsc2UsMSwwXSxbIjM2ODk3MC5LUSIsIk9zcCBDbyBMdGQiLCIyMDI2LTA2LTE5VDA0OjAwOjAw
+        LjAwMFoiLGZhbHNlLDEsMV0sWyI0NjU5LlQiLCJBSklTIENvIEx0ZCIsIjIwMjYtMDYtMTlUMDQ6
+        MDA6MDAuMDAwWiIsZmFsc2UsMTAxNTk4NCwxXSxbIjk5MjcuVCIsIldhdHQgTWFubiBDbyBMdGQi
+        LCIyMDI2LTA2LTE5VDA0OjAwOjAwLjAwMFoiLGZhbHNlLDIxMTIxODQsMV0sWyJCQUYuVk4iLCJC
+        QUYgVmlldCBOYW0gQWdyaWN1bHR1cmUgSlNDIiwiMjAyNi0wNi0xOVQwNDowMDowMC4wMDBaIixm
+        YWxzZSwxMDAsMTIxXSxbIkRCRUlMLkJPIiwiRGVlcGFrIEJ1aWxkZXJzICYgRW5naW5lZXJzIElu
+        ZGlhIEx0ZCIsIjIwMjYtMDYtMTlUMDQ6MDA6MDAuMDAwWiIsZmFsc2UsMSwxMF0sWyJEQkVJTC5O
+        UyIsIkRlZXBhayBCdWlsZGVycyAmIEVuZ2luZWVycyBJbmRpYSBMdGQiLCIyMDI2LTA2LTE5VDA0
+        OjAwOjAwLjAwMFoiLGZhbHNlLDEsMTBdLFsiREhDLlZOIiwiRG9uZyBIYWkgSlNDIG9mIEJlbiBU
+        cmUiLCIyMDI2LTA2LTE5VDA0OjAwOjAwLjAwMFoiLGZhbHNlLDEwLDExXSxbIkhEQy5WTiIsIkJh
+        IFJpYSDigJMgVnVuZyBUYXUgSG91c2UgRGV2ZWxvcG1lbnQgSlNDIiwiMjAyNi0wNi0xOVQwNDow
+        MDowMC4wMDBaIixmYWxzZSwxMDAsMTE1XSxbIk1FVEEuQk8iLCJTdHJpbmcgTWV0YXZlcnNlIEx0
+        ZCIsIjIwMjYtMDYtMTlUMDQ6MDA6MDAuMDAwWiIsZmFsc2UsOSwxMV0sWyIwMDI3NjguU1oiLCJR
+        aW5nZGFvIEdvbiBUZWNobm9sb2d5IENvIEx0ZCIsIjIwMjYtMDYtMThUMDQ6MDA6MDAuMDAwWiIs
+        ZmFsc2UsMSwxXSxbIjI1NDAuVCIsIllvbWVpc2h1IFNlaXpvIENvIEx0ZCIsIjIwMjYtMDYtMThU
+        MDQ6MDA6MDAuMDAwWiIsZmFsc2UsMjMwNjgwMCwxXV19XX1dLCJlcnJvciI6bnVsbH19
+    headers:
+      age: '0'
+      cache-control: private, no-cache, no-store
+      content-encoding: gzip
+      content-length: '867'
+      content-type: application/json;charset=utf-8
+      date: Sat, 13 Jun 2026 18:39:01 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '22'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync

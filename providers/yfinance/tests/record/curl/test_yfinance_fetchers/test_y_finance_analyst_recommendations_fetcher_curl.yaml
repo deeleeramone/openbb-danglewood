@@ -1,0 +1,37 @@
+interactions:
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query2.finance.yahoo.com/v10/finance/quoteSummary/AAPL
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJxdW90ZVN1bW1hcnkiOnsicmVzdWx0IjpbeyJyZWNvbW1lbmRhdGlvblRyZW5kIjp7InRyZW5k
+        IjpbeyJwZXJpb2QiOiIwbSIsInN0cm9uZ0J1eSI6NywiYnV5IjoyMywiaG9sZCI6MTUsInNlbGwi
+        OjEsInN0cm9uZ1NlbGwiOjJ9LHsicGVyaW9kIjoiLTFtIiwic3Ryb25nQnV5Ijo3LCJidXkiOjIz
+        LCJob2xkIjoxNSwic2VsbCI6MSwic3Ryb25nU2VsbCI6Mn0seyJwZXJpb2QiOiItMm0iLCJzdHJv
+        bmdCdXkiOjcsImJ1eSI6MjUsImhvbGQiOjE0LCJzZWxsIjoxLCJzdHJvbmdTZWxsIjoxfSx7InBl
+        cmlvZCI6Ii0zbSIsInN0cm9uZ0J1eSI6NiwiYnV5IjoyNSwiaG9sZCI6MTUsInNlbGwiOjEsInN0
+        cm9uZ1NlbGwiOjF9XSwibWF4QWdlIjo4NjQwMH19XSwiZXJyb3IiOm51bGx9fQ==
+    headers:
+      age: '0'
+      cache-control: public, max-age=1, stale-while-revalidate=9
+      content-length: '388'
+      content-type: application/json;charset=utf-8
+      date: Sat, 13 Jun 2026 19:37:50 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '2'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync

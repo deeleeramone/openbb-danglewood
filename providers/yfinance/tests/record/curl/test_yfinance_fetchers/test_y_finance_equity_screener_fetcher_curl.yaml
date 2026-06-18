@@ -1,0 +1,201 @@
+interactions:
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query1.finance.yahoo.com/v1/test/getcrumb
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        OUJWR0pHY1FwLkM=
+    headers:
+      age: '0'
+      cache-control: private, max-age=60, stale-while-revalidate=30
+      content-length: '11'
+      content-type: text/plain;charset=utf-8
+      date: Sun, 14 Jun 2026 06:45:04 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      set-cookie: MOCK_COOKIE
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '0'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync
+- request:
+    body: '{"offset":0,"count":25,"size":200,"sortField":"percentchange","userId":"","userIdType":"guid","sortType":"DESC","query":{"operator":"AND","operands":[{"operator":"EQ","operands":["region","us"]},{"operator":"EQ","operands":["sector","Consumer
+      Cyclical"]},{"operator":"EQ","operands":["industry","Auto Manufacturers"]},{"operator":"GT","operands":["intradaymarketcap",60000000000]},{"operator":"GT","operands":["intradayprice",10.0]},{"operator":"GT","operands":["dayvolume",5000000]}]},"quoteType":"EQUITY"}'
+    headers:
+      Content-Type: application/json
+    method: POST
+    uri: https://query1.finance.yahoo.com/v1/finance/screener
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJmaW5hbmNlIjp7InJlc3VsdCI6W3sic3RhcnQiOjAsImNvdW50IjoxLCJ0b3RhbCI6MSwicXVv
+        dGVzIjpbeyJsYW5ndWFnZSI6ImVuLVVTIiwicmVnaW9uIjoiVVMiLCJxdW90ZVR5cGUiOiJFUVVJ
+        VFkiLCJ0eXBlRGlzcCI6IkVxdWl0eSIsInF1b3RlU291cmNlTmFtZSI6Ik5hc2RhcSBSZWFsIFRp
+        bWUgUHJpY2UiLCJ0cmlnZ2VyYWJsZSI6dHJ1ZSwiY3VzdG9tUHJpY2VBbGVydENvbmZpZGVuY2Ui
+        OiJISUdIIiwiY3VycmVuY3kiOiJVU0QiLCJyZWd1bGFyTWFya2V0Q2hhbmdlUGVyY2VudCI6MS44
+        MjM4OCwiaGFzUHJlUG9zdE1hcmtldERhdGEiOnRydWUsImZpcnN0VHJhZGVEYXRlTWlsbGlzZWNv
+        bmRzIjoxMjc3ODE4MjAwMDAwLCJwcmljZUhpbnQiOjIsInBvc3RNYXJrZXRDaGFuZ2VQZXJjZW50
+        IjotMC4wODExOTE0OSwicG9zdE1hcmtldFRpbWUiOjE3ODEzMDg3OTcsInBvc3RNYXJrZXRQcmlj
+        ZSI6NDA2LjEsInBvc3RNYXJrZXRDaGFuZ2UiOi0wLjMyOTk4NjU3LCJyZWd1bGFyTWFya2V0Q2hh
+        bmdlIjo3LjI4LCJyZWd1bGFyTWFya2V0VGltZSI6MTc4MTI5NDQwMCwicmVndWxhck1hcmtldFBy
+        aWNlIjo0MDYuNDMsInJlZ3VsYXJNYXJrZXREYXlIaWdoIjo0MDYuNjgsInJlZ3VsYXJNYXJrZXRE
+        YXlSYW5nZSI6IjM4Ni43NiAtIDQwNi42OCIsInJlZ3VsYXJNYXJrZXREYXlMb3ciOjM4Ni43Niwi
+        cmVndWxhck1hcmtldFZvbHVtZSI6NjI0NjAxMjcsInJlZ3VsYXJNYXJrZXRQcmV2aW91c0Nsb3Nl
+        IjozOTkuMTUsImJpZFNpemUiOjQsImFza1NpemUiOjMsIm1hcmtldCI6InVzX21hcmtldCIsIm1l
+        c3NhZ2VCb2FyZElkIjoiZmlubWJfMjc0NDQ3NTIiLCJmdWxsRXhjaGFuZ2VOYW1lIjoiTmFzZGFx
+        R1MiLCJsb25nTmFtZSI6IlRlc2xhLCBJbmMuIiwicmVndWxhck1hcmtldE9wZW4iOjM5OS40Niwi
+        YXZlcmFnZURhaWx5Vm9sdW1lM01vbnRoIjo1ODk2NTMzOCwiYXZlcmFnZURhaWx5Vm9sdW1lMTBE
+        YXkiOjQ5NDU4MTUwLCJjb3Jwb3JhdGVBY3Rpb25zIjpbXSwiZmlmdHlUd29XZWVrTG93Q2hhbmdl
+        IjoxMTcuNjYsImZpZnR5VHdvV2Vla0xvd0NoYW5nZVBlcmNlbnQiOjAuNDA3NDUyMzIsImZpZnR5
+        VHdvV2Vla1JhbmdlIjoiMjg4Ljc3IC0gNDk4LjgzIiwiZmlmdHlUd29XZWVrSGlnaENoYW5nZSI6
+        LTkyLjM5OTk5NCwiZmlmdHlUd29XZWVrSGlnaENoYW5nZVBlcmNlbnQiOi0wLjE4NTIzMzQ0LCJm
+        aWZ0eVR3b1dlZWtDaGFuZ2VQZXJjZW50IjoyMy40ODYxNiwiZWFybmluZ3NUaW1lc3RhbXAiOjE3
+        NzY4ODgwMDAsImVhcm5pbmdzVGltZXN0YW1wU3RhcnQiOjE3ODQ3NTA0MDAsImVhcm5pbmdzVGlt
+        ZXN0YW1wRW5kIjoxNzg0NzUwNDAwLCJlYXJuaW5nc0NhbGxUaW1lc3RhbXBTdGFydCI6MTc3Njg5
+        MzQwMCwiZWFybmluZ3NDYWxsVGltZXN0YW1wRW5kIjoxNzc2ODkzNDAwLCJpc0Vhcm5pbmdzRGF0
+        ZUVzdGltYXRlIjp0cnVlLCJ0cmFpbGluZ0FubnVhbERpdmlkZW5kUmF0ZSI6MC4wLCJ0cmFpbGlu
+        Z1BFIjozNjkuNDgxOCwidHJhaWxpbmdBbm51YWxEaXZpZGVuZFlpZWxkIjowLjAsIm1hcmtldFN0
+        YXRlIjoiQ0xPU0VEIiwiZXBzVHJhaWxpbmdUd2VsdmVNb250aHMiOjEuMSwiZXBzRm9yd2FyZCI6
+        Mi40OTk5NSwiZXBzQ3VycmVudFllYXIiOjIuMDU5MzcsInByaWNlRXBzQ3VycmVudFllYXIiOjE5
+        Ny4zNTY0Niwic2hhcmVzT3V0c3RhbmRpbmciOjM3NTU3MjM4NzEsImltcGxpZWRTaGFyZXNPdXRz
+        dGFuZGluZyI6Mzc1NTcyMzg3MSwiYm9va1ZhbHVlIjoyMS44OTcsImZpZnR5RGF5QXZlcmFnZSI6
+        Mzk4LjMsImZpZnR5RGF5QXZlcmFnZUNoYW5nZSI6OC4xMzAwMDUsImZpZnR5RGF5QXZlcmFnZUNo
+        YW5nZVBlcmNlbnQiOjAuMDIwNDExNzYzLCJ0d29IdW5kcmVkRGF5QXZlcmFnZSI6NDE1LjY5NDQs
+        InR3b0h1bmRyZWREYXlBdmVyYWdlQ2hhbmdlIjotOS4yNjQ0MDQsInR3b0h1bmRyZWREYXlBdmVy
+        YWdlQ2hhbmdlUGVyY2VudCI6LTAuMDIyMjg2NTc1LCJmb3J3YXJkUEUiOjE2Mi41NzUyNiwicHJp
+        Y2VUb0Jvb2siOjE4LjU2MDk5LCJzb3VyY2VJbnRlcnZhbCI6MTUsImV4Y2hhbmdlRGF0YURlbGF5
+        ZWRCeSI6MCwiZXhjaGFuZ2VUaW1lem9uZU5hbWUiOiJBbWVyaWNhL05ld19Zb3JrIiwiZXhjaGFu
+        Z2VUaW1lem9uZVNob3J0TmFtZSI6IkVEVCIsImdtdE9mZlNldE1pbGxpc2Vjb25kcyI6LTE0NDAw
+        MDAwLCJlc2dQb3B1bGF0ZWQiOmZhbHNlLCJ0cmFkZWFibGUiOmZhbHNlLCJjcnlwdG9UcmFkZWFi
+        bGUiOmZhbHNlLCJiaWQiOjQwMy4zMSwibWFya2V0Q2FwIjoxNTI2NDM4ODIxODg4LCJleGNoYW5n
+        ZSI6Ik5NUyIsImZpZnR5VHdvV2Vla0hpZ2giOjQ5OC44MywiZmlmdHlUd29XZWVrTG93IjoyODgu
+        NzcsImF2ZXJhZ2VBbmFseXN0UmF0aW5nIjoiMi4zIC0gQnV5IiwiZmluYW5jaWFsQ3VycmVuY3ki
+        OiJVU0QiLCJzaG9ydE5hbWUiOiJUZXNsYSwgSW5jLiIsImFzayI6NDA1LjY1LCJkaXNwbGF5TmFt
+        ZSI6IlRlc2xhIiwic3ltYm9sIjoiVFNMQSJ9XSwidXNlUmVjb3JkcyI6ZmFsc2V9XSwiZXJyb3Ii
+        Om51bGx9fQ==
+    headers:
+      age: '1'
+      cache-control: private, no-cache, no-store
+      content-encoding: gzip
+      content-length: '1165'
+      content-type: application/json;charset=utf-8
+      date: Sun, 14 Jun 2026 06:45:04 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '23'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync
+- request:
+    body: null
+    headers: {}
+    method: GET
+    uri: https://query2.finance.yahoo.com/v8/finance/chart/TSLA
+  response:
+    body:
+      encoding: utf-8
+      string: !!binary |
+        eyJjaGFydCI6eyJyZXN1bHQiOlt7Im1ldGEiOnsiY3VycmVuY3kiOiJVU0QiLCJzeW1ib2wiOiJU
+        U0xBIiwiZXhjaGFuZ2VOYW1lIjoiTk1TIiwiZnVsbEV4Y2hhbmdlTmFtZSI6Ik5hc2RhcUdTIiwi
+        aW5zdHJ1bWVudFR5cGUiOiJFUVVJVFkiLCJmaXJzdFRyYWRlRGF0ZSI6MTI3NzgxODIwMCwicmVn
+        dWxhck1hcmtldFRpbWUiOjE3ODEyOTQ0MDAsImhhc1ByZVBvc3RNYXJrZXREYXRhIjp0cnVlLCJn
+        bXRvZmZzZXQiOi0xNDQwMCwidGltZXpvbmUiOiJFRFQiLCJleGNoYW5nZVRpbWV6b25lTmFtZSI6
+        IkFtZXJpY2EvTmV3X1lvcmsiLCJyZWd1bGFyTWFya2V0UHJpY2UiOjQwNi40MywiZmlmdHlUd29X
+        ZWVrSGlnaCI6NDk4LjgzLCJmaWZ0eVR3b1dlZWtMb3ciOjI4OC43NywicmVndWxhck1hcmtldERh
+        eUhpZ2giOjQwNi42OCwicmVndWxhck1hcmtldERheUxvdyI6Mzg2Ljc2LCJyZWd1bGFyTWFya2V0
+        Vm9sdW1lIjo2MjQ2MDEyNywibG9uZ05hbWUiOiJUZXNsYSwgSW5jLiIsInNob3J0TmFtZSI6IlRl
+        c2xhLCBJbmMuIiwiY2hhcnRQcmV2aW91c0Nsb3NlIjo0MzMuNDUsInByaWNlSGludCI6MiwiY3Vy
+        cmVudFRyYWRpbmdQZXJpb2QiOnsicHJlIjp7InRpbWV6b25lIjoiRURUIiwic3RhcnQiOjE3ODEy
+        NTEyMDAsImVuZCI6MTc4MTI3MTAwMCwiZ210b2Zmc2V0IjotMTQ0MDB9LCJyZWd1bGFyIjp7InRp
+        bWV6b25lIjoiRURUIiwic3RhcnQiOjE3ODEyNzEwMDAsImVuZCI6MTc4MTI5NDQwMCwiZ210b2Zm
+        c2V0IjotMTQ0MDB9LCJwb3N0Ijp7InRpbWV6b25lIjoiRURUIiwic3RhcnQiOjE3ODEyOTQ0MDAs
+        ImVuZCI6MTc4MTMwODgwMCwiZ210b2Zmc2V0IjotMTQ0MDB9fSwiZGF0YUdyYW51bGFyaXR5Ijoi
+        MWQiLCJyYW5nZSI6IjFtbyIsInZhbGlkUmFuZ2VzIjpbIjFkIiwiNWQiLCIxbW8iLCIzbW8iLCI2
+        bW8iLCIxeSIsIjJ5IiwiNXkiLCIxMHkiLCJ5dGQiLCJtYXgiXX0sInRpbWVzdGFtcCI6WzE3Nzg2
+        NzkwMDAsMTc3ODc2NTQwMCwxNzc4ODUxODAwLDE3NzkxMTEwMDAsMTc3OTE5NzQwMCwxNzc5Mjgz
+        ODAwLDE3NzkzNzAyMDAsMTc3OTQ1NjYwMCwxNzc5ODAyMjAwLDE3Nzk4ODg2MDAsMTc3OTk3NTAw
+        MCwxNzgwMDYxNDAwLDE3ODAzMjA2MDAsMTc4MDQwNzAwMCwxNzgwNDkzNDAwLDE3ODA1Nzk4MDAs
+        MTc4MDY2NjIwMCwxNzgwOTI1NDAwLDE3ODEwMTE4MDAsMTc4MTA5ODIwMCwxNzgxMTg0NjAwLDE3
+        ODEyNzEwMDBdLCJpbmRpY2F0b3JzIjp7InF1b3RlIjpbeyJjbG9zZSI6WzQ0NS4yNjk5ODkwMTM2
+        NzE5LDQ0My4yOTk5ODc3OTI5Njg3NSw0MjIuMjM5OTkwMjM0Mzc1LDQwOS45ODk5OTAyMzQzNzUs
+        NDA0LjEwOTk4NTM1MTU2MjUsNDE3LjI2MDAwOTc2NTYyNSw0MTcuODUwMDA2MTAzNTE1Niw0MjYu
+        MDEwMDA5NzY1NjI1LDQzMy41ODk5OTYzMzc4OTA2LDQ0MC4zNTk5ODUzNTE1NjI1LDQ0Mi4xMDAw
+        MDYxMDM1MTU2LDQzNS43OTAwMDg1NDQ5MjE5LDQxNS44ODAwMDQ4ODI4MTI1LDQyMy43Mzk5OTAy
+        MzQzNzUsNDIzLjcwMDAxMjIwNzAzMTI1LDQxOC40NTAwMTIyMDcwMzEyNSwzOTEuMCw0MDguOTUw
+        MDEyMjA3MDMxMjUsMzk2LjY3OTk5MjY3NTc4MTI1LDM4MS41ODk5OTYzMzc4OTA2LDM5OS4xNDk5
+        OTM4OTY0ODQ0LDQwNi40Mjk5OTI2NzU3ODEyNV0sIm9wZW4iOls0MzYuNjcwMDEzNDI3NzM0NCw0
+        NDYuNDg5OTkwMjM0Mzc1LDQzMy45ODAwMTA5ODYzMjgxLDQxOS4yNjk5ODkwMTM2NzE5LDQwMy4x
+        NjAwMDM2NjIxMDk0LDQwNy42MDAwMDYxMDM1MTU2LDQyMi4xNzk5OTI2NzU3ODEyNSw0MjIuNjcw
+        MDEzNDI3NzM0NCw0MzAuMjYwMDA5NzY1NjI1LDQ0Mi44OTAwMTQ2NDg0Mzc1LDQzNy42MTk5OTUx
+        MTcxODc1LDQzOS44NTAwMDYxMDM1MTU2LDQyNy40ODk5OTAyMzQzNzUsNDE4LjIyMDAwMTIyMDcw
+        MzEsNDE4LjcwMDAxMjIwNzAzMTI1LDQxOS44Mzk5OTYzMzc4OTA2LDQyMC41LDM5Ni4zMjk5ODY1
+        NzIyNjU2LDQxMS4wMjk5OTg3NzkyOTY5LDM5MS41NDAwMDg1NDQ5MjE5LDM4OC4yNzk5OTg3Nzky
+        OTY5LDM5OS40ODk5OTAyMzQzNzVdLCJoaWdoIjpbNDUzLjM5OTk5Mzg5NjQ4NDQsNDUxLjk4MDAx
+        MDk4NjMyODEsNDM0LjY2MDAwMzY2MjEwOTQsNDIxLjEzMDAwNDg4MjgxMjUsNDA1LjYzMDAwNDg4
+        MjgxMjUsNDE3LjQ1OTk5MTQ1NTA3ODEsNDI2Ljk1MDAxMjIwNzAzMTI1LDQzMS41MTAwMDk3NjU2
+        MjUsNDM1LjIwMDAxMjIwNzAzMTI1LDQ0NS42MDAwMDYxMDM1MTU2LDQ0My45NTk5OTE0NTUwNzgx
+        LDQ0MS4wNzAwMDczMjQyMTg3NSw0MjkuNjAwMDA2MTAzNTE1Niw0MjQuNDIwMDEzNDI3NzM0NCw0
+        MzMuNjAwMDA2MTAzNTE1Niw0MjYuMzUwMDA2MTAzNTE1Niw0MjQuNjc5OTkyNjc1NzgxMjUsNDEy
+        Ljk0MDAwMjQ0MTQwNjI1LDQxOC41LDM5Ny4wODk5OTYzMzc4OTA2LDM5OS41NDAwMDg1NDQ5MjE5
+        LDQwNi42Nzk5OTI2NzU3ODEyNV0sImxvdyI6WzQzMC4yMDk5OTE0NTUwNzgxLDQ0MS4xNjAwMDM2
+        NjIxMDk0LDQyMi4wLDQwNS4zMjk5ODY1NzIyNjU2LDM5My42MzAwMDQ4ODI4MTI1LDQwNi4zOTAw
+        MTQ2NDg0Mzc1LDQxMi44OTk5OTM4OTY0ODQ0LDQyMC41MTAwMDk3NjU2MjUsNDI2LjExOTk5NTEx
+        NzE4NzUsNDM1LjUxOTk4OTAxMzY3MTksNDM2LjI5OTk4Nzc5Mjk2ODc1LDQyOC4xNDAwMTQ2NDg0
+        Mzc1LDQxNS40Mjk5OTI2NzU3ODEyNSw0MTMuNjQ5OTkzODk2NDg0NCw0MTYuMCw0MTcuMTYwMDAz
+        NjYyMTA5NCwzODguNTg5OTk2MzM3ODkwNiwzOTQuNzIwMDAxMjIwNzAzMSwzODQuMjM5OTkwMjM0
+        Mzc1LDM4MC4xNDk5OTM4OTY0ODQ0LDM4MC42NjAwMDM2NjIxMDk0LDM4Ni43NjAwMDk3NjU2MjVd
+        LCJ2b2x1bWUiOls2ODI4MzIwMCw0NjA3MDQwMCw1MjY4ODcwMCw1MjQ3NDIwMCw0NjUwMDYwMCw0
+        NTI5NDcwMCw0MjYzNjkwMCw0NjEwNDcwMCw0NTY1ODkwMCw0NDY1NjUwMCwzMjQzNTAwMCw0NTE3
+        NjgwMCw0NDkzNzkwMCwzNzU5NjAwMCw0NDUwMDcwMCwzNTMyMzMwMCw2MzQyMDIwMCw1MDMyODgw
+        MCw1OTk0MDIwMCw0OTY5NTYwMCw0NTMyNDMwMCw2MzUxNDUwMF19XSwiYWRqY2xvc2UiOlt7ImFk
+        amNsb3NlIjpbNDQ1LjI2OTk4OTAxMzY3MTksNDQzLjI5OTk4Nzc5Mjk2ODc1LDQyMi4yMzk5OTAy
+        MzQzNzUsNDA5Ljk4OTk5MDIzNDM3NSw0MDQuMTA5OTg1MzUxNTYyNSw0MTcuMjYwMDA5NzY1NjI1
+        LDQxNy44NTAwMDYxMDM1MTU2LDQyNi4wMTAwMDk3NjU2MjUsNDMzLjU4OTk5NjMzNzg5MDYsNDQw
+        LjM1OTk4NTM1MTU2MjUsNDQyLjEwMDAwNjEwMzUxNTYsNDM1Ljc5MDAwODU0NDkyMTksNDE1Ljg4
+        MDAwNDg4MjgxMjUsNDIzLjczOTk5MDIzNDM3NSw0MjMuNzAwMDEyMjA3MDMxMjUsNDE4LjQ1MDAx
+        MjIwNzAzMTI1LDM5MS4wLDQwOC45NTAwMTIyMDcwMzEyNSwzOTYuNjc5OTkyNjc1NzgxMjUsMzgx
+        LjU4OTk5NjMzNzg5MDYsMzk5LjE0OTk5Mzg5NjQ4NDQsNDA2LjQyOTk5MjY3NTc4MTI1XX1dfX1d
+        LCJlcnJvciI6bnVsbH19
+    headers:
+      age: '0'
+      cache-control: public, max-age=10, stale-while-revalidate=20
+      content-encoding: gzip
+      content-length: '1266'
+      content-type: application/json;charset=utf-8
+      date: Sun, 14 Jun 2026 06:45:05 GMT
+      referrer-policy: no-referrer-when-downgrade
+      server: ATS
+      set-cookie: MOCK_COOKIE
+      strict-transport-security: max-age=31536000
+      vary: Origin,Accept-Encoding
+      x-content-type-options: nosniff
+      x-envoy-decorator-operation: MOCK_OPERATION
+      x-envoy-upstream-service-time: '5'
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: 1; mode=block
+      y-rid: MOCK_RID
+    status:
+      code: 200
+      message: ''
+  source_type: curl_cffi_sync

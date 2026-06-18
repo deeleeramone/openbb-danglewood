@@ -1,0 +1,110 @@
+[
+  {
+    "name": "Yahoo Finance",
+    "img": "https://images-cdn3.welcomesoftware.com/assets/yahoo+finance.jpg/Zz0yNWFjNTk0NjlkMmQxMWVmYjhlNjFlYTY2MTI5N2IyNg==?width=800&height=448",
+    "img_dark": "https://images-cdn3.welcomesoftware.com/assets/yahoo+finance.jpg/Zz0yNWFjNTk0NjlkMmQxMWVmYjhlNjFlYTY2MTI5N2IyNg==?width=800&height=448",
+    "img_light": "https://images-cdn3.welcomesoftware.com/assets/yahoo+finance.jpg/Zz0yNWFjNTk0NjlkMmQxMWVmYjhlNjFlYTY2MTI5N2IyNg==?width=800&height=448",
+    "description": "Explore markets, assets, benchmarks, and news from Yahoo Finance. Use TradingView charts with live market updates to analyze and compare across the universe.",
+    "allowCustomization": true,
+    "tabs": {
+      "asset-overview": {
+        "id": "asset-overview",
+        "name": "Asset Overview",
+        "layout": [
+          {
+            "i": "yfinance_search_obb",
+            "x": 0,
+            "y": 2,
+            "w": 24,
+            "h": 12,
+            "state": {
+              "params": {
+                "query": "apple"
+              },
+              "chartView": {
+                "enabled": false,
+                "chartType": "line"
+              },
+              "columnState": {
+                "default": {
+                  "columnPinning": {
+                    "leftColIds": [
+                      "symbol"
+                    ],
+                    "rightColIds": []
+                  },
+                  "columnOrder": {
+                    "orderedColIds": [
+                      "symbol",
+                      "name",
+                      "description",
+                      "exchange",
+                      "asset_type"
+                    ]
+                  }
+                }
+              }
+            },
+            "groups": [
+              "Symbol"
+            ]
+          },
+          {
+            "i": "yfinance_tv_widget_obb",
+            "x": 0,
+            "y": 44,
+            "w": 40,
+            "h": 20,
+            "state": {
+              "params": {
+                "symbol": "GOOG"
+              }
+            },
+            "groups": [
+              "Symbol"
+            ]
+          },
+          {
+            "i": "yfinance_asset_info_obb",
+            "x": 0,
+            "y": 14,
+            "w": 40,
+            "h": 30,
+            "state": {
+              "params": {
+                "symbol": "GOOG"
+              }
+            },
+            "groups": [
+              "Symbol"
+            ]
+          },
+          {
+            "i": "yfinance_news_obb",
+            "x": 24,
+            "y": 2,
+            "w": 16,
+            "h": 12,
+            "state": {
+              "params": {
+                "symbol": "GOOG",
+                "limit": "100"
+              }
+            },
+            "groups": [
+              "Symbol"
+            ]
+          }
+        ]
+      }
+    },
+    "groups": [
+      {
+        "name": "Symbol",
+        "type": "param",
+        "paramName": "symbol",
+        "defaultValue": "AAPL"
+      }
+    ]
+  }
+]
