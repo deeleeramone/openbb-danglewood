@@ -76,9 +76,9 @@ class YFinanceNewsFetcher(Fetcher[YFinanceNewsQueryParams, list[YFinanceNewsData
         import asyncio
 
         from openbb_core.provider.utils.errors import EmptyDataError
-        from yfinance import Search, Ticker
 
         from openbb_yfinance.utils.news_helpers import get_article_body
+        from yfinance import Search, Ticker
 
         def _normalize(item: dict) -> dict | None:
             """Flatten a Yahoo news item to a flat record."""

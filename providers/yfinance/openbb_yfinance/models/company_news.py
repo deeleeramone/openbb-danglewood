@@ -57,6 +57,7 @@ class YFinanceCompanyNewsFetcher(
         from warnings import warn
 
         from openbb_core.provider.utils.errors import EmptyDataError
+
         from yfinance import Ticker
 
         symbols = [s.strip() for s in query.symbol.split(",") if s.strip()]

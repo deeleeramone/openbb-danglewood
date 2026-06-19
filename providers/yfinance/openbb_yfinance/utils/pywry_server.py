@@ -31,12 +31,13 @@ def ensure_pywry_mounted() -> None:
 
         inline.get_server_app()
         pywry_app = inline._state.app
-        existing = {getattr(route, "path", "") for route in core_app.router.routes}
-        wanted = ("/ws/", "/register_widget", "/disconnect/")
-        for route in pywry_app.routes:
-            path = getattr(route, "path", "")
-            if path.startswith(wanted) and path not in existing:
-                core_app.router.routes.append(route)
+        if pywry_app is not None:
+            existing = {getattr(route, "path", "") for route in core_app.router.routes}
+            wanted = ("/ws/", "/register_widget", "/disconnect/")
+            for route in pywry_app.routes:
+                path = getattr(route, "path", "")
+                if path.startswith(wanted) and path not in existing:
+                    core_app.router.routes.append(route)
 
         threading.Thread(target=inline._process_callbacks, daemon=True).start()
         keeper = threading.Thread(target=threading.Event().wait, daemon=True)

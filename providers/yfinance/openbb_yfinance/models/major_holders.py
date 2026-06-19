@@ -68,6 +68,7 @@ class YFinanceMajorHoldersFetcher(
 
         from openbb_core.provider.utils.errors import EmptyDataError
         from pandas import isna
+
         from yfinance import Ticker
 
         def _val(v):

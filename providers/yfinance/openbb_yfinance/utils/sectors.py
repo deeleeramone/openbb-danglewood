@@ -5,6 +5,7 @@ carry the real Yahoo sector/industry keys — no guessing, no network call.
 """
 
 from openbb_core.app.service.system_service import SystemService
+
 from yfinance.const import SECTOR_INDUSTY_MAPPING_LC
 
 _API_PREFIX = SystemService().system_settings.api_settings.prefix
@@ -34,7 +35,9 @@ SECTOR_OPTIONS_WITH_MARKET: list[dict] = [MARKET_OPTION, *SECTOR_OPTIONS]
 
 def sector_keys(sector: str | None) -> list[str]:
     """Resolve a sector query to a list of keys; empty/None means every sector."""
-    keys: list[str] = [s.strip().lower() for s in (sector or "").split(",") if s.strip()]
+    keys: list[str] = [
+        s.strip().lower() for s in (sector or "").split(",") if s.strip()
+    ]
     if not keys:
         return list(SECTOR_KEYS)
     return keys

@@ -12,6 +12,7 @@ from openbb_core.provider.utils.country_utils import Country
 from openbb_core.provider.utils.errors import EmptyDataError
 from pydantic import Field, field_validator
 
+from openbb_yfinance.utils.helpers import PREDEFINED_SCREENERS
 from openbb_yfinance.utils.references import (
     COUNTRIES,
     EXCHANGES,
@@ -24,7 +25,6 @@ from openbb_yfinance.utils.references import (
     YFPredefinedScreenerData,
     get_industry_sector,
 )
-from openbb_yfinance.utils.helpers import PREDEFINED_SCREENERS
 from openbb_yfinance.utils.screener_presets import get_bundled_presets
 
 _PRESET_CHOICES = list(get_bundled_presets()) + PREDEFINED_SCREENERS

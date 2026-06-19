@@ -21,7 +21,7 @@ yfinance = "openbb_yfinance.yfinance_router:router"
 
 [project.urls]
 Homepage = "https://openbb.co"
-Repository = "https://github.com/OpenBB-finance/OpenBB"
+Repository = "https://github.com/deeleeramone/openbb-danglewood"
 
 [dependency-groups]
 dev = ["openbb-devtools>=1.6.8"]

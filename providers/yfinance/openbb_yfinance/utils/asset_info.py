@@ -193,9 +193,7 @@ def _overview_stats(info: dict) -> str:
             rows.append(_stat("Max Supply", _fmt_compact(info.get("maxSupply"))))
         vol24 = info.get("volume24Hr") or info.get("regularMarketVolume")
         if vol24 is not None:
-            rows.append(
-                _stat("Volume (24h)", _fmt_compact(vol24), "ai-volume-24h")
-            )
+            rows.append(_stat("Volume (24h)", _fmt_compact(vol24), "ai-volume-24h"))
         if info.get("startDate"):
             rows.append(_stat("Inception", _fmt_date(info.get("startDate"))))
     elif quote_type == "FUTURE":
@@ -403,7 +401,11 @@ def _performance_html(info: dict, history: Any) -> str:
         cells.append(("1D", float(one_day)))
 
     closes = None
-    if history is not None and not getattr(history, "empty", True) and "Close" in history:
+    if (
+        history is not None
+        and not getattr(history, "empty", True)
+        and "Close" in history
+    ):
         closes = history["Close"].dropna()
     if closes is not None and not closes.empty:
         last = float(closes.iloc[-1])

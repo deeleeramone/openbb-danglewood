@@ -45,6 +45,7 @@ class YFinanceEconomicCalendarFetcher(
     ) -> list[dict]:
         """Return the raw data from the Yahoo Finance endpoint."""
         from openbb_core.provider.utils.errors import EmptyDataError
+
         from yfinance import Calendars
 
         df = Calendars(

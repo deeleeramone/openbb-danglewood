@@ -91,7 +91,7 @@ async def tvchart_widget_html(
     theme_mode = ThemeMode.LIGHT if str(theme).lower() == "light" else ThemeMode.DARK
     app = PyWry(mode=WindowMode.BROWSER, theme=theme_mode)
     widget = _show(app, symbol, interval)
-    html = await get_widget_html_async(widget.label)
+    html = await get_widget_html_async(widget.label) or ""
     # generate_tvchart_html omits the toolbar handler script (marquee updates),
     # registers the datafeed dispatchers before window.pywry exists, and the WS
     # bridge's emit (unlike the native bridge) never fires local listeners.

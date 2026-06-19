@@ -167,6 +167,7 @@ async def get_custom_screener(
 
     from openbb_core.provider.utils.helpers import safe_fromtimestamp
     from pytz import timezone
+
     from yfinance import EquityQuery, ETFQuery, FundQuery, screen
 
     query_classes = {
@@ -279,6 +280,7 @@ async def get_defined_screener(
 
     from openbb_core.provider.utils.helpers import safe_fromtimestamp
     from pytz import timezone
+
     from yfinance import screen
 
     count = 250 if not limit else min(250, max(1, limit))
