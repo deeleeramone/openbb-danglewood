@@ -4,8 +4,6 @@ from importlib.util import find_spec
 
 from openbb_core.provider.abstract.provider import Provider
 
-from openbb_yfinance.models.active import YFActiveFetcher
-from openbb_yfinance.models.aggressive_small_caps import YFAggressiveSmallCapsFetcher
 from openbb_yfinance.models.analyst_recommendations import (
     YFinanceAnalystRecommendationsFetcher,
 )
@@ -38,9 +36,7 @@ from openbb_yfinance.models.fund_ratings import YFinanceFundRatingsFetcher
 from openbb_yfinance.models.fund_risk import YFinanceFundRiskFetcher
 from openbb_yfinance.models.futures_curve import YFinanceFuturesCurveFetcher
 from openbb_yfinance.models.futures_historical import YFinanceFuturesHistoricalFetcher
-from openbb_yfinance.models.gainers import YFGainersFetcher
 from openbb_yfinance.models.growth_estimates import YFinanceGrowthEstimatesFetcher
-from openbb_yfinance.models.growth_tech_equities import YFGrowthTechEquitiesFetcher
 from openbb_yfinance.models.historical_dividends import (
     YFinanceHistoricalDividendsFetcher,
 )
@@ -62,7 +58,6 @@ from openbb_yfinance.models.institutional_holders import (
 )
 from openbb_yfinance.models.key_executives import YFinanceKeyExecutivesFetcher
 from openbb_yfinance.models.key_metrics import YFinanceKeyMetricsFetcher
-from openbb_yfinance.models.losers import YFLosersFetcher
 from openbb_yfinance.models.major_holders import YFinanceMajorHoldersFetcher
 from openbb_yfinance.models.mutualfund_holders import YFinanceMutualFundHoldersFetcher
 from openbb_yfinance.models.options_chains import YFinanceOptionsChainsFetcher
@@ -82,10 +77,6 @@ from openbb_yfinance.models.sector_top_companies import (
 from openbb_yfinance.models.sector_top_funds import YFinanceSectorTopFundsFetcher
 from openbb_yfinance.models.share_statistics import YFinanceShareStatisticsFetcher
 from openbb_yfinance.models.symbol_search import YFinanceSymbolSearchFetcher
-from openbb_yfinance.models.undervalued_growth_equities import (
-    YFUndervaluedGrowthEquitiesFetcher,
-)
-from openbb_yfinance.models.undervalued_large_caps import YFUndervaluedLargeCapsFetcher
 from openbb_yfinance.models.yf_news import YFinanceNewsFetcher
 
 EQUITY_INSTALLED = find_spec("openbb_equity") is not None
@@ -116,36 +107,17 @@ financial markets and assets.""",
         _key("CashFlowStatement", "YfCashFlowStatement", EQUITY_INSTALLED): (
             YFinanceCashFlowStatementFetcher
         ),
-        _key("EquityActive", "YfEquityActive", EQUITY_INSTALLED): YFActiveFetcher,
-        _key(
-            "EquityAggressiveSmallCaps",
-            "YfEquityAggressiveSmallCaps",
-            EQUITY_INSTALLED,
-        ): YFAggressiveSmallCapsFetcher,
-        _key("EquityGainers", "YfEquityGainers", EQUITY_INSTALLED): YFGainersFetcher,
         _key("EquityHistorical", "YfEquityHistorical", EQUITY_INSTALLED): (
             YFinanceEquityHistoricalFetcher
         ),
         _key("EquityInfo", "YfEquityInfo", EQUITY_INSTALLED): (
             YFinanceEquityProfileFetcher
         ),
-        _key("EquityLosers", "YfEquityLosers", EQUITY_INSTALLED): YFLosersFetcher,
         _key("EquityQuote", "YfEquityQuote", EQUITY_INSTALLED): (
             YFinanceEquityQuoteFetcher
         ),
         _key("EquityScreener", "YfEquityScreener", EQUITY_INSTALLED): (
             YFinanceEquityScreenerFetcher
-        ),
-        _key(
-            "EquityUndervaluedGrowth", "YfEquityUndervaluedGrowth", EQUITY_INSTALLED
-        ): YFUndervaluedGrowthEquitiesFetcher,
-        _key(
-            "EquityUndervaluedLargeCaps",
-            "YfEquityUndervaluedLargeCaps",
-            EQUITY_INSTALLED,
-        ): YFUndervaluedLargeCapsFetcher,
-        _key("GrowthTechEquities", "YfGrowthTechEquities", EQUITY_INSTALLED): (
-            YFGrowthTechEquitiesFetcher
         ),
         _key("HistoricalDividends", "YfHistoricalDividends", EQUITY_INSTALLED): (
             YFinanceHistoricalDividendsFetcher

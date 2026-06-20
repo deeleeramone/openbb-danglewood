@@ -39,7 +39,7 @@ so the hybrid never collides with a first-party OpenBB extension.
 | Area | Examples |
 | --- | --- |
 | Equity | historical prices, quotes, company profile, balance sheet / income / cash flow, key metrics, key executives, share statistics, dividends, EPS history, company filings |
-| Screening & movers | equity screener, gainers / losers / most active, undervalued growth & large caps, aggressive small caps, growth tech equities |
+| Screening & movers | equity screener with INI presets — bundled movers/discovery presets (gainers, losers, most active, undervalued growth & large caps, aggressive small caps, growth tech) plus Yahoo's predefined screeners |
 | Estimates | analyst recommendations, price target & consensus, earnings / revenue / growth estimates, EPS trend & revisions |
 | Funds & ETFs | fund info, holdings, allocation, historical, performance, ratings, risk; ETF info & historical |
 | Ownership | institutional / mutual fund / major holders, insider trading, insider purchases, insider roster |

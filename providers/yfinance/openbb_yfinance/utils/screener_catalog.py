@@ -197,22 +197,64 @@ _SORT_TYPES = [
 
 
 def _value_options(field: str, eq_map: dict) -> list[dict]:
-    """Return {value, label} options for an enum field, labelling the country region."""
-    raw = sorted(str(v) for v in eq_map[field])
+    """Return {value, label} options for an enum field.
+
+    Some fields (e.g. ``exchange``) are stored grouped as ``{country: [codes]}``;
+    iterating those yields the country keys, not the screenable codes, which is
+    why the dropdown used to offer invalid values like ``ca`` for an exchange.
+    Flatten the groups and label each code with its country.
+    """
+    value = eq_map[field]
     if field == "region":
         from openbb_core.provider.utils.country_utils import Country
 
         options = []
-        for value in raw:
+        for code in sorted(str(v) for v in value):
             try:
-                options.append({"value": value, "label": str(Country(value).name)})
+                options.append({"value": code, "label": str(Country(code).name)})
             except Exception:
-                options.append({"value": value, "label": value.upper()})
+                options.append({"value": code, "label": code.upper()})
         return sorted(options, key=lambda o: o["label"])
-    return [{"value": value, "label": value} for value in raw]
+    if isinstance(value, dict):
+        from openbb_core.provider.utils.country_utils import Country
+
+        pairs: set[tuple[str, str]] = set()
+        for country, codes in value.items():
+            try:
+                name = str(Country(country).name)
+            except Exception:
+                name = str(country).upper()
+            for code in codes:
+                pairs.add((name, str(code)))
+        return [
+            {"value": code, "label": f"{code} — {name}"} for name, code in sorted(pairs)
+        ]
+    return [{"value": code, "label": code} for code in sorted(str(v) for v in value)]
 
 
-def _fields_for(fields_map: dict, eq_map: dict) -> list[dict]:
+def _cache_value_options(field: str, asset: str | None) -> list[dict] | None:
+    """Return {value, label} options for fund family/category from the build cache.
+
+    The yfinance ``fundfamilyname``/``categoryname`` enum tables are stale; the
+    build-time screener cache holds the names Yahoo matches today. Returns ``None``
+    for any other field, or when the cache has not been generated, so the caller
+    falls back to the bundled enum map.
+    """
+    if asset not in ("etf", "fund"):
+        return None
+    from openbb_yfinance.utils import screener_cache
+
+    if field == "fundfamilyname":
+        counts = screener_cache.family_counts(asset)
+        ranked = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
+        return [{"value": name, "label": f"{name} ({count})"} for name, count in ranked]
+    if field == "categoryname":
+        values = screener_cache.fund_categories(asset)
+        return [{"value": v, "label": v} for v in values] or None
+    return None
+
+
+def _fields_for(fields_map: dict, eq_map: dict, asset: str | None = None) -> list[dict]:
     """Flatten a field map into catalog entries with type and enum values."""
     out: list[dict] = []
     for category in sorted(fields_map):
@@ -228,7 +270,9 @@ def _fields_for(fields_map: dict, eq_map: dict) -> list[dict]:
             }
             if field in eq_map:
                 entry["type"] = "enum"
-                entry["values"] = _value_options(field, eq_map)
+                entry["values"] = _cache_value_options(field, asset) or _value_options(
+                    field, eq_map
+                )
             elif field in _STRING_FIELDS:
                 entry["type"] = "text"
             else:
@@ -300,8 +344,8 @@ def build_screener_catalog() -> dict:
 
     fields = {
         "equity": _fields_for(EQUITY_SCREENER_FIELDS, EQUITY_SCREENER_EQ_MAP),
-        "etf": _fields_for(ETF_SCREENER_FIELDS, ETF_SCREENER_EQ_MAP),
-        "fund": _fields_for(FUND_SCREENER_FIELDS, FUND_SCREENER_EQ_MAP),
+        "etf": _fields_for(ETF_SCREENER_FIELDS, ETF_SCREENER_EQ_MAP, "etf"),
+        "fund": _fields_for(FUND_SCREENER_FIELDS, FUND_SCREENER_EQ_MAP, "fund"),
         "index": _extra_fields_for("index"),
         "future": _extra_fields_for("future"),
     }

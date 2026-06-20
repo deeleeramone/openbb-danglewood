@@ -15,6 +15,8 @@ from typing import Any
 
 _CSS = Path(__file__).resolve().parent.parent / "assets" / "asset_info.css"
 _LIVE_JS = Path(__file__).resolve().parent.parent / "assets" / "asset_info_live.js"
+_BRIDGE_JS = Path(__file__).resolve().parent.parent / "assets" / "asset_info_bridge.js"
+_WIDGET_ID = "yfinance_asset_info_obb"
 
 _LIVE_ASSET_INFO: list = []
 
@@ -552,14 +554,41 @@ def _start_live_quotes(widget: Any, symbol: str, info: dict) -> None:
     _LIVE_ASSET_INFO.append((widget, streamer))
 
 
+def _connect_island(symbol: str, info: dict) -> str:
+    """Build the ``window.__obbAssetInfo`` data island for the Workspace bridge."""
+    import json
+
+    summary = {"symbol": symbol.upper()}
+    if info:
+        summary.update(
+            {
+                "name": info.get("longName") or info.get("shortName") or symbol.upper(),
+                "quote_type": info.get("quoteType"),
+                "exchange": info.get("fullExchangeName") or info.get("exchange"),
+                "currency": info.get("currency"),
+                "price": info.get("regularMarketPrice"),
+                "change": info.get("regularMarketChange"),
+                "change_percent": info.get("regularMarketChangePercent"),
+            }
+        )
+    payload = {"symbol": symbol.upper(), "widgetId": _WIDGET_ID, "data": summary}
+    return json.dumps(payload, default=str)
+
+
 def _build_live_document(
-    fragment: str, widget_id: str, token: str | None, theme: str
+    fragment: str,
+    widget_id: str,
+    token: str | None,
+    theme: str,
+    symbol: str,
+    info: dict,
 ) -> str:
     """Assemble the full Asset Info page (PyWry theme, ws-bridge, live handler).
 
     Mirrors the document :func:`pywry.inline.show` builds, but creates the widget
     in ``browser_only`` mode (no ipywidgets dependency) so it serves from the
-    mounted inline server inside the OpenBB API.
+    mounted inline server inside the OpenBB API. The Workspace iframe bridge is
+    injected so the shared Symbol group and MCP wire into this iframe.
     """
     from pywry.assets import get_pywry_css, get_scrollbar_js, get_toast_css
     from pywry.inline import _get_pywry_bridge_js
@@ -589,6 +618,8 @@ def _build_live_document(
         "</head><body>"
         f'<div class="pywry-widget pywry-custom-scrollbar {widget_theme}">{content}</div>'
         f"<script>{_LIVE_JS.read_text(encoding='utf-8')}</script>"
+        f"<script>window.__obbAssetInfo = {_connect_island(symbol, info)};</script>"
+        f"<script>{_BRIDGE_JS.read_text(encoding='utf-8')}</script>"
         "</body></html>"
     )
 
@@ -613,7 +644,9 @@ async def asset_info_widget_html(symbol: str = "AAPL", theme: str = "dark") -> s
     fragment = _render_fragment(symbol, payload)
     widget_id = uuid.uuid4().hex
     token = _generate_widget_token(widget_id)
-    document = _build_live_document(fragment, widget_id, token, theme)
+    document = _build_live_document(
+        fragment, widget_id, token, theme, symbol, payload.get("info") or {}
+    )
     widget = InlineWidget(
         html=document, widget_id=widget_id, browser_only=True, token=token
     )

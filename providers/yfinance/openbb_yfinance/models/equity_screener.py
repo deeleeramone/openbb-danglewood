@@ -1,6 +1,6 @@
 """YFinance Equity Screener Model."""
 
-from typing import Any
+from typing import Any, Literal
 
 from openbb_core.app.model.abstract.error import OpenBBError
 from openbb_core.provider.abstract.fetcher import Fetcher
@@ -30,6 +30,61 @@ from openbb_yfinance.utils.screener_presets import get_bundled_presets
 _PRESET_CHOICES = list(get_bundled_presets()) + PREDEFINED_SCREENERS
 
 
+def _screener_eq_values(field: str) -> list[str]:
+    """Return the sorted union of a Yahoo enum field's values across the ETF and fund maps."""
+    try:
+        from yfinance.const import ETF_SCREENER_EQ_MAP, FUND_SCREENER_EQ_MAP
+    except Exception:  # noqa: BLE001
+        return []
+    values: set[str] = set()
+    for mapping in (ETF_SCREENER_EQ_MAP, FUND_SCREENER_EQ_MAP):
+        raw = mapping.get(field)
+        if isinstance(raw, dict):
+            for group in raw.values():
+                values.update(str(v) for v in group)
+        elif raw:
+            values.update(str(v) for v in raw)
+    return sorted(values)
+
+
+def _fund_choices(field: str) -> list[str]:
+    """Return current fund family/category choices from the build-time cache.
+
+    Falls back to yfinance's stale enum maps only when the cache has not been
+    generated, so the dropdowns offer values Yahoo actually matches today.
+    """
+    from openbb_yfinance.utils import screener_cache
+
+    getter = (
+        screener_cache.fund_families
+        if field == "fundfamilyname"
+        else screener_cache.fund_categories
+    )
+    values: set[str] = set()
+    for asset_type in ("etf", "fund"):
+        values.update(getter(asset_type))
+    return sorted(values) if values else _screener_eq_values(field)
+
+
+_FUND_ISSUERS = _fund_choices("fundfamilyname")
+_FUND_STYLES = _fund_choices("categoryname")
+
+
+def _match_choice(value: Any, choices: list[str], field: str) -> str:
+    """Normalize an enum input to its canonical choice, matched case-insensitively."""
+    text = str(value).strip()
+    if text in choices:
+        return text
+    lowered = {c.lower(): c for c in choices}
+    if text.lower() in lowered:
+        return lowered[text.lower()]
+    from difflib import get_close_matches
+
+    hint = get_close_matches(text, choices, n=5)
+    suggestion = f" Did you mean: {', '.join(hint)}?" if hint else ""
+    raise ValueError(f"'{value}' is not a valid {field}.{suggestion}")
+
+
 class YFinanceEquityScreenerQueryParams(EquityScreenerQueryParams):
     """YFinance Equity Screener Query."""
 
@@ -54,7 +109,41 @@ class YFinanceEquityScreenerQueryParams(EquityScreenerQueryParams):
             "multiple_items_allowed": False,
             "choices": _PRESET_CHOICES,
         },
+        "asset_type": {
+            "multiple_items_allowed": False,
+            "choices": ["equity", "etf", "fund", "index", "future"],
+        },
+        "fund_issuer": {
+            "multiple_items_allowed": False,
+            "choices": _FUND_ISSUERS,
+        },
+        "fund_style": {
+            "multiple_items_allowed": False,
+            "choices": _FUND_STYLES,
+        },
     }
+
+    asset_type: Literal["equity", "etf", "fund", "index", "future"] = Field(
+        default="equity",
+        description="Asset type to screen. Selects the Yahoo Finance query universe;"
+        " 'fund' maps to mutual funds. Sector and industry apply to 'equity';"
+        " fund_issuer and fund_style apply to 'etf' and 'fund'.",
+    )
+    universe: bool = Field(
+        default=False,
+        description="Pull every matching symbol for the given filters, bypassing the"
+        " market-cap/price/volume floors and the liquidity filter. Use it to enumerate"
+        " a full region/exchange/sector/industry/fund-issuer/fund-style universe."
+        " Requires at least one filter.",
+    )
+    fund_issuer: str | None = Field(
+        default=None,
+        description="Filter funds and ETFs by fund family (issuer), e.g. 'Vanguard'.",
+    )
+    fund_style: str | None = Field(
+        default=None,
+        description="Filter funds and ETFs by category (style), e.g. 'Large Growth'.",
+    )
 
     preset: str | None = Field(
         default=None,
@@ -145,6 +234,38 @@ class YFinanceEquityScreenerQueryParams(EquityScreenerQueryParams):
                 f"Valid options: {', '.join(sorted(COUNTRIES))}",
             )
         return country_code
+
+    @field_validator("asset_type", mode="before")
+    @classmethod
+    def _validate_asset_type(cls, v):
+        """Normalize asset-type synonyms to a canonical value."""
+        if v is None:
+            return "equity"
+        text = str(v).strip().lower().replace(" ", "").replace("_", "")
+        aliases = {
+            "mutualfund": "fund",
+            "mutualfunds": "fund",
+            "funds": "fund",
+            "etfs": "etf",
+            "equities": "equity",
+            "stock": "equity",
+            "stocks": "equity",
+            "indices": "index",
+            "futures": "future",
+        }
+        return aliases.get(text, text)
+
+    @field_validator("fund_issuer", mode="before")
+    @classmethod
+    def _validate_fund_issuer(cls, v):
+        """Normalize and validate the fund issuer against the Yahoo fund-family choices."""
+        return None if v is None else _match_choice(v, _FUND_ISSUERS, "fund_issuer")
+
+    @field_validator("fund_style", mode="before")
+    @classmethod
+    def _validate_fund_style(cls, v):
+        """Normalize and validate the fund style against the Yahoo category choices."""
+        return None if v is None else _match_choice(v, _FUND_STYLES, "fund_style")
 
 
 class YFinanceEquityScreenerData(EquityScreenerData, YFPredefinedScreenerData):
@@ -313,6 +434,15 @@ class YFinanceEquityScreenerFetcher(
 
         operands: list = []
 
+        quote_types = {
+            "equity": "EQUITY",
+            "etf": "ETF",
+            "fund": "MUTUALFUND",
+            "index": "INDEX",
+            "future": "FUTURE",
+        }
+        quote_type = quote_types[query.asset_type]
+
         if query.exchange is not None:
             operands.append(
                 {"operator": "eq", "operands": ["exchange", query.exchange.upper()]},
@@ -322,66 +452,101 @@ class YFinanceEquityScreenerFetcher(
         if query.country and query.country != "all":
             operands.append({"operator": "EQ", "operands": ["region", query.country]})
 
-        if query.sector is not None:
-            sector = SECTOR_MAP[query.sector]
-            operands.append({"operator": "EQ", "operands": ["sector", sector]})
+        if query.asset_type == "equity":
+            if query.sector is not None:
+                sector = SECTOR_MAP[query.sector]
+                operands.append({"operator": "EQ", "operands": ["sector", sector]})
 
-        if query.industry is not None:
-            sector = (
-                query.sector
-                if query.sector is not None
-                else get_industry_sector(query.industry)
-            )
-            industry = INDUSTRY_MAP[sector][query.industry]
-            if industry in PEER_GROUPS:
-                operands.append(
-                    {"operator": "EQ", "operands": ["peer_group", industry]},
+            if query.industry is not None:
+                sector = (
+                    query.sector
+                    if query.sector is not None
+                    else get_industry_sector(query.industry)
                 )
-            else:
-                operands.append({"operator": "EQ", "operands": ["industry", industry]})
+                industry = INDUSTRY_MAP[sector][query.industry]
+                if industry in PEER_GROUPS:
+                    operands.append(
+                        {"operator": "EQ", "operands": ["peer_group", industry]},
+                    )
+                else:
+                    operands.append(
+                        {"operator": "EQ", "operands": ["industry", industry]}
+                    )
 
-        if query.mktcap_min is not None:
-            operands.append(
-                {"operator": "gt", "operands": ["intradaymarketcap", query.mktcap_min]},
+        if query.asset_type in ("etf", "fund"):
+            if query.fund_issuer is not None:
+                operands.append(
+                    {
+                        "operator": "EQ",
+                        "operands": ["fundfamilyname", query.fund_issuer],
+                    }
+                )
+            if query.fund_style is not None:
+                operands.append(
+                    {"operator": "EQ", "operands": ["categoryname", query.fund_style]}
+                )
+
+        if not query.universe and query.asset_type == "equity":
+            if query.mktcap_min is not None:
+                operands.append(
+                    {
+                        "operator": "gt",
+                        "operands": ["intradaymarketcap", query.mktcap_min],
+                    },
+                )
+
+            if query.mktcap_max is not None:
+                operands.append(
+                    {
+                        "operator": "lt",
+                        "operands": ["intradaymarketcap", query.mktcap_max],
+                    },
+                )
+
+            if query.price_min is not None:
+                operands.append(
+                    {"operator": "gt", "operands": ["intradayprice", query.price_min]},
+                )
+
+            if query.price_max is not None:
+                operands.append(
+                    {"operator": "lt", "operands": ["intradayprice", query.price_max]},
+                )
+
+            if query.volume_min is not None:
+                operands.append(
+                    {"operator": "gt", "operands": ["dayvolume", query.volume_min]},
+                )
+
+            if query.volume_max is not None:
+                operands.append(
+                    {"operator": "lt", "operands": ["dayvolume", query.volume_max]},
+                )
+
+            if query.beta_min is not None:
+                operands.append(
+                    {"operator": "gt", "operands": ["beta", query.beta_min]}
+                )
+
+            if query.beta_max is not None:
+                operands.append(
+                    {"operator": "lt", "operands": ["beta", query.beta_max]}
+                )
+
+        if not operands:
+            raise OpenBBError(
+                ValueError(
+                    "Provide at least one filter (exchange, country, sector,"
+                    " industry, fund_issuer, or fund_style) to run the screener."
+                )
             )
-
-        if query.mktcap_max is not None:
-            operands.append(
-                {"operator": "lt", "operands": ["intradaymarketcap", query.mktcap_max]},
-            )
-
-        if query.price_min is not None:
-            operands.append(
-                {"operator": "gt", "operands": ["intradayprice", query.price_min]},
-            )
-
-        if query.price_max is not None:
-            operands.append(
-                {"operator": "lt", "operands": ["intradayprice", query.price_max]},
-            )
-
-        if query.volume_min is not None:
-            operands.append(
-                {"operator": "gt", "operands": ["dayvolume", query.volume_min]},
-            )
-
-        if query.volume_max is not None:
-            operands.append(
-                {"operator": "lt", "operands": ["dayvolume", query.volume_max]},
-            )
-
-        if query.beta_min is not None:
-            operands.append({"operator": "gt", "operands": ["beta", query.beta_min]})
-
-        if query.beta_max is not None:
-            operands.append({"operator": "lt", "operands": ["beta", query.beta_max]})
 
         payload = {
             "offset": 0,
             "size": 100,
             "sortField": "percentchange",
             "sortType": "DESC",
-            "quoteType": "EQUITY",
+            "quoteType": quote_type,
             "query": {
                 "operands": operands,
                 "operator": "AND",
@@ -393,6 +558,7 @@ class YFinanceEquityScreenerFetcher(
         response = await get_custom_screener(
             body=payload,
             limit=query.limit if query.limit and query.limit not in (0, None) else None,
+            keep_illiquid=query.universe,
         )
 
         if not response:

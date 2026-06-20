@@ -31,8 +31,40 @@ from openbb_yfinance.routers.sectors import router as sectors_router
 
 router = Router(prefix="", description="Yahoo Finance data and analytics.")
 
-_API_PREFIX = SystemService().system_settings.api_settings.prefix
-_MCP_URL = f"{_API_PREFIX}/yfinance/mcp"
+def _mcp_public_url() -> str:
+    """Absolute URL the Workspace connects to for MCP.
+
+    The server runs as a subprocess reverse-proxied through the OpenBB API (see
+    the /mcp route below), so it lives on the API's own host/port. It must be
+    absolute — a relative path resolves against the Workspace origin, not the
+    backend, so the connection never reaches here. Built from the API port;
+    override the whole URL with ``OPENBB_YFINANCE_MCP_PUBLIC_URL`` (or just the
+    host with ``OPENBB_YFINANCE_MCP_PUBLIC_HOST``) for non-local deployments.
+    """
+    import os
+    import sys
+
+    override = os.environ.get("OPENBB_YFINANCE_MCP_PUBLIC_URL")
+    if override:
+        return override
+
+    # openbb-api/uvicorn take --port on the command line and don't export it, so
+    # read it from argv (then env, then the default).
+    port = None
+    argv = sys.argv
+    for i, arg in enumerate(argv):
+        if arg == "--port" and i + 1 < len(argv):
+            port = argv[i + 1]
+        elif arg.startswith("--port="):
+            port = arg.split("=", 1)[1]
+    port = os.environ.get("OPENBB_API_PORT") or port or "6900"
+
+    prefix = SystemService().system_settings.api_settings.prefix
+    host = os.environ.get("OPENBB_YFINANCE_MCP_PUBLIC_HOST", "127.0.0.1")
+    return f"http://{host}:{port}{prefix}/yfinance/mcp"
+
+
+_MCP_URL = _mcp_public_url()
 
 
 @router.command(
@@ -444,6 +476,7 @@ router.api_router.add_api_route(
             ],
             "gridData": {"w": 20, "h": 20},
             "refetchInterval": False,
+            "storage": {"mcpUrl": _MCP_URL},
         }
     },
 )
@@ -486,10 +519,13 @@ async def screener_builder_run(config: str = "", limit: int = 100) -> JSONRespon
     if not isinstance(cfg, dict):
         return JSONResponse(content={"rows": []})
 
-    capped = min(max(1, int(limit or 100)), 250)
+    # limit <= 0 is the universe puller: fetch every match (None paginates to the
+    # region total) instead of silently collapsing to a page of 100.
+    requested = int(limit or 0)
+    screener_limit = None if requested <= 0 else requested
     try:
         rows = await get_custom_screener(
-            screener_body_from_config(cfg), capped, keep_illiquid=True
+            screener_body_from_config(cfg), screener_limit, keep_illiquid=True
         )
     except (EmptyDataError, OpenBBError, ValueError) as exc:
         return JSONResponse(content={"error": str(exc), "rows": []})
@@ -613,6 +649,7 @@ router.api_router.add_api_route(
             ],
             "gridData": {"w": 16, "h": 18},
             "refetchInterval": False,
+            "storage": {"mcpUrl": _MCP_URL},
         }
     },
 )
@@ -633,16 +670,15 @@ router.api_router.add_api_route(
 )
 
 
-from openbb_yfinance.utils.mcp_app import (  # noqa: E402
-    get_mcp_asgi_app,
-    make_asgi_proxy,
+from openbb_yfinance.utils.mcp_app import mcp_reverse_proxy  # noqa: E402
+
+# Expose the MCP server on the OpenBB API's own host/port (_MCP_URL) by
+# reverse-proxying to the local subprocess that actually serves streamable-http.
+router.api_router.add_api_route(
+    path="/mcp",
+    endpoint=mcp_reverse_proxy,
+    methods=["GET", "POST", "DELETE"],
+    include_in_schema=False,
 )
 
-_MCP_ASGI_APP = get_mcp_asgi_app()
-if _MCP_ASGI_APP is not None:
-    router.api_router.add_api_route(
-        path="/mcp",
-        endpoint=make_asgi_proxy(_MCP_ASGI_APP),
-        methods=["POST"],
-        include_in_schema=False,
-    )
+

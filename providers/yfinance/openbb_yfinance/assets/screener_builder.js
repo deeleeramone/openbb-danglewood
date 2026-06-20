@@ -59,6 +59,58 @@
   function fieldsFor(asset) {
     return FIELDS[asset] || [];
   }
+  function normLimit(v) {
+    if (v === "" || v === null || v === undefined) return 100;
+    var n = Math.floor(Number(v));
+    return Number.isFinite(n) && n >= 0 ? n : 100;
+  }
+  function patchGridCsvExport() {
+    // Inside the cross-origin Workspace iframe, AG-Grid's CSV export can't open
+    // the file picker (SecurityError) and falls back to emitting a notebook-only
+    // 'grid_export_csv' event — which isn't a valid Workspace event and, because
+    // the emit "succeeds", suppresses PyWry's own Blob download. Intercept that
+    // event and download via a Blob instead. Native PyWry windows (self === top)
+    // keep the real file picker untouched.
+    if (window.self === window.top || window.__obbGridExportPatched) return;
+    if (!window.pywry || typeof window.pywry.emit !== "function") {
+      setTimeout(patchGridCsvExport, 50);
+      return;
+    }
+    window.__obbGridExportPatched = true;
+    try {
+      delete window.showSaveFilePicker;
+    } catch (e) {
+      /* not deletable on this browser */
+    }
+    try {
+      window.showSaveFilePicker = undefined;
+    } catch (e) {
+      /* not writable on this browser */
+    }
+    var origEmit = window.pywry.emit.bind(window.pywry);
+    window.pywry.emit = function (type, payload) {
+      if (type === "grid_export_csv") {
+        try {
+          var blob = new Blob([(payload && payload.csvContent) || ""], {
+            type: "text/csv;charset=utf-8;",
+          });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement("a");
+          a.href = url;
+          a.download = (payload && payload.fileName) || "export.csv";
+          a.style.display = "none";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        } catch (e) {
+          /* best effort */
+        }
+        return;
+      }
+      return origEmit(type, payload);
+    };
+  }
   function fieldByName(asset, name) {
     var list = fieldsFor(asset);
     for (var i = 0; i < list.length; i++) {
@@ -383,7 +435,7 @@
   function buildConfig() {
     return {
       type: STATE.asset,
-      limit: STATE.limit || 100,
+      limit: normLimit(STATE.limit),
       sort_field: STATE.sortField || DEFAULT_SORT[STATE.asset] || "",
       sort_type: STATE.sortType || "DESC",
       filters: STATE.filters.map(function (f) {
@@ -463,7 +515,7 @@
       if (window.pywry && window.pywry.emit)
         window.pywry.emit("screener:run", {
           config: JSON.stringify(cfg),
-          limit: cfg.limit || 100,
+          limit: normLimit(cfg.limit),
           isDefault: isDefault,
         });
       return;
@@ -473,7 +525,7 @@
         "?config=" +
         encodeURIComponent(JSON.stringify(cfg)) +
         "&limit=" +
-        (cfg.limit || 100)
+        normLimit(cfg.limit)
     )
       .then(function (r) {
         return r.json();
@@ -533,7 +585,7 @@
     if (!cfg || typeof cfg !== "object") return;
     var asset = cfg.type && FIELDS[cfg.type] ? cfg.type : STATE.asset;
     STATE.asset = asset;
-    STATE.limit = Number(cfg.limit) || 100;
+    STATE.limit = normLimit(cfg.limit);
     STATE.sortType = cfg.sort_type === "ASC" ? "ASC" : "DESC";
     STATE.sortField = cfg.sort_field || DEFAULT_SORT[asset] || "";
     STATE.currentTemplate = name || null;
@@ -697,7 +749,7 @@
     if (d) STATE.sortType = d.value;
   });
   on("screener:limit", function (d) {
-    if (d) STATE.limit = Number(d.value) || 100;
+    if (d) STATE.limit = normLimit(d.value);
   });
   on("screener:open-add-filter", function () {
     resetModal();
@@ -822,7 +874,19 @@
 
   var params = new URLSearchParams(window.location.search);
   applyTheme(params.get("theme") || J.theme || "dark");
-  setAsset(STATE.asset);
+  var initialConfig = null;
+  var rawConfig = params.get("config");
+  if (rawConfig) {
+    try {
+      initialConfig = JSON.parse(rawConfig);
+    } catch (e) {
+      initialConfig = null;
+    }
+  }
+  if (initialConfig && typeof initialConfig === "object" && initialConfig.type)
+    applyConfig(initialConfig);
+  else setAsset(STATE.asset);
   if (target !== window)
     target.postMessage({ type: "openbb-connect", widgets: MANIFESTS, params: PARAM_DEFS }, "*");
+  patchGridCsvExport();
 })();

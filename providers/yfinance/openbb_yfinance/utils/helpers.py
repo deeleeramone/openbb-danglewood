@@ -148,6 +148,12 @@ def _screen_via_post(
     return response.json()["finance"]["result"][0]
 
 
+def _full_name(item: dict[str, Any]) -> str | None:
+    """Prefer Yahoo's full ``longName`` over the ~31-char truncated ``shortName``."""
+    name = item.get("longName") or item.get("shortName")
+    return name.replace("\xa0", " ").strip() if isinstance(name, str) else name
+
+
 async def get_custom_screener(
     body: dict[str, Any],
     limit: int | None = None,
@@ -183,7 +189,11 @@ async def get_custom_screener(
     if not (query_node.get("operands") or []):
         return []
 
-    direct = quote_type in ("INDEX", "FUTURE")
+    # ETF and MUTUALFUND post directly too: yfinance's query classes validate the
+    # fundfamilyname/categoryname value against a stale table that rejects current
+    # names (e.g. the renamed State Street family), while the screener itself
+    # matches them. EQUITY keeps the validated path.
+    direct = quote_type in ("INDEX", "FUTURE", "ETF", "MUTUALFUND")
     if not direct:
         query_cls: Any = query_classes.get(quote_type, EquityQuery)
 
@@ -255,6 +265,7 @@ async def get_custom_screener(
         )
         item["earnings_date"] = earnings_date
         result = {k: item.get(k, None) for k in SCREENER_FIELDS}
+        result["shortName"] = _full_name(item)
         if keep_illiquid:
             if result.get("regularMarketPrice") is not None:
                 output.append(result)
@@ -309,6 +320,7 @@ async def get_defined_screener(
             output.append(item)
         else:
             result = {k: item.get(k, None) for k in SCREENER_FIELDS}
+            result["shortName"] = _full_name(item)
             if result.get("regularMarketChange") and result.get("regularMarketVolume"):
                 output.append(result)
 

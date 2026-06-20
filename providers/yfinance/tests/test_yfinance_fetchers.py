@@ -5,8 +5,6 @@ from datetime import date
 import pytest
 from openbb_core.app.service.user_service import UserService
 
-from openbb_yfinance.models.active import YFActiveFetcher
-from openbb_yfinance.models.aggressive_small_caps import YFAggressiveSmallCapsFetcher
 from openbb_yfinance.models.analyst_recommendations import (
     YFinanceAnalystRecommendationsFetcher,
 )
@@ -39,9 +37,7 @@ from openbb_yfinance.models.fund_ratings import YFinanceFundRatingsFetcher
 from openbb_yfinance.models.fund_risk import YFinanceFundRiskFetcher
 from openbb_yfinance.models.futures_curve import YFinanceFuturesCurveFetcher
 from openbb_yfinance.models.futures_historical import YFinanceFuturesHistoricalFetcher
-from openbb_yfinance.models.gainers import YFGainersFetcher
 from openbb_yfinance.models.growth_estimates import YFinanceGrowthEstimatesFetcher
-from openbb_yfinance.models.growth_tech_equities import YFGrowthTechEquitiesFetcher
 from openbb_yfinance.models.historical_dividends import (
     YFinanceHistoricalDividendsFetcher,
 )
@@ -63,7 +59,6 @@ from openbb_yfinance.models.institutional_holders import (
 )
 from openbb_yfinance.models.key_executives import YFinanceKeyExecutivesFetcher
 from openbb_yfinance.models.key_metrics import YFinanceKeyMetricsFetcher
-from openbb_yfinance.models.losers import YFLosersFetcher
 from openbb_yfinance.models.major_holders import YFinanceMajorHoldersFetcher
 from openbb_yfinance.models.mutualfund_holders import YFinanceMutualFundHoldersFetcher
 from openbb_yfinance.models.options_chains import YFinanceOptionsChainsFetcher
@@ -83,10 +78,6 @@ from openbb_yfinance.models.sector_top_companies import (
 from openbb_yfinance.models.sector_top_funds import YFinanceSectorTopFundsFetcher
 from openbb_yfinance.models.share_statistics import YFinanceShareStatisticsFetcher
 from openbb_yfinance.models.symbol_search import YFinanceSymbolSearchFetcher
-from openbb_yfinance.models.undervalued_growth_equities import (
-    YFUndervaluedGrowthEquitiesFetcher,
-)
-from openbb_yfinance.models.undervalued_large_caps import YFUndervaluedLargeCapsFetcher
 from openbb_yfinance.models.yf_news import YFinanceNewsFetcher
 
 test_credentials = UserService().default_user_settings.credentials.model_dump(
@@ -326,76 +317,6 @@ def test_y_finance_available_fetcher(credentials=test_credentials):
     params = {}
 
     fetcher = YFinanceAvailableIndicesFetcher()
-    result = fetcher.test(params, credentials)
-    assert result is None
-
-
-@pytest.mark.record_curl
-def test_y_finance_active_fetcher(credentials=test_credentials):
-    """Test YFActiveFetcher."""
-    params = {"limit": 10}
-
-    fetcher = YFActiveFetcher()
-    result = fetcher.test(params, credentials)
-    assert result is None
-
-
-@pytest.mark.record_curl
-def test_y_finance_gainers_fetcher(credentials=test_credentials):
-    """Test YFGainersFetcher."""
-    params = {"limit": 10}
-
-    fetcher = YFGainersFetcher()
-    result = fetcher.test(params, credentials)
-    assert result is None
-
-
-@pytest.mark.record_curl
-def test_y_finance_losers_fetcher(credentials=test_credentials):
-    """Test YFLosersFetcher."""
-    params = {"limit": 10}
-
-    fetcher = YFLosersFetcher()
-    result = fetcher.test(params, credentials)
-    assert result is None
-
-
-@pytest.mark.record_curl
-def test_y_finance_undervalued_large_caps_fetcher(credentials=test_credentials):
-    """Test YFUndervaluedLargeCapsFetcher."""
-    params = {"limit": 10}
-
-    fetcher = YFUndervaluedLargeCapsFetcher()
-    result = fetcher.test(params, credentials)
-    assert result is None
-
-
-@pytest.mark.record_curl
-def test_y_finance_undervalued_growth_equities_fetcher(credentials=test_credentials):
-    """Test YFUndervaluedGrowthEquitiesFetcher."""
-    params = {"limit": 10}
-
-    fetcher = YFUndervaluedGrowthEquitiesFetcher()
-    result = fetcher.test(params, credentials)
-    assert result is None
-
-
-@pytest.mark.record_curl
-def test_y_finance_aggressive_small_caps_fetcher(credentials=test_credentials):
-    """Test YFAggressiveSmallCapsFetcher."""
-    params = {"limit": 10}
-
-    fetcher = YFAggressiveSmallCapsFetcher()
-    result = fetcher.test(params, credentials)
-    assert result is None
-
-
-@pytest.mark.record_curl
-def test_y_finance_growth_tech_equities_fetcher(credentials=test_credentials):
-    """Test YFGrowthTechEquitiesFetcher."""
-    params = {"limit": 10}
-
-    fetcher = YFGrowthTechEquitiesFetcher()
     result = fetcher.test(params, credentials)
     assert result is None
 

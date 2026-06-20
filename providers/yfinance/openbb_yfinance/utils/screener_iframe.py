@@ -56,7 +56,7 @@ def _txt(field: str, header: str, width: int = 110, **extra: Any) -> dict[str, A
 
 _COMMON_COLS: list[dict[str, Any]] = [
     _txt("symbol", "Symbol", 95, pinned="left"),
-    _txt("shortName", "Name", 200),
+    _txt("shortName", "Name", 320, tooltipField="shortName"),
     _txt("quoteType", "Type", 90),
     _num("regularMarketPrice", "Price", _FMT_PRICE),
     _num("regularMarketChange", "Change", _FMT_PRICE),
@@ -323,10 +323,10 @@ def build_screener_content(theme: str = "dark", transport: str = "iframe"):
             ),
             NumberInput(
                 component_id="ob-limit",
-                label="Limit",
+                label="Limit (0=all)",
                 event="screener:limit",
                 value=100,
-                min=1,
+                min=0,
             ),
             Button(label="Reset", event="screener:reset", variant="secondary"),
             Button(label="Apply", event="screener:apply", variant="primary"),

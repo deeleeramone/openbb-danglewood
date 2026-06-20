@@ -19,7 +19,7 @@
             "h": 12,
             "state": {
               "params": {
-                "query": "apple"
+                "query": "artificial intelligence"
               },
               "chartView": {
                 "enabled": false,
@@ -96,6 +96,34 @@
             ]
           }
         ]
+      },
+      "screener": {
+        "id": "screener",
+        "name": "Screener",
+        "layout": [
+          {
+            "i": "yfinance_screener_builder_obb",
+            "x": 0,
+            "y": 0,
+            "w": 40,
+            "h": 25,
+            "state": {},
+            "groups": [
+              "Screener"
+            ]
+          },
+          {
+            "i": "equity_screener",
+            "x": 16,
+            "y": 0,
+            "w": 24,
+            "h": 24,
+            "state": {},
+            "groups": [
+              "Screener"
+            ]
+          }
+        ]
       }
     },
     "groups": [
@@ -104,6 +132,12 @@
         "type": "param",
         "paramName": "symbol",
         "defaultValue": "AAPL"
+      },
+      {
+        "name": "Screener",
+        "type": "param",
+        "paramName": "config",
+        "defaultValue": ""
       }
     ]
   }

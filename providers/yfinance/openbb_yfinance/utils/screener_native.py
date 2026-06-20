@@ -3,7 +3,7 @@
 from typing import Any
 
 
-def _run_screen(config: dict, limit: int) -> list[dict]:
+def _run_screen(config: dict, limit: int | None) -> list[dict]:
     """Run the screener for a builder config on a private event loop."""
     import asyncio
 
@@ -34,7 +34,9 @@ def make_screener_callbacks(app: Any) -> dict:
             config = json.loads(data.get("config") or "{}")
         except (ValueError, TypeError):
             config = {}
-        limit = min(max(1, int(data.get("limit") or 100)), 250)
+        # limit <= 0 is the universe puller: None paginates to the region total.
+        requested = int(data.get("limit") or 0)
+        limit = None if requested <= 0 else requested
         try:
             rows = _run_screen(config, limit)
         except Exception as exc:  # noqa: BLE001 - surfaced to the UI status line
