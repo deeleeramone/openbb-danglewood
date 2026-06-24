@@ -5,8 +5,26 @@
   var SORT_OPTIONS = J.sortOptions || {};
   var DEFAULT_SORT = J.defaultSort || {};
 
-  var CONFIG_WID = J.configWidgetId || "yfinance_screener_config";
-  var RESULTS_WID = J.resultsWidgetId || "yfinance_screener_results";
+  var _BASE_CONFIG_WID = J.configWidgetId || "yfinance_screener_config";
+  var _BASE_RESULTS_WID = J.resultsWidgetId || "yfinance_screener_results";
+
+  // Each iframe browsing context gets its own sessionStorage, so multiple
+  // Workspace instances of this widget each carry a different INSTANCE_ID.
+  // The same context (after a Workspace refresh) keeps the same ID, which
+  // also keys the localStorage slot used for state persistence.
+  var INSTANCE_ID;
+  try {
+    INSTANCE_ID = sessionStorage.getItem("ob_screener_iid_" + _BASE_CONFIG_WID);
+    if (!INSTANCE_ID) {
+      INSTANCE_ID = Math.random().toString(36).slice(2, 10);
+      sessionStorage.setItem("ob_screener_iid_" + _BASE_CONFIG_WID, INSTANCE_ID);
+    }
+  } catch (e) {
+    INSTANCE_ID = Math.random().toString(36).slice(2, 10);
+  }
+
+  var CONFIG_WID = _BASE_CONFIG_WID + "_" + INSTANCE_ID;
+  var RESULTS_WID = _BASE_RESULTS_WID + "_" + INSTANCE_ID;
   var RESULTS_GID = J.resultsGridId || "ob-results-grid";
   var TRANSPORT = J.transport || "iframe";
   var MODAL_ID = J.addFilterModalId || "ob-add-filter";
@@ -135,6 +153,23 @@
     return fieldsFor(asset).filter(function (f) {
       return f.category === category;
     });
+  }
+
+  var _STATE_KEY = "ob_screener_state_" + INSTANCE_ID;
+
+  function saveState() {
+    try {
+      localStorage.setItem(_STATE_KEY, JSON.stringify(buildConfig()));
+    } catch (e) {}
+  }
+
+  function loadSavedState() {
+    try {
+      var s = localStorage.getItem(_STATE_KEY);
+      return s ? JSON.parse(s) : null;
+    } catch (e) {
+      return null;
+    }
   }
 
   function pushData(id) {
@@ -465,12 +500,41 @@
     pushData(CONFIG_WID);
   }
 
-  function setResults(rows) {
+  function isPresentValue(value) {
+    if (value === null || value === undefined) return false;
+    if (typeof value === "string") return value.trim() !== "";
+    return true;
+  }
+
+  function pruneEmptyColumns(rows, cols) {
+    rows = rows || [];
+    cols = cols || [];
+    if (!cols.length || !rows.length) return cols;
+
+    var required = { symbol: true, shortName: true };
+    var nonEmpty = {};
+
+    rows.forEach(function (row) {
+      cols.forEach(function (col) {
+        var field = col && col.field;
+        if (!field || nonEmpty[field]) return;
+        if (isPresentValue(row[field])) nonEmpty[field] = true;
+      });
+    });
+
+    return cols.filter(function (col) {
+      var field = col && col.field;
+      return !!field && (required[field] || nonEmpty[field]);
+    });
+  }
+
+  function setResults(rows, columnDefs) {
     rows = rows || [];
     WIDGET_DATA[RESULTS_WID].data = rows;
     pushData(RESULTS_WID);
     if (!(window.pywry && window.pywry.emit)) return;
-    var cols = COLUMN_DEFS_BY_ASSET[STATE.asset];
+    var baseCols = columnDefs || COLUMN_DEFS_BY_ASSET[STATE.asset] || [];
+    var cols = pruneEmptyColumns(rows, baseCols);
     if (cols) {
       // grid:update-grid swaps columns + data atomically without restoring the
       // previous column state, so the asset's column order is respected.
@@ -489,9 +553,9 @@
     if (s) s.textContent = text;
   }
 
-  function renderResults(rows, isDefault) {
+  function renderResults(rows, isDefault, columnDefs) {
     rows = rows || [];
-    setResults(rows);
+    setResults(rows, columnDefs);
     var n = rows.length;
     var noun = n + " result" + (n === 1 ? "" : "s");
     setStatus(
@@ -536,7 +600,7 @@
           setResults([]);
           return;
         }
-        renderResults((res && res.rows) || [], isDefault);
+        renderResults((res && res.rows) || [], isDefault, res && res.columnDefs);
       })
       .catch(function () {
         setStatus("Request failed");
@@ -546,6 +610,7 @@
   function apply() {
     var cfg = buildConfig();
     emitParams({ config: JSON.stringify(cfg) });
+    saveState();
     runScreener(cfg);
   }
 
@@ -609,6 +674,7 @@
     refreshTemplateOptions();
     renderChips();
     recount();
+    saveState();
     runScreener(buildConfig());
   }
 
@@ -845,7 +911,7 @@
       setResults([]);
       return;
     }
-    renderResults(d.rows || [], d.isDefault);
+    renderResults(d.rows || [], d.isDefault, d.columnDefs);
   });
 
   document.addEventListener("click", function (e) {
@@ -869,6 +935,15 @@
     if (d.type === "openbb-request") {
       if (d.widgetId == null) Object.keys(WIDGET_DATA).forEach(pushData);
       else pushData(d.widgetId);
+      return;
+    }
+    // Workspace restoring params (e.g. after reconnect or widget re-mount)
+    var inParams = d.params || d.data;
+    if (inParams && typeof inParams.config === "string") {
+      try {
+        var restored = JSON.parse(inParams.config);
+        if (restored && restored.type) applyConfig(restored);
+      } catch (e) {}
     }
   });
 
@@ -883,9 +958,14 @@
       initialConfig = null;
     }
   }
+  // Priority: URL param (Workspace-injected) > localStorage (survived hard reload)
   if (initialConfig && typeof initialConfig === "object" && initialConfig.type)
     applyConfig(initialConfig);
-  else setAsset(STATE.asset);
+  else {
+    var saved = loadSavedState();
+    if (saved && typeof saved === "object" && saved.type) applyConfig(saved);
+    else setAsset(STATE.asset);
+  }
   if (target !== window)
     target.postMessage({ type: "openbb-connect", widgets: MANIFESTS, params: PARAM_DEFS }, "*");
   patchGridCsvExport();

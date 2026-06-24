@@ -10,6 +10,7 @@ from openbb_yfinance.utils.screener_catalog import (
 from openbb_yfinance.utils.screener_iframe import (
     build_screener_builder_html,
     build_screener_content,
+    prune_empty_columns,
 )
 from openbb_yfinance.utils.screener_presets import (
     build_preset_template,
@@ -197,6 +198,11 @@ def test_screener_catalog():
     assert mktcap["type"] == "number"
     assert mktcap["label"] == "Market Cap"
     assert mktcap["category_label"] == "Price & Performance"
+    fund_category = next(
+        f for f in catalog["fields"]["fund"] if f["field"] == "categoryname"
+    )
+    assert fund_category["type"] == "enum"
+    assert fund_category["values"]
 
 
 def test_screener_catalog_index_future():
@@ -287,7 +293,7 @@ def test_screener_builder_html():
     assert "ob-delete-template" in html
     # An AG Grid results table, themed to match the page.
     assert 'id="myGrid"' in html
-    assert 'class="pywry-grid ag-theme-quartz-dark"' in html
+    assert 'class="pywry-grid ag-theme-balham-dark"' in html
     assert "grid:update-data" in html
     # OpenBB iframe protocol with an exportable results sub-widget.
     assert "openbb-connect" in html
@@ -299,9 +305,55 @@ def test_screener_builder_html_light_theme():
     """The light theme renders the light PyWry + AG Grid grid-div classes."""
     html = build_screener_builder_html("light")
     assert "pywry-theme-light" in html
-    # The results grid div uses the light quartz class (not the -dark variant).
-    assert 'class="pywry-grid ag-theme-quartz"' in html
-    assert 'class="pywry-grid ag-theme-quartz-dark"' not in html
+    # The results grid div uses the light balham class (not the -dark variant).
+    assert 'class="pywry-grid ag-theme-balham"' in html
+    assert 'class="pywry-grid ag-theme-balham-dark"' not in html
+
+
+def test_tvchart_widget_html_announces_workspace_bridge(monkeypatch):
+    """The TradingView iframe announces itself to Workspace and exports symbol state."""
+    import asyncio
+    import sys
+    from types import ModuleType, SimpleNamespace
+
+    from openbb_yfinance.utils import tvchart_native
+
+    fake_inline = ModuleType("pywry.inline")
+
+    async def fake_get_widget_html_async(_label):
+        return "<!doctype html><html><body>chart</body></html>"
+
+    fake_inline.get_widget_html_async = fake_get_widget_html_async
+
+    fake_toolbar = ModuleType("pywry.toolbar")
+    fake_toolbar.get_toolbar_script = lambda with_script_tag=False: (
+        "<script>toolbar</script>"
+    )
+
+    fake_pywry = ModuleType("pywry")
+    fake_pywry.ThemeMode = SimpleNamespace(LIGHT="light", DARK="dark")
+    fake_pywry.WindowMode = SimpleNamespace(BROWSER="browser")
+    fake_pywry.PyWry = lambda *args, **kwargs: SimpleNamespace()
+
+    fake_server = ModuleType("openbb_yfinance.utils.pywry_server")
+    fake_server.bind_loop = lambda: None
+    fake_server.ensure_pywry_mounted = lambda: None
+
+    monkeypatch.setitem(sys.modules, "pywry", fake_pywry)
+    monkeypatch.setitem(sys.modules, "pywry.inline", fake_inline)
+    monkeypatch.setitem(sys.modules, "pywry.toolbar", fake_toolbar)
+    monkeypatch.setitem(sys.modules, "openbb_yfinance.utils.pywry_server", fake_server)
+    monkeypatch.setattr(
+        tvchart_native,
+        "_show",
+        lambda app, symbol, resolution, **show_kwargs: SimpleNamespace(label="tvchart"),
+    )
+
+    html = asyncio.run(tvchart_native.tvchart_widget_html("AAPL", "1d", "dark"))
+    assert "openbb-connect" in html
+    assert "openbb-data" in html
+    assert "window.__obbTvChart" in html
+    assert "tvchart:symbol-search" in html
 
 
 def test_screener_builder_run_rejects_bad_json_offline():
@@ -314,6 +366,62 @@ def test_screener_builder_run_rejects_bad_json_offline():
     bad = asyncio.run(screener_builder_run(config="{not json"))
     assert bad.status_code == 400
     assert "Invalid config JSON" in _json.loads(bytes(bad.body))["error"]
+
+
+def test_prune_empty_columns_drops_fully_empty_fields():
+    rows = [
+        {"symbol": "AAA", "shortName": "Alpha", "marketCap": None, "currency": "USD"},
+        {"symbol": "BBB", "shortName": "Beta", "marketCap": None, "currency": ""},
+    ]
+    cols = [
+        {"field": "symbol", "headerName": "Symbol"},
+        {"field": "shortName", "headerName": "Name"},
+        {"field": "marketCap", "headerName": "Market Cap"},
+        {"field": "currency", "headerName": "Currency"},
+    ]
+
+    pruned = prune_empty_columns(rows, cols)
+    fields = [c["field"] for c in pruned]
+    assert "symbol" in fields
+    assert "shortName" in fields
+    assert "currency" in fields
+    assert "marketCap" not in fields
+
+
+def test_screener_builder_run_returns_pruned_column_defs(monkeypatch):
+    import asyncio
+    import json as _json
+
+    from openbb_yfinance import yfinance_router
+
+    async def _fake_get_custom_screener(_body, _limit, keep_illiquid):
+        assert keep_illiquid is True
+        return [
+            {
+                "symbol": "SPY",
+                "shortName": "SPDR S&P 500 ETF Trust",
+                "quoteType": "ETF",
+                "regularMarketPrice": 521.01,
+                "regularMarketVolume": None,
+                "currency": "USD",
+                "exchange": "PCX",
+            }
+        ]
+
+    monkeypatch.setattr(
+        "openbb_yfinance.utils.helpers.get_custom_screener", _fake_get_custom_screener
+    )
+
+    resp = asyncio.run(
+        yfinance_router.screener_builder_run(config='{"type":"etf","filters":[]}')
+    )
+    payload = _json.loads(bytes(resp.body))
+    fields = {c["field"] for c in payload.get("columnDefs", [])}
+
+    assert "symbol" in fields
+    assert "shortName" in fields
+    assert "currency" in fields
+    assert "regularMarketVolume" not in fields
 
 
 def test_screener_content_bridge_transport():

@@ -111,17 +111,6 @@
             "groups": [
               "Screener"
             ]
-          },
-          {
-            "i": "equity_screener",
-            "x": 16,
-            "y": 0,
-            "w": 24,
-            "h": 24,
-            "state": {},
-            "groups": [
-              "Screener"
-            ]
           }
         ]
       }
@@ -137,7 +126,7 @@
         "name": "Screener",
         "type": "param",
         "paramName": "config",
-        "defaultValue": ""
+        "defaultValue": null
       }
     ]
   }

@@ -36,6 +36,9 @@ async def profile(
 
 @router.command(
     model="YfEquityScreener",
+    widget_config={
+        "exclude": True,
+    },
     examples=[APIEx(parameters={"provider": "yfinance"})],
 )
 async def screener(

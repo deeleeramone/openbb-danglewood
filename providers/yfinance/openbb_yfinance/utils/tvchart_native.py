@@ -1,5 +1,7 @@
 """TradingView charts via PyWry's tvchart."""
 
+import json
+import uuid
 from pathlib import Path
 from typing import Any
 
@@ -42,10 +44,15 @@ def _show(app: Any, symbol: str, resolution: str, **show_kwargs: Any) -> Any:
     marquee_toolbar, marquee_css = build_marquee(symbol)
     toolbars.insert(0, marquee_toolbar)
 
+    chart_id = f"tvc_{uuid.uuid4().hex[:12]}"
+    widget_label = f"tvw_{uuid.uuid4().hex[:12]}"
+
     widget = app.show_tvchart(
         use_datafeed=True,
         symbol=symbol,
         resolution=resolution,
+        chart_id=chart_id,
+        label=widget_label,
         title=f"OpenBB - Yahoo Finance TradingView Chart ({symbol})",
         chart_options={"timeScale": {"secondsVisible": False}},
         toolbars=toolbars,
@@ -53,6 +60,12 @@ def _show(app: Any, symbol: str, resolution: str, **show_kwargs: Any) -> Any:
         inline_css=marquee_css,
         **show_kwargs,
     )
+    chart_ids = getattr(app, "_obb_chart_ids_by_widget", None)
+    if not isinstance(chart_ids, dict):
+        chart_ids = {}
+    chart_ids[str(getattr(widget, "label", "") or widget_label)] = chart_id
+    app._obb_chart_ids_by_widget = chart_ids
+    app._obb_chart_id = chart_id
     _LIVE_CHARTS.append((app, streamer))
     return widget
 
@@ -92,13 +105,28 @@ async def tvchart_widget_html(
     app = PyWry(mode=WindowMode.BROWSER, theme=theme_mode)
     widget = _show(app, symbol, interval)
     html = await get_widget_html_async(widget.label) or ""
+    widget_id = str(getattr(widget, "label", "") or getattr(app, "label", "") or "")
+    chart_id = (getattr(app, "_obb_chart_ids_by_widget", {}) or {}).get(
+        widget_id
+    ) or str(getattr(app, "_obb_chart_id", "") or "")
+    bridge_state = json.dumps(
+        {
+            "widgetId": widget_id,
+            "chartId": chart_id,
+            "symbol": symbol.upper(),
+            "interval": interval,
+            "theme": theme,
+        }
+    )
     # generate_tvchart_html omits the toolbar handler script (marquee updates),
     # registers the datafeed dispatchers before window.pywry exists, and the WS
     # bridge's emit (unlike the native bridge) never fires local listeners.
     # Inject the toolbar script and a shim that re-registers the datafeed
     # dispatchers and makes emit dispatch locally so the chart toolbars work.
-    extra = get_toolbar_script(with_script_tag=True) + (
-        f"<script>{_BRIDGE_REGISTER_JS.read_text(encoding='utf-8')}</script>"
+    extra = (
+        f"<script>window.__obbTvChart = {bridge_state};</script>"
+        + get_toolbar_script(with_script_tag=True)
+        + f"<script>{_BRIDGE_REGISTER_JS.read_text(encoding='utf-8')}</script>"
     )
     return (
         html.replace("</body>", f"{extra}</body>", 1)

@@ -31,6 +31,7 @@ from openbb_yfinance.routers.sectors import router as sectors_router
 
 router = Router(prefix="", description="Yahoo Finance data and analytics.")
 
+
 def _mcp_public_url() -> str:
     """Absolute URL the Workspace connects to for MCP.
 
@@ -507,6 +508,10 @@ async def screener_builder_run(config: str = "", limit: int = 100) -> JSONRespon
 
     from openbb_yfinance.utils.helpers import get_custom_screener
     from openbb_yfinance.utils.screener_catalog import screener_body_from_config
+    from openbb_yfinance.utils.screener_iframe import (
+        _COLUMN_DEFS_BY_ASSET,
+        prune_empty_columns,
+    )
 
     try:
         cfg = json.loads(config) if config else {}
@@ -530,7 +535,11 @@ async def screener_builder_run(config: str = "", limit: int = 100) -> JSONRespon
     except (EmptyDataError, OpenBBError, ValueError) as exc:
         return JSONResponse(content={"error": str(exc), "rows": []})
 
-    return JSONResponse(content={"rows": rows})
+    asset = str(cfg.get("type") or "equity").lower()
+    column_defs = _COLUMN_DEFS_BY_ASSET.get(asset) or _COLUMN_DEFS_BY_ASSET["equity"]
+    return JSONResponse(
+        content={"rows": rows, "columnDefs": prune_empty_columns(rows, column_defs)}
+    )
 
 
 async def screener_builder_templates() -> JSONResponse:
@@ -670,7 +679,7 @@ router.api_router.add_api_route(
 )
 
 
-from openbb_yfinance.utils.mcp_app import mcp_reverse_proxy  # noqa: E402
+from openbb_yfinance.utils.mcp_app import mcp_reverse_proxy, mcp_tvchart_emit  # noqa: E402
 
 # Expose the MCP server on the OpenBB API's own host/port (_MCP_URL) by
 # reverse-proxying to the local subprocess that actually serves streamable-http.
@@ -681,4 +690,9 @@ router.api_router.add_api_route(
     include_in_schema=False,
 )
 
-
+router.api_router.add_api_route(
+    path="/mcp/tvchart/emit",
+    endpoint=mcp_tvchart_emit,
+    methods=["POST"],
+    include_in_schema=False,
+)

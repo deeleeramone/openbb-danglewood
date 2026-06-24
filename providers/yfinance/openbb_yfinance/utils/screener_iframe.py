@@ -144,6 +144,39 @@ _COLUMN_DEFS_BY_ASSET: dict[str, list[dict[str, Any]]] = {
 }
 
 _RESULT_COLUMN_DEFS: list[dict[str, Any]] = _EQUITY_COLS
+_ALWAYS_VISIBLE_FIELDS = {"symbol", "shortName"}
+
+
+def _is_present_value(value: Any) -> bool:
+    if value is None:
+        return False
+    if isinstance(value, str):
+        return bool(value.strip())
+    return True
+
+
+def prune_empty_columns(
+    rows: list[dict[str, Any]],
+    column_defs: list[dict[str, Any]],
+    required_fields: set[str] | None = None,
+) -> list[dict[str, Any]]:
+    required = required_fields or _ALWAYS_VISIBLE_FIELDS
+    if not column_defs:
+        return []
+    if not rows:
+        return column_defs
+
+    non_empty_fields: set[str] = set()
+    fields = [str(col.get("field") or "") for col in column_defs]
+    for row in rows:
+        for field in fields:
+            if not field or field in non_empty_fields:
+                continue
+            if _is_present_value(row.get(field)):
+                non_empty_fields.add(field)
+
+    visible_fields = non_empty_fields | required
+    return [col for col in column_defs if str(col.get("field") or "") in visible_fields]
 
 
 def _category_options(catalog_fields: list[dict]) -> list:
@@ -234,7 +267,7 @@ def build_screener_content(theme: str = "dark", transport: str = "iframe"):
             column_defs=_RESULT_COLUMN_DEFS,  # ty: ignore[invalid-argument-type]
             grid_id=_RESULTS_GRID_ID,
             theme=grid_theme,
-            aggrid_theme="quartz",
+            aggrid_theme="balham",
             row_selection=False,
             pagination=True,
             pagination_page_size=50,
@@ -477,7 +510,7 @@ def build_screener_builder_html(theme: str = "dark") -> str:
         title="OpenBB - Yahoo Finance Screener Builder",
         theme=ThemeMode.LIGHT if grid_theme == "light" else ThemeMode.DARK,
         enable_aggrid=True,
-        aggrid_theme="quartz",
+        aggrid_theme="balham",
     )
     return build_html(
         content,

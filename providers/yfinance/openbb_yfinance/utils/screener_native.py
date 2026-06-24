@@ -28,6 +28,11 @@ def make_screener_callbacks(app: Any) -> dict:
     """Build the callback dict that serves screener results over the PyWry bridge."""
     import json
 
+    from openbb_yfinance.utils.screener_iframe import (
+        _COLUMN_DEFS_BY_ASSET,
+        prune_empty_columns,
+    )
+
     def on_run(data: dict[str, Any], *_: Any) -> None:
         is_default = bool(data.get("isDefault"))
         try:
@@ -45,7 +50,18 @@ def make_screener_callbacks(app: Any) -> dict:
                 {"error": str(exc), "rows": [], "isDefault": is_default},
             )
             return
-        app.emit("screener:results", {"rows": rows, "isDefault": is_default})
+        asset = str(config.get("type") or "equity").lower()
+        column_defs = (
+            _COLUMN_DEFS_BY_ASSET.get(asset) or _COLUMN_DEFS_BY_ASSET["equity"]
+        )
+        app.emit(
+            "screener:results",
+            {
+                "rows": rows,
+                "columnDefs": prune_empty_columns(rows, column_defs),
+                "isDefault": is_default,
+            },
+        )
 
     def on_theme(data: dict[str, Any], *_: Any) -> None:
         from pywry import ThemeMode
@@ -163,7 +179,7 @@ def launch_screener_builder(
         width=width,
         height=height,
         include_aggrid=True,
-        aggrid_theme="quartz",
+        aggrid_theme="balham",
         toolbars=toolbars,
         modals=modals,
         callbacks=make_screener_callbacks(app),

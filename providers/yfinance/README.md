@@ -76,8 +76,39 @@ A curated Workspace app is served from `GET /yfinance/apps.json`.
 ## Embedded MCP server
 
 A [FastMCP](https://github.com/jlowin/fastmcp) server is mounted at `/yfinance/mcp` with
-tools for agents: `search_symbols`, `get_price_history`, `get_quote`, and
-`get_company_profile`.
+tools for agents.
+
+Core market-data tools:
+
+- `search_symbols`
+- `get_price_history`
+- `get_quote`
+- `get_company_profile`
+- `run_screener`
+
+TradingView chart control tools:
+
+- Generic dispatch: `tvchart_send_event`
+- Symbol/interval/view: `tvchart_symbol_search`, `tvchart_compare`,
+  `tvchart_change_interval`, `tvchart_time_range`, `tvchart_time_range_picker`,
+  `tvchart_request_state`
+- Indicators: `tvchart_add_indicator`, `tvchart_remove_indicator`,
+  `tvchart_list_indicators`, `tvchart_show_indicators`
+- Chart options/actions: `tvchart_chart_type`, `tvchart_toggle_dark_mode`,
+  `tvchart_log_scale`, `tvchart_auto_scale`, `tvchart_show_settings`,
+  `tvchart_drawing_tool`, `tvchart_undo`, `tvchart_redo`, `tvchart_screenshot`,
+  `tvchart_fullscreen`
+
+Dispatch and confirmation behavior:
+
+- TV tools emit `tvchart:*` events using PyWry's event system.
+- Dispatch attempts local in-process emit first; when unavailable, it falls back to
+  the API bridge endpoint `POST /yfinance/mcp/tvchart/emit`.
+- Many mutation tools accept `confirm` + `timeout` and can wait for local
+  `tvchart:data-settled` confirmation.
+- State and indicator tools can return confirmed snapshots when local response
+  events (`tvchart:state-response`, `tvchart:list-indicators-response`) are
+  captured before timeout.
 
 ## Development
 

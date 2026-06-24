@@ -22,27 +22,27 @@
     color: var(--pywry-text-primary);
 }
 .ws-sym {
-    font-weight: 700;
-    font-size: 13px;
+    font-weight: 400;
+    font-size: 11.5px;
     color: var(--pywry-text-primary);
     letter-spacing: 0.04em;
 }
 .ws-price .pywry-ticker-item,
 .ws-price {
     font-weight: 600;
-    font-size: 13px;
+    font-size: 11.5px;
     font-variant-numeric: tabular-nums;
 }
 .ws-change .pywry-ticker-item,
 .ws-change {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 11.5px;
     font-variant-numeric: tabular-nums;
 }
 .ws-label {
     color: var(--pywry-text-secondary);
-    font-size: 10.5px;
-    font-weight: 500;
+    font-size: 11.5px;
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     margin-right: 2px;
@@ -50,7 +50,7 @@
 .ws-field {
     font-variant-numeric: tabular-nums;
     color: var(--pywry-text-primary);
-    font-size: 11px;
+    font-size: 11.5px;
 }
 .ws-val {
     font-variant-numeric: tabular-nums;
@@ -61,8 +61,8 @@
 }
 .ws-session .pywry-ticker-item,
 .ws-session {
-    font-weight: 600;
-    font-size: 10.5px;
+    font-weight: 400;
+    font-size: 11.5px;
     letter-spacing: 0.03em;
     padding: 1px 6px;
     border-radius: 3px;
@@ -77,12 +77,12 @@ html.light .ws-session,
 .ws-ext-price .pywry-ticker-item,
 .ws-ext-price {
     font-weight: 600;
-    font-size: 13px;
+    font-size: 11.5px;
     font-variant-numeric: tabular-nums;
 }
 .ws-ext-change .pywry-ticker-item,
 .ws-ext-change {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 11.5px;
     font-variant-numeric: tabular-nums;
 }

@@ -367,3 +367,81 @@
 .ag-body-horizontal-scroll-viewport::-webkit-scrollbar-thumb:hover {
   background: var(--pywry-scrollbar-thumb-hover, rgba(175, 175, 175, 0.7));
 }
+
+.ob-grid-wrap .ag-theme-balham,
+.ob-grid-wrap .ag-theme-balham-dark {
+  --ag-font-family: var(--pywry-font-family, inherit);
+  --ag-font-size: 13px;
+  --ag-row-height: 32px;
+  --ag-header-height: 34px;
+  --ag-list-item-height: 30px;
+  --ag-border-radius: 0;
+  --ag-wrapper-border-radius: 0;
+  --ag-borders: solid 1px;
+  --ag-cell-horizontal-border: solid 1px;
+  --ag-header-column-separator-display: block;
+  --ag-header-column-separator-height: 55%;
+  --ag-header-column-separator-width: 1px;
+  --ag-row-hover-color: rgba(90, 155, 220, 0.08);
+  --ag-selected-row-background-color: rgba(90, 155, 220, 0.14);
+  --ag-range-selection-border-color: rgba(90, 155, 220, 0.4);
+  --ag-checkbox-checked-color: #4da3ff;
+}
+
+.ob-grid-wrap .ag-theme-balham-dark {
+  --ag-background-color: #16171c;
+  --ag-foreground-color: #e6eaf0;
+  --ag-header-background-color: #2a2c34;
+  --ag-header-foreground-color: #d7dce5;
+  --ag-odd-row-background-color: #1b1d24;
+  --ag-row-border-color: #2d313c;
+  --ag-border-color: #2f3340;
+  --ag-cell-horizontal-border-color: #2a2d37;
+  --ag-secondary-border-color: #3a3f4b;
+  --ag-header-column-separator-color: #454b58;
+  --ag-input-focus-border-color: #5f9ed8;
+  --ag-alpine-active-color: #5f9ed8;
+}
+
+.ob-grid-wrap .ag-theme-balham {
+  --ag-background-color: #f6f8fb;
+  --ag-foreground-color: #1f2937;
+  --ag-header-background-color: #e6ebf2;
+  --ag-header-foreground-color: #3a4454;
+  --ag-odd-row-background-color: #f0f4f9;
+  --ag-row-border-color: #d9e0ea;
+  --ag-border-color: #cfd7e3;
+  --ag-cell-horizontal-border-color: #d9e0ea;
+  --ag-secondary-border-color: #c6cfdd;
+  --ag-header-column-separator-color: #b8c3d3;
+  --ag-input-focus-border-color: #3f7fb7;
+  --ag-alpine-active-color: #3f7fb7;
+}
+
+.ob-grid-wrap .ag-theme-balham .ag-root-wrapper,
+.ob-grid-wrap .ag-theme-balham-dark .ag-root-wrapper {
+  border-left: none;
+  border-right: none;
+}
+
+.ob-grid-wrap .ag-theme-balham .ag-header,
+.ob-grid-wrap .ag-theme-balham-dark .ag-header {
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+}
+
+.ob-grid-wrap .ag-theme-balham .ag-header-cell-label,
+.ob-grid-wrap .ag-theme-balham-dark .ag-header-cell-label {
+  font-weight: 600;
+}
+
+.ob-grid-wrap .ag-theme-balham .ag-cell,
+.ob-grid-wrap .ag-theme-balham-dark .ag-cell {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.ob-grid-wrap .ag-theme-balham .ag-row,
+.ob-grid-wrap .ag-theme-balham-dark .ag-row {
+  transition: background-color 0.12s ease;
+}

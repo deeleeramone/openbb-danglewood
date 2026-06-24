@@ -50,6 +50,7 @@ SCREENER_FIELDS = [
     "symbol",
     "quoteType",
     "shortName",
+    "longName",
     "regularMarketPrice",
     "regularMarketChange",
     "regularMarketChangePercent",

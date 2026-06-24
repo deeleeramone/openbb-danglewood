@@ -268,11 +268,13 @@ def _fields_for(fields_map: dict, eq_map: dict, asset: str | None = None) -> lis
                 "category": category,
                 "category_label": category_label,
             }
-            if field in eq_map:
+            cached_values = _cache_value_options(field, asset)
+            if cached_values is not None:
                 entry["type"] = "enum"
-                entry["values"] = _cache_value_options(field, asset) or _value_options(
-                    field, eq_map
-                )
+                entry["values"] = cached_values
+            elif field in eq_map:
+                entry["type"] = "enum"
+                entry["values"] = _value_options(field, eq_map)
             elif field in _STRING_FIELDS:
                 entry["type"] = "text"
             else:

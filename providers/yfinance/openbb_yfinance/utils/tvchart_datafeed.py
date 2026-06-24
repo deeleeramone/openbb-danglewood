@@ -262,17 +262,41 @@ def yf_fetch_full_history(symbol: str, resolution: str) -> list[dict[str, Any]]:
     yf_period = mapping["period"]
 
     ticker = yf.Ticker(symbol)
-    try:
-        df = ticker.history(interval=yf_interval, period=yf_period, prepost=True)
-    except Exception:
-        return []
+
+    _daily_intervals = ("1d", "5d", "1wk", "1mo", "3mo")
+    attempts: list[tuple[str, str]] = [(yf_interval, yf_period)]
+    if yf_interval in _daily_intervals:
+        # Some indices / ETF instruments only have recent or intraday data
+        # available from Yahoo. Try shorter windows before falling back to
+        # intraday so the chart shows something useful instead of a blank pane.
+        attempts += [
+            (yf_interval, "1y"),
+            (yf_interval, "6mo"),
+            (yf_interval, "1mo"),
+            ("5m", "5d"),
+            ("1m", "7d"),
+        ]
+
+    df = None
+    used_interval = yf_interval
+    for attempt_interval, attempt_period in attempts:
+        try:
+            df = ticker.history(
+                interval=attempt_interval, period=attempt_period, prepost=True
+            )
+        except Exception:
+            df = None
+            continue
+        if df is not None and not df.empty:
+            used_interval = attempt_interval
+            break
 
     if df is None or df.empty:
         return []
 
     bars = _df_to_bars(df)
 
-    if yf_interval not in ("1d", "5d", "1wk", "1mo", "3mo"):
+    if used_interval not in _daily_intervals:
         bars = [b for b in bars if not is_overnight(b["time"], symbol)]
 
     return bars

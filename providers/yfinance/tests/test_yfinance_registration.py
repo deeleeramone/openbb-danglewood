@@ -57,6 +57,7 @@ def test_router_always_on_commands():
     assert "/search" in paths
     assert "/news" in paths
     assert "/tv_widget/view" in paths
+    assert "/mcp/tvchart/emit" in paths
     for cmd in (
         "/funds/info",
         "/funds/holdings",
