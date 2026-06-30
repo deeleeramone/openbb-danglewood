@@ -72,7 +72,7 @@ jobs:
           echo "Branch '${BRANCH}' matches pyproject version '${VERSION}'."
 
   build:
-    name: Build sdist + wheel
+    name: Build wheel (vendors v5 openbb-*)
     needs: version-check
     runs-on: ubuntu-latest
     defaults:
@@ -84,14 +84,29 @@ jobs:
         with:
           ref: main
 
+      # openbb-core/-charting/-platform-api target the unpublished v5 line, so
+      # their sources are vendored into the wheel at build time (hatch_build.py).
+      - name: Check out OpenBB v5 sources to vendor
+        uses: actions/checkout@v6
+        with:
+          repository: OpenBB-finance/OpenBB
+          ref: v5
+          path: _openbb_v5
+          sparse-checkout: |
+            openbb_platform/core
+            openbb_platform/obbject_extensions/charting
+            openbb_platform/extensions/platform_api
+
       - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
       - run: python -m pip install --upgrade pip uv
 
-      - name: Build sdist + wheel
-        run: uv build --no-sources
+      - name: Build the self-contained wheel
+        env:
+          OPENBB_VENDOR_SRC: ${{ github.workspace }}/_openbb_v5
+        run: uv build --wheel --no-sources
 
       - uses: actions/upload-artifact@v4
         with:

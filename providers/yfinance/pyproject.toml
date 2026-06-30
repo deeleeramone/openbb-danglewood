@@ -7,13 +7,31 @@ license = { text = "AGPL-3.0-only" }
 readme = "README.md"
 requires-python = ">=3.10,<4"
 dependencies = [
-    "openbb-core>=1.6.13",
-    "openbb-platform-api>=1.3.6",
-    "openbb-charting>=3",
     "yfinance>=1.3",
+    "lxml>=4.9",  # pandas.read_html backend for the HTML-scraping fetchers
     "pywry>=2.0.4",
     "fastmcp>=3",
-    "fastapi==0.136.3"
+    # openbb-core / openbb-platform-api / openbb-charting are vendored into the
+    # wheel (see hatch_build.py) because the v5 line they target is unpublished.
+    # Their third-party dependencies are therefore declared directly here.
+    # --- from openbb-core 2.0.0 ---
+    "uvicorn>=0.48.0",
+    "websockets>=15.0",
+    "uuid7>=0.1.0",
+    "python-multipart>=0.0.29",
+    "pydantic>=2.12.3,<3.0.0",
+    "requests>=2.34.2",
+    "importlib-metadata>=6.8.0",
+    "python-dotenv>=1.0.0",
+    "aiohttp>=3.13.3",
+    "pyjwt>=2.13.0",
+    "ruff>=0.15,<0.16",
+    "tomli>=2.0.0; python_version<'3.11'",
+    # --- from openbb-platform-api 2.0.0 ---
+    "deepdiff>=8.6.2",
+    # --- from openbb-charting 3.0.0 ---
+    "pandas-ta-openbb>=0.4.24,<0.5",
+    "plotly>=6.3.1,<7",
 ]
 
 [project.entry-points."openbb_provider_extension"]
@@ -21,6 +39,10 @@ yfinance = "openbb_yfinance:yfinance_provider"
 
 [project.entry-points."openbb_core_extension"]
 yfinance = "openbb_yfinance.yfinance_router:router"
+
+# Merged from the vendored openbb-charting so the platform still discovers it.
+[project.entry-points."openbb_obbject_extension"]
+openbb_charting = "openbb_charting:ext"
 
 [project.urls]
 Homepage = "https://openbb.co"
