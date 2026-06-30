@@ -1,22 +1,4 @@
-"""Hatchling build hook: screener cache + a self-contained, pre-built wheel.
-
-openbb-yfinance targets the unpublished v5 line of ``openbb-core`` /
-``openbb-charting`` / ``openbb-platform-api`` (it lives on the OpenBB ``v5``
-branch, not PyPI). To ship an installable wheel this hook:
-
-  1. vendors those three pure-Python packages under their real import names,
-  2. installs them + this extension into a throwaway venv and runs
-     ``openbb-build`` there (openbb-core ships the static-build ``openbb``
-     package, so no meta package is involved),
-  3. bundles the generated static ``openbb`` package too,
-
-so a plain ``pip install`` of the wheel yields a working ``import openbb`` with
-the yfinance commands — no post-install step, no v5 packages on PyPI.
-
-Editable/dev installs set ``OPENBB_VENDOR_SKIP=1`` (see scripts/bootstrap.sh) to
-install the real v5 packages instead; this also breaks the install-itself
-recursion in step 2.
-"""
+"""Hatchling build hook: screener cache + a self-contained, pre-built wheel."""
 
 from __future__ import annotations
 
@@ -129,16 +111,38 @@ class YFinanceBuildHook(BuildHookInterface):
         # package, so no meta package is needed. `--no-sources` bypasses the
         # OpenBB uv workspace so these install as real copies into the throwaway
         # venv — otherwise openbb-build would mutate the checkout's `openbb`.
-        run("uv", "pip", "install", "--no-sources", "--python", vpy,
-            str(root / "openbb_platform/core"))
         run(
-            "uv", "pip", "install", "--no-sources", "--python", vpy,
-            "-e", str(root / "openbb_platform/obbject_extensions/charting"),
-            "-e", str(root / "openbb_platform/extensions/platform_api"),
+            "uv",
+            "pip",
+            "install",
+            "--no-sources",
+            "--python",
+            vpy,
+            str(root / "openbb_platform/core"),
+        )
+        run(
+            "uv",
+            "pip",
+            "install",
+            "--no-sources",
+            "--python",
+            vpy,
+            "-e",
+            str(root / "openbb_platform/obbject_extensions/charting"),
+            "-e",
+            str(root / "openbb_platform/extensions/platform_api"),
         )
         # Install this extension (OPENBB_VENDOR_SKIP=1 → no nested vendoring).
-        run("uv", "pip", "install", "--no-sources", "--python", vpy, str(_ROOT),
-            env={**os.environ, _SKIP_ENV: "1"})
+        run(
+            "uv",
+            "pip",
+            "install",
+            "--no-sources",
+            "--python",
+            vpy,
+            str(_ROOT),
+            env={**os.environ, _SKIP_ENV: "1"},
+        )
         # Generate the static `openbb` package from the installed extensions.
         run(vpy, "-m", "openbb_core.build")
         return Path(
