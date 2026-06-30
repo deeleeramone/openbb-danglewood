@@ -58,10 +58,17 @@ jobs:
         with:
           python-version: "3.11"
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: openbb-yfinance-dist
+          path: providers/yfinance/dist
+
       - run: python -m pip install --upgrade pip uv
 
-      - name: Install dev tooling
-        run: uv pip install --system --group dev
+      - name: Install dev tooling + the built wheel
+        run: |
+          uv pip install --system --group dev
+          uv pip install --system dist/openbb_yfinance-*.whl
 
       - name: ruff check
         run: ruff check openbb_yfinance tests

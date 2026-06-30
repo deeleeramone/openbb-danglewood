@@ -27,7 +27,7 @@ Homepage = "https://openbb.co"
 Repository = "https://github.com/deeleeramone/openbb-danglewood"
 
 [dependency-groups]
-dev = ["openbb-devtools>=1.6.8"]
+dev = ["openbb-devtools>=1.6.8", "ty==0.0.53"]
 
 [build-system]
 requires = ["hatchling>=1.25", "yfinance>=1.3"]
