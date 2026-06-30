@@ -506,7 +506,7 @@ async def screener_builder_run(config: str = "", limit: int = 100) -> JSONRespon
     from openbb_core.app.model.abstract.error import OpenBBError
     from openbb_core.provider.utils.errors import EmptyDataError
 
-    from openbb_yfinance.utils.helpers import get_custom_screener
+    from openbb_yfinance.utils.helpers import get_custom_screener, get_defined_screener
     from openbb_yfinance.utils.screener_catalog import screener_body_from_config
     from openbb_yfinance.utils.screener_iframe import (
         _COLUMN_DEFS_BY_ASSET,
@@ -529,9 +529,13 @@ async def screener_builder_run(config: str = "", limit: int = 100) -> JSONRespon
     requested = int(limit or 0)
     screener_limit = None if requested <= 0 else requested
     try:
-        rows = await get_custom_screener(
-            screener_body_from_config(cfg), screener_limit, keep_illiquid=True
-        )
+        predefined = str(cfg.get("predefined") or "").strip()
+        if predefined:
+            rows = await get_defined_screener(predefined, limit=screener_limit)
+        else:
+            rows = await get_custom_screener(
+                screener_body_from_config(cfg), screener_limit, keep_illiquid=True
+            )
     except (EmptyDataError, OpenBBError, ValueError) as exc:
         return JSONResponse(content={"error": str(exc), "rows": []})
 
@@ -640,9 +644,8 @@ router.api_router.add_api_route(
     include_in_schema=True,
     openapi_extra={
         "widget_config": {
-            "name": "Screener Builder (Yahoo Finance)",
-            "description": "Interactively build a screener configuration across"
-            + " equities, ETFs and funds; click 'Apply' to sync the results table.",
+            "name": "Screener Builder",
+            "description": "Interactively build a screener configuration across a universe of assets. Configurations can be saved and reloaded.",
             "type": "iframe",
             "category": "Equity",
             "subCategory": "Screener",
@@ -659,6 +662,7 @@ router.api_router.add_api_route(
             "gridData": {"w": 16, "h": 18},
             "refetchInterval": False,
             "storage": {"mcpUrl": _MCP_URL},
+            "source": ["yFinance"],
         }
     },
 )
@@ -679,7 +683,10 @@ router.api_router.add_api_route(
 )
 
 
-from openbb_yfinance.utils.mcp_app import mcp_reverse_proxy, mcp_tvchart_emit  # noqa: E402
+from openbb_yfinance.utils.mcp_app import (  # noqa: E402
+    mcp_reverse_proxy,
+    mcp_tvchart_emit,
+)
 
 # Expose the MCP server on the OpenBB API's own host/port (_MCP_URL) by
 # reverse-proxying to the local subprocess that actually serves streamable-http.

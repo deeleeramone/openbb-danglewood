@@ -9,14 +9,19 @@ def _run_screen(config: dict, limit: int | None) -> list[dict]:
 
     from openbb_core.provider.utils.errors import EmptyDataError
 
-    from openbb_yfinance.utils.helpers import get_custom_screener
+    from openbb_yfinance.utils.helpers import get_custom_screener, get_defined_screener
     from openbb_yfinance.utils.screener_catalog import screener_body_from_config
 
-    body = screener_body_from_config(config)
+    predefined = str(config.get("predefined") or "").strip()
+    body = screener_body_from_config(config) if not predefined else None
     loop = asyncio.new_event_loop()
     try:
+        if predefined:
+            return loop.run_until_complete(
+                get_defined_screener(predefined, limit=limit)
+            )
         return loop.run_until_complete(
-            get_custom_screener(body, limit, keep_illiquid=True)
+            get_custom_screener(body or {}, limit, keep_illiquid=True)
         )
     except EmptyDataError:
         return []

@@ -19,10 +19,9 @@ def _list_live_tvchart_targets() -> list[dict[str, Any]]:
     targets: list[dict[str, Any]] = []
     charts = getattr(tvchart_native, "_LIVE_CHARTS", [])
     for index, item in enumerate(charts):
-        try:
-            app = item[0]
-        except Exception:
+        if not isinstance(item, (list, tuple)) or not item:
             continue
+        app = item[0]
 
         inline_widgets = getattr(app, "_inline_widgets", {}) or {}
         chart_ids = getattr(app, "_obb_chart_ids_by_widget", {}) or {}
@@ -80,7 +79,7 @@ def _latest_tvchart_target(widget_id: str = "") -> tuple[Any | None, str]:
     return None, ""
 
 
-def _latest_tvchart_chart_id(widget_id: str = "") -> str:
+def _latest_tvchart_chart_id(widget_id: str = "") -> str:  # noqa: PLR0911
     try:
         from openbb_yfinance.utils import tvchart_native
     except Exception:
@@ -198,7 +197,7 @@ def _emit_via_api_bridge(
         event_type, _resolved_tvchart_data(event_type, data, widget_id), widget_id
     )
     body = json.dumps(payload).encode("utf-8")
-    req = urllib.request.Request(
+    req = urllib.request.Request(  # noqa: S310
         _api_tvchart_bridge_url(),
         data=body,
         headers={"content-type": "application/json"},
@@ -362,6 +361,7 @@ def _dispatch_with_settled_confirmation(
 
 
 def mcp_tvchart_emit_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    """Validate a tvchart emit payload and dispatch it to the live chart."""
     event_type = str(payload.get("event_type") or "")
     data = payload.get("data")
     widget_id = str(payload.get("widget_id") or "")
@@ -384,6 +384,7 @@ def mcp_tvchart_emit_payload(payload: dict[str, Any]) -> dict[str, Any]:
 
 
 async def mcp_tvchart_emit(request: Request) -> Any:
+    """Handle the bridge HTTP request that emits a tvchart event."""
     from starlette.responses import JSONResponse
 
     try:
@@ -1204,7 +1205,7 @@ def _build_mcp_server() -> Any:
         ):
             if value:
                 params[key] = value
-        rows = await YFinanceEquityScreenerFetcher.fetch_data(params, {})
+        rows: Any = await YFinanceEquityScreenerFetcher.fetch_data(params, {})
         return [
             r.model_dump(exclude_none=True, exclude={"price_history"}) for r in rows
         ]
@@ -1349,8 +1350,9 @@ async def mcp_reverse_proxy(data: dict = Depends(_extract_mcp_request)) -> Any:
     SSE stream are both forwarded; the session-id header is exposed so the browser
     client can carry the session.
     """
-    import aiohttp
     import asyncio
+
+    import aiohttp
     from starlette.responses import JSONResponse, StreamingResponse
 
     ensure_mcp_subprocess()

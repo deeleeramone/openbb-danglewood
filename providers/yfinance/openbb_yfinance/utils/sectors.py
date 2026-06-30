@@ -5,7 +5,6 @@ carry the real Yahoo sector/industry keys — no guessing, no network call.
 """
 
 from openbb_core.app.service.system_service import SystemService
-
 from yfinance.const import SECTOR_INDUSTY_MAPPING_LC
 
 _API_PREFIX = SystemService().system_settings.api_settings.prefix

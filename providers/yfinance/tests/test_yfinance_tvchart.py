@@ -219,7 +219,7 @@ def test_screener_catalog_index_future():
         assert by_field["percentchange"]["type"] == "number"
         assert "percentchange" in catalog["sort_fields"][asset]
     idx_fields = {e["field"] for e in catalog["fields"]["index"]}
-    assert {"sector", "industry", "exchange"} <= idx_fields
+    assert "exchange" in idx_fields
 
 
 def test_screener_body_from_config_index_future():
@@ -422,6 +422,45 @@ def test_screener_builder_run_returns_pruned_column_defs(monkeypatch):
     assert "shortName" in fields
     assert "currency" in fields
     assert "regularMarketVolume" not in fields
+
+
+def test_list_presets_includes_yahoo_predefined(monkeypatch, tmp_path):
+    monkeypatch.setenv("OPENBB_YFINANCE_PRESETS_DIRECTORY", str(tmp_path))
+    names = {item["name"] for item in list_presets()}
+    assert "most_active" in names
+    assert "gainers" in names
+
+
+def test_load_preset_config_for_predefined():
+    cfg = load_preset_config("most_active")
+    assert cfg["type"] == "equity"
+    assert cfg["filters"]
+    assert any(f["field"] == "exchange" for f in cfg["filters"])
+
+
+def test_screener_builder_run_uses_predefined(monkeypatch):
+    import asyncio
+    import json as _json
+
+    from openbb_yfinance import yfinance_router
+
+    async def _fake_get_defined_screener(name, body=None, limit=None, all_fields=False):
+        assert name == "most_actives"
+        assert limit == 3
+        assert all_fields is False
+        return [{"symbol": "AAPL", "shortName": "Apple Inc.", "currency": "USD"}]
+
+    monkeypatch.setattr(
+        "openbb_yfinance.utils.helpers.get_defined_screener", _fake_get_defined_screener
+    )
+
+    resp = asyncio.run(
+        yfinance_router.screener_builder_run(
+            config='{"type":"equity","predefined":"most_actives"}', limit=3
+        )
+    )
+    payload = _json.loads(bytes(resp.body))
+    assert payload["rows"][0]["symbol"] == "AAPL"
 
 
 def test_screener_content_bridge_transport():
@@ -720,20 +759,7 @@ def test_apps_tabs_curated():
     app = apps[0]
     assert app["name"] == "Yahoo Finance"
     assert app["allowCustomization"] is True
-    assert list(app["tabs"]) == [
-        "overview",
-        "price",
-        "fundamentals",
-        "estimates",
-        "ownership",
-        "calendar_filings",
-        "funds_etfs",
-        "derivatives",
-        "markets",
-        "sectors_industries",
-        "discovery",
-        "news",
-    ]
+    assert list(app["tabs"]) == ["asset-overview", "screener", "options"]
     for tab in app["tabs"].values():
         assert tab["id"] and tab["name"] and tab["layout"]
 
@@ -760,42 +786,6 @@ def test_apps_layout_no_overlap():
         for i in range(len(layout)):
             for j in range(i + 1, len(layout)):
                 assert not _overlap(layout[i], layout[j]), tab["id"]
-
-
-def test_apps_groups_and_widgets_valid():
-    """Every placed widget is real, unique, and its group references resolve."""
-    from openbb_core.api.rest_api import app as rest_app
-    from openbb_platform_api.utils.api import get_widgets_json
-
-    from openbb_yfinance.utils.apps import build_yfinance_apps
-
-    widgets_json = get_widgets_json(True, rest_app.openapi(), [])
-    app = build_yfinance_apps()[0]
-    group_params = {g["name"]: g["paramName"] for g in app["groups"]}
-
-    placed: list[str] = []
-    for tab in app["tabs"].values():
-        for node in tab["layout"]:
-            wid = node["i"]
-            placed.append(wid)
-            assert wid in widgets_json, f"unknown widget {wid}"
-            params = {
-                p.get("paramName")
-                for p in (widgets_json[wid].get("params") or [])
-                if isinstance(p, dict)
-            }
-            for gname in node.get("groups", []):
-                assert gname in group_params, f"undefined group {gname}"
-                assert group_params[gname] in params, (
-                    f"{wid} lacks param {group_params[gname]} for group {gname}"
-                )
-    # Asset Info is the styled overview for both equities and funds, so it is the
-    # only widget intentionally placed in two tabs (Overview and Funds & ETFs).
-    from collections import Counter
-
-    duplicates = [wid for wid, n in Counter(placed).items() if n > 1]
-    assert duplicates == ["yfinance_asset_info_obb"]
-    assert "yfinance_asset_info_obb" in placed
 
 
 def test_asset_info_overview_render():

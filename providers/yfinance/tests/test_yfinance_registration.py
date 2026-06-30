@@ -1,5 +1,7 @@
 """Tests for the yfinance hybrid provider/router registration contract."""
 
+from openbb_core.app.route_iter import iter_api_routes
+
 import openbb_yfinance as m
 from openbb_yfinance import _key
 from openbb_yfinance.yfinance_router import router
@@ -53,7 +55,7 @@ def test_always_on_fetchers_registered():
 
 def test_router_always_on_commands():
     """The router always exposes search, news, funds and tv_widget."""
-    paths = {r.path for r in router.api_router.routes}
+    paths = {r.path for r in iter_api_routes(router.api_router)}
     assert "/search" in paths
     assert "/news" in paths
     assert "/tv_widget/view" in paths
@@ -72,7 +74,7 @@ def test_router_always_on_commands():
 
 def test_router_conditional_subrouters():
     """Standalone sibling commands are mounted only when the sibling is absent."""
-    paths = {r.path for r in router.api_router.routes}
+    paths = {r.path for r in iter_api_routes(router.api_router)}
     if m.EQUITY_INSTALLED:
         assert not any(p.startswith("/equity") for p in paths)
     else:

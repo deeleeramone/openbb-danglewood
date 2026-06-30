@@ -60,7 +60,6 @@ def yf_symbol_search(
         Normalized result documents.
     """
     from pandas import isna
-
     from yfinance import Lookup
 
     method_name = "get_all"

@@ -20,7 +20,6 @@ def compute_fund_performance(symbol: str) -> list[dict]:
     history instead.
     """
     from pandas import DateOffset, Timestamp
-
     from yfinance import Ticker
 
     history = Ticker(symbol).history(period="max", auto_adjust=True)

@@ -68,6 +68,8 @@
     sortType: "DESC",
     sortField: DEFAULT_SORT[J.defaultAsset] || "",
     filters: [],
+    predefined: null,
+    predefinedLabel: null,
     currentTemplate: null,
   };
 
@@ -407,6 +409,8 @@
     var op = tbGet("ob-mf-operator") || "gt";
     var value = readValue(f, op);
     if (value === null) return;
+    STATE.predefined = null;
+    STATE.predefinedLabel = null;
     var join = STATE.filters.length ? tbGet("ob-mf-join") || "and" : "and";
     STATE.filters.push({
       field: f.field,
@@ -425,6 +429,8 @@
 
   function removeFilter(i) {
     STATE.filters.splice(i, 1);
+    STATE.predefined = null;
+    STATE.predefinedLabel = null;
     if (STATE.filters.length) STATE.filters[0].join = "and";
     renderChips();
     recount();
@@ -468,7 +474,7 @@
   }
 
   function buildConfig() {
-    return {
+    var cfg = {
       type: STATE.asset,
       limit: normLimit(STATE.limit),
       sort_field: STATE.sortField || DEFAULT_SORT[STATE.asset] || "",
@@ -482,6 +488,11 @@
         };
       }),
     };
+    if (STATE.predefined) {
+      cfg.predefined = STATE.predefined;
+      cfg.predefined_label = STATE.predefinedLabel || STATE.predefined;
+    }
+    return cfg;
   }
 
   function recount() {
@@ -560,7 +571,9 @@
     var noun = n + " result" + (n === 1 ? "" : "s");
     setStatus(
       n
-        ? isDefault
+        ? STATE.predefinedLabel
+          ? noun + " · " + STATE.predefinedLabel
+          : isDefault
           ? noun + " · US market default"
           : noun
         : "No results for this configuration"
@@ -573,7 +586,7 @@
   }
 
   function runScreener(cfg) {
-    var isDefault = !cfg.filters.length;
+    var isDefault = !cfg.filters.length && !cfg.predefined;
     setStatus("Loading results…");
     if (TRANSPORT === "bridge") {
       if (window.pywry && window.pywry.emit)
@@ -617,6 +630,8 @@
   function setAsset(a) {
     STATE.asset = a;
     STATE.filters = [];
+    STATE.predefined = null;
+    STATE.predefinedLabel = null;
     STATE.sortField = DEFAULT_SORT[a] || "";
     setSelect("ob-sort-field", STATE.sortField, SORT_OPTIONS[a] || []);
     renderChips();
@@ -626,6 +641,8 @@
 
   function reset() {
     STATE.filters = [];
+    STATE.predefined = null;
+    STATE.predefinedLabel = null;
     renderChips();
     recount();
     runScreener(buildConfig());
@@ -653,7 +670,10 @@
     STATE.limit = normLimit(cfg.limit);
     STATE.sortType = cfg.sort_type === "ASC" ? "ASC" : "DESC";
     STATE.sortField = cfg.sort_field || DEFAULT_SORT[asset] || "";
-    STATE.currentTemplate = name || null;
+    STATE.predefined = typeof cfg.predefined === "string" ? cfg.predefined : null;
+    STATE.predefinedLabel =
+      typeof cfg.predefined_label === "string" ? cfg.predefined_label : null;
+    STATE.currentTemplate = STATE.predefined ? null : name || null;
     STATE.filters = (cfg.filters || []).map(function (f, i) {
       var meta = fieldByName(asset, f.field) || {};
       return {
@@ -840,6 +860,8 @@
   });
   on("screener:template-new", function () {
     STATE.filters = [];
+    STATE.predefined = null;
+    STATE.predefinedLabel = null;
     STATE.currentTemplate = null;
     refreshTemplateOptions();
     renderChips();

@@ -115,7 +115,6 @@ class YFinancePrivateCompaniesFetcher(
         import asyncio
 
         from openbb_core.provider.utils.errors import EmptyDataError
-
         from yfinance import Ticker, screen
 
         scr_id = CATEGORY_SCR_IDS[query.category]

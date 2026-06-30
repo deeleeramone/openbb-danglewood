@@ -5,6 +5,32 @@
   min-height: 0;
 }
 
+/* tvchart.css is bundled into this window and overrides the core
+   --pywry-bg-primary/secondary/hover to its near-black chart surfaces on
+   :root; its light block restores only the --pywry-tvchart-* vars, so a light
+   page inherits the chart's dark surfaces from <html>. The light theme also
+   never defines --pywry-bg-tertiary/quartary. Pin the screener's surface
+   palette on its own container, keyed off the page theme class: a closer
+   ancestor's custom-property declaration wins for its whole subtree, so the
+   toolbars/filter chips track the page theme regardless of :root. */
+html.pywry-theme-light .pywry-container,
+html.light .pywry-container {
+  --pywry-bg-primary: #f5f5f5;
+  --pywry-bg-secondary: #ffffff;
+  --pywry-bg-tertiary: #ececf1;
+  --pywry-bg-quartary: #e4e4ec;
+  --pywry-bg-hover: rgba(0, 0, 0, 0.06);
+}
+
+html.pywry-theme-dark .pywry-container,
+html.dark .pywry-container {
+  --pywry-bg-primary: #212124;
+  --pywry-bg-secondary: #151518;
+  --pywry-bg-tertiary: #1f1e23;
+  --pywry-bg-quartary: #24242a;
+  --pywry-bg-hover: rgba(255, 255, 255, 0.08);
+}
+
 .ob-results {
   display: flex;
   flex-direction: column;

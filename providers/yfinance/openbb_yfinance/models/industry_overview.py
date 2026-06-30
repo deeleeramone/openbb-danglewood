@@ -104,7 +104,6 @@ class YFinanceIndustryOverviewFetcher(
 
         from openbb_core.provider.utils.errors import EmptyDataError
         from pandas import isna
-
         from yfinance import Industry
 
         keys = (

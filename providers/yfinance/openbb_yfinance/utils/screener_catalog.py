@@ -292,17 +292,18 @@ def _extra_fields_for(asset: str) -> list[dict]:
     which share the relevant field identifiers (region, sector, industry,
     exchange).
     """
+    from yfinance.const import (
+        EQUITY_SCREENER_EQ_MAP,
+        ETF_SCREENER_EQ_MAP,
+        FUND_SCREENER_EQ_MAP,
+    )
+
     from openbb_yfinance.utils.screener_extra_fields import (
         EXTRA_CATEGORY_LABELS,
         EXTRA_ENUM_FIELDS,
         EXTRA_FIELD_LABELS,
         EXTRA_NUMBER_FIELDS,
         EXTRA_SCREENER_FIELDS,
-    )
-    from yfinance.const import (
-        EQUITY_SCREENER_EQ_MAP,
-        ETF_SCREENER_EQ_MAP,
-        FUND_SCREENER_EQ_MAP,
     )
 
     eq_map: dict = {}

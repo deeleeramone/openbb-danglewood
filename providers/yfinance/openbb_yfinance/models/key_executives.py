@@ -57,7 +57,6 @@ class YFinanceKeyExecutivesFetcher(
     ) -> list[dict]:
         """Extract the raw data from YFinance."""
         from openbb_core.app.model.abstract.error import OpenBBError
-
         from yfinance import Ticker
 
         try:

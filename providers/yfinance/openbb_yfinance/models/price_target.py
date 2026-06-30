@@ -55,7 +55,6 @@ class YFinancePriceTargetFetcher(
 
         from openbb_core.provider.utils.errors import EmptyDataError
         from pandas import isna
-
         from yfinance import Ticker
 
         symbols = [s.strip() for s in (query.symbol or "").split(",") if s.strip()]

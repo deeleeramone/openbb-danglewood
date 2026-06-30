@@ -814,7 +814,9 @@ def test_y_finance_equity_screener_predefined_fetcher(credentials=test_credentia
 
 
 @pytest.mark.record_curl
-def test_y_finance_equity_screener_etf_metadata_fetcher(credentials=test_credentials):
+def test_y_finance_equity_screener_etf_metadata_fetcher(
+    reset_yfinance_session, credentials=test_credentials
+):
     """Test YFinanceEquityScreenerFetcher enriches ETFs with full metadata."""
     params = {"predefined": "top_etfs_us", "limit": 3}
 

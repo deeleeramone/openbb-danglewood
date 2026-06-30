@@ -80,7 +80,6 @@ class YFinanceSectorTopFundsFetcher(
 
         from openbb_core.provider.utils.errors import EmptyDataError
         from pandas import isna
-
         from yfinance import Sector
 
         sectors = sector_keys(query.sector)

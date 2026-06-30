@@ -33,13 +33,18 @@ def _show(app: Any, symbol: str, resolution: str, **show_kwargs: Any) -> Any:
     def _on_theme_change(
         data: dict[str, Any], _event_type: str = "", _label: str = ""
     ) -> None:
-        theme_str = (data.get("theme") or "dark").lower()
-        app.theme = ThemeMode.LIGHT if theme_str == "light" else ThemeMode.DARK
+        is_dark = (data.get("theme") or "dark").lower() != "light"
+        app.theme = ThemeMode.DARK if is_dark else ThemeMode.LIGHT
+        # Sync the chart's own dark-mode toggle (the toolbar slider) to the
+        # Workspace theme; updating app.theme alone leaves the slider behind.
+        app.emit("tvchart:toggle-dark-mode", {"value": is_dark})
 
     callbacks["pywry:update-theme"] = _on_theme_change
 
     toolbars = build_tvchart_toolbars(
-        intervals=SUPPORTED_RESOLUTIONS, selected_interval=resolution
+        intervals=SUPPORTED_RESOLUTIONS,
+        selected_interval=resolution,
+        theme="light" if app.theme == ThemeMode.LIGHT else "dark",
     )
     marquee_toolbar, marquee_css = build_marquee(symbol)
     toolbars.insert(0, marquee_toolbar)

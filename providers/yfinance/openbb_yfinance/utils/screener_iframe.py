@@ -160,6 +160,7 @@ def prune_empty_columns(
     column_defs: list[dict[str, Any]],
     required_fields: set[str] | None = None,
 ) -> list[dict[str, Any]]:
+    """Return a subset of column_defs that have non-empty values in rows."""
     required = required_fields or _ALWAYS_VISIBLE_FIELDS
     if not column_defs:
         return []

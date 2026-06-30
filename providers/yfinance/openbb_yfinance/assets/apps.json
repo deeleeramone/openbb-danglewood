@@ -113,6 +113,60 @@
             ]
           }
         ]
+      },
+      "options": {
+        "id": "options",
+        "name": "Options",
+        "layout": [
+          {
+            "i": "yfinance_derivatives_options_term_structure_custom_obb",
+            "x": 0, "y": 0, "w": 40, "h": 16,
+            "state": { "params": { "symbol": "AAPL" } },
+            "groups": [ "Symbol" ]
+          },
+          {
+            "i": "yfinance_derivatives_options_stats_custom_obb",
+            "x": 0, "y": 16, "w": 40, "h": 16,
+            "state": { "params": { "symbol": "AAPL" } },
+            "groups": [ "Symbol" ]
+          },
+          {
+            "i": "yfinance_derivatives_options_smile_custom_obb",
+            "x": 0, "y": 32, "w": 40, "h": 16,
+            "state": { "params": { "symbol": "AAPL" } },
+            "groups": [ "Symbol" ]
+          },
+          {
+            "i": "yfinance_derivatives_options_surface_custom_obb",
+            "x": 0, "y": 48, "w": 40, "h": 20,
+            "state": { "params": { "symbol": "AAPL" } },
+            "groups": [ "Symbol" ]
+          },
+          {
+            "i": "yfinance_derivatives_options_chains_custom_obb",
+            "x": 0, "y": 68, "w": 40, "h": 16,
+            "state": { "params": { "symbol": "AAPL" } },
+            "groups": [ "Symbol" ]
+          },
+          {
+            "i": "yfinance_derivatives_options_straddle_custom_obb",
+            "x": 0, "y": 84, "w": 40, "h": 12,
+            "state": { "params": { "symbol": "AAPL" } },
+            "groups": [ "Symbol" ]
+          },
+          {
+            "i": "yfinance_derivatives_options_strangle_custom_obb",
+            "x": 0, "y": 96, "w": 40, "h": 12,
+            "state": { "params": { "symbol": "AAPL" } },
+            "groups": [ "Symbol" ]
+          },
+          {
+            "i": "yfinance_derivatives_options_spreads_custom_obb",
+            "x": 0, "y": 108, "w": 40, "h": 12,
+            "state": { "params": { "symbol": "AAPL" } },
+            "groups": [ "Symbol" ]
+          }
+        ]
       }
     },
     "groups": [
