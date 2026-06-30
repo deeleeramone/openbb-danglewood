@@ -1206,9 +1206,7 @@ def _build_mcp_server() -> Any:
             if value:
                 params[key] = value
         rows: Any = await YFinanceEquityScreenerFetcher.fetch_data(params, {})
-        return [
-            r.model_dump(exclude_none=True, exclude={"price_history"}) for r in rows
-        ]
+        return [r.model_dump(exclude_none=True) for r in rows]
 
     return mcp
 

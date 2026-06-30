@@ -283,35 +283,6 @@ class YFinanceEquityScreenerData(EquityScreenerData, YFPredefinedScreenerData):
             }
         },
     )
-    price_history: list[float] | None = Field(
-        default=None,
-        description="Recent daily closing prices, rendered as a sparkline.",
-        json_schema_extra={
-            "x-widget_config": {
-                "headerName": "Price (1M)",
-                "width": 180,
-                "sparkline": {
-                    "type": "line",
-                    "options": {
-                        "stroke": "#2563eb",
-                        "strokeWidth": 2,
-                        "pointsOfInterest": {
-                            "maximum": {
-                                "fill": "#22c55e",
-                                "stroke": "#16a34a",
-                                "size": 5,
-                            },
-                            "minimum": {
-                                "fill": "#ef4444",
-                                "stroke": "#dc2626",
-                                "size": 5,
-                            },
-                        },
-                    },
-                },
-            }
-        },
-    )
 
 
 class YFinanceEquityScreenerFetcher(
@@ -359,7 +330,6 @@ class YFinanceEquityScreenerFetcher(
     ) -> list[dict]:
         """Extract the raw data."""
         from openbb_yfinance.utils.helpers import (
-            attach_price_sparklines,
             enrich_fund_metadata,
             get_custom_screener,
             get_defined_screener,
@@ -386,7 +356,7 @@ class YFinanceEquityScreenerFetcher(
             )
             if not response:
                 raise EmptyDataError("No results found for the configuration.")
-            return await attach_price_sparklines(await enrich_fund_metadata(response))
+            return await enrich_fund_metadata(response)
 
         if query.preset:
             from openbb_yfinance.utils.helpers import PREDEFINED_SCREENERS
@@ -405,9 +375,7 @@ class YFinanceEquityScreenerFetcher(
                     raise EmptyDataError(
                         f"No results found for the predefined screener '{query.preset}'."
                     )
-                return await attach_price_sparklines(
-                    await enrich_fund_metadata(response)
-                )
+                return await enrich_fund_metadata(response)
 
             from openbb_yfinance.utils.screener_presets import (
                 build_screener_body,
@@ -430,7 +398,7 @@ class YFinanceEquityScreenerFetcher(
             )
             if not response:
                 raise EmptyDataError("No results found for the preset.")
-            return await attach_price_sparklines(await enrich_fund_metadata(response))
+            return await enrich_fund_metadata(response)
 
         operands: list = []
 
@@ -564,7 +532,7 @@ class YFinanceEquityScreenerFetcher(
         if not response:
             raise EmptyDataError("No results found for the combination of filters.")
 
-        return await attach_price_sparklines(await enrich_fund_metadata(response))
+        return await enrich_fund_metadata(response)
 
     @staticmethod
     def transform_data(

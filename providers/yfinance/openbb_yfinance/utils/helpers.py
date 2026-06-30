@@ -44,6 +44,7 @@ PREDEFINED_SCREENERS = [
     "solid_large_growth_funds",
     "solid_midcap_growth_funds",
     "top_mutual_funds",
+    "top_etfs_us",
 ]
 
 SCREENER_FIELDS = [
@@ -327,51 +328,6 @@ async def get_defined_screener(
         raise EmptyDataError("No data found for the predefined screener.")
 
     return output[:limit] if limit is not None else output
-
-
-async def attach_price_sparklines(
-    records: list[dict],
-    period: str = "1mo",
-    interval: str = "1d",
-) -> list[dict]:
-    """Attach a ``price_history`` close series to each record for sparklines.
-
-    Uses a single batched ``yfinance.download`` for every symbol, so the cost is
-    one request rather than one per row.
-    """
-    import asyncio
-
-    from yfinance import download
-
-    symbols = [r["symbol"] for r in records if r.get("symbol")]
-    if not symbols:
-        return records
-
-    data = await asyncio.to_thread(
-        download,
-        symbols,
-        period=period,
-        interval=interval,
-        progress=False,
-        auto_adjust=True,
-    )
-    if data is None or data.empty or "Close" not in data:
-        return records
-
-    closes = data["Close"]
-    single = closes.ndim == 1
-    for record in records:
-        symbol = record.get("symbol")
-        if single:
-            series = closes
-        elif symbol in closes.columns:
-            series = closes[symbol]
-        else:
-            continue
-        values = [round(float(v), 4) for v in series.dropna().tolist()]
-        record["price_history"] = values or None
-
-    return records
 
 
 async def enrich_fund_metadata(

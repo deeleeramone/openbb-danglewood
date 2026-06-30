@@ -806,7 +806,7 @@ def test_y_finance_private_companies_fetcher(credentials=test_credentials):
 @pytest.mark.record_curl
 def test_y_finance_equity_screener_predefined_fetcher(credentials=test_credentials):
     """Test YFinanceEquityScreenerFetcher with a predefined scrId passthrough."""
-    params = {"predefined": "most_actives", "limit": 10}
+    params = {"preset": "most_actives", "limit": 10}
 
     fetcher = YFinanceEquityScreenerFetcher()
     result = fetcher.test(params, credentials)
@@ -818,7 +818,7 @@ def test_y_finance_equity_screener_etf_metadata_fetcher(
     reset_yfinance_session, credentials=test_credentials
 ):
     """Test YFinanceEquityScreenerFetcher enriches ETFs with full metadata."""
-    params = {"predefined": "top_etfs_us", "limit": 3}
+    params = {"preset": "top_etfs_us", "limit": 3}
 
     fetcher = YFinanceEquityScreenerFetcher()
     result = fetcher.test(params, credentials)

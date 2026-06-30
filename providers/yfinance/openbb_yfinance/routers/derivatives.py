@@ -406,7 +406,7 @@ async def smile_chart(
     skew: bool = False,
     raw: Annotated[bool, _excluded_query()] = False,
     theme: Annotated[str, _excluded_query()] = "dark",
-) -> dict | list:
+):
     """Implied-volatility smile / skew across strikes."""
     from openbb_yfinance.utils.options.create_smile import create_smile
 
@@ -425,7 +425,7 @@ async def surface_chart(
     volume: bool = False,
     raw: Annotated[bool, _excluded_query()] = False,
     theme: Annotated[str, _excluded_query()] = "dark",
-) -> dict | list:
+):
     """Implied-volatility 3-D surface over DTE and strike."""
     from openbb_yfinance.utils.options.create_surface import create_surface
 
@@ -460,7 +460,7 @@ async def stats_chart(
     unit: Literal["value", "percent", "pcr"] = "value",
     raw: Annotated[bool, _excluded_query()] = False,
     theme: Annotated[str, _excluded_query()] = "dark",
-) -> dict | list:
+):
     """Open-interest or volume statistics by strike or expiration."""
     from openbb_yfinance.utils.options.create_stats import create_stats
 
@@ -485,7 +485,7 @@ async def term_structure_chart(
     option_type: Literal["both", "calls", "puts"] = "both",
     raw: Annotated[bool, _excluded_query()] = False,
     theme: Annotated[str, _excluded_query()] = "dark",
-) -> dict | list:
+):
     """Price or IV term structure across expirations."""
     from openbb_yfinance.utils.options.create_term_structure import (
         create_term_structure,
