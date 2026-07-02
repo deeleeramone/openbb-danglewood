@@ -1,0 +1,129 @@
+name: 🧪 test openbb-hkex
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "providers/hkex/**"
+      - ".github/workflows/test-openbb-hkex.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  # Cancel in-flight matrix runs when a new commit lands on the same PR.
+  group: test-openbb-hkex-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build wheel
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: providers/hkex
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - run: python -m pip install --upgrade pip uv
+
+      - name: Build the wheel
+        run: uv build --wheel
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openbb-hkex-dist
+          path: providers/hkex/dist/
+          if-no-files-found: error
+          retention-days: 7
+
+  lint:
+    name: Lint (ruff + ty)
+    needs: build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: providers/hkex
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: openbb-hkex-dist
+          path: providers/hkex/dist
+
+      - run: python -m pip install --upgrade pip uv
+
+      # Install the built wheel so its deps (openbb-core) are present — ty needs
+      # the real signatures to type-check accurately.
+      - name: Install tooling + the built wheel
+        run: |
+          uv pip install --system --group dev ruff ty
+          uv pip install --system dist/openbb_hkex-*.whl
+
+      - name: ruff check
+        run: ruff check openbb_hkex tests
+
+      - name: ruff format --check
+        run: ruff format --check openbb_hkex tests
+
+      - name: ty check
+        run: ty check openbb_hkex
+
+  test:
+    name: Test (${{ matrix.os }} / Python ${{ matrix.python_version }})
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-latest, python_version: "3.10" }
+          - { os: ubuntu-latest, python_version: "3.11" }
+          - { os: ubuntu-latest, python_version: "3.12" }
+          - { os: ubuntu-latest, python_version: "3.13" }
+          - { os: ubuntu-latest, python_version: "3.14" }
+          - { os: macos-latest, python_version: "3.10" }
+          - { os: macos-latest, python_version: "3.14" }
+          - { os: windows-latest, python_version: "3.10" }
+          - { os: windows-latest, python_version: "3.14" }
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: providers/hkex
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python_version }}
+          allow-prereleases: true
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: openbb-hkex-dist
+          path: providers/hkex/dist
+
+      - run: python -m pip install --upgrade pip uv
+
+      - name: Install dev tooling + the built wheel
+        run: |
+          uv pip install --system --group dev
+          uv pip install --system ty
+          uv pip install --system dist/openbb_hkex-*.whl
+
+      - name: Test the installed wheel
+        run: |
+          rm -rf openbb_hkex
+          pytest tests -m "not integration" --cov=openbb_hkex --cov-report=term-missing

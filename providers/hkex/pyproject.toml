@@ -1,0 +1,106 @@
+[project]
+name = "openbb-hkex"
+version = "0.1.0"
+description = "OpenBB provider extension for Hong Kong Exchange (HKEX) open data."
+authors = [{ name = "Darren Lee", email = "deeleeramone@gmail.com" }]
+license = { text = "AGPL-3.0-only" }
+readme = "README.md"
+requires-python = ">=3.10,<4"
+dependencies = [
+    "openbb-core>=1.6.13",
+    "openpyxl>=3.1,<4.0",
+    "async-lru>=2.0,<3.0",
+    "pypdf>=4.0",
+]
+
+[project.entry-points."openbb_provider_extension"]
+hkex = "openbb_hkex:hkex_provider"
+
+[project.entry-points."openbb_core_extension"]
+hkex = "openbb_hkex.hkex_router:router"
+
+[project.urls]
+Homepage = "https://openbb.co"
+Repository = "https://github.com/deeleeramone/openbb-danglewood"
+
+[dependency-groups]
+dev = ["openbb-devtools>=1.6.8"]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["openbb_hkex"]
+artifacts = ["openbb_hkex/assets/apps.json"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "openbb_hkex",
+    "README.md",
+    "pyproject.toml",
+]
+artifacts = ["openbb_hkex/assets/apps.json"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+fix = true
+
+[tool.ruff.lint]
+select = ["D", "E", "W", "F", "S", "UP", "I", "PLC", "PLE", "PLR", "PLW", "SIM", "T20"]
+ignore = [
+    "PLR2004", "PLR0913", "PLR0915", "PLC0415",
+    "E402", "E501",
+    "D202", "D203", "D205", "D206", "D210", "D212", "D213", "D214",
+    "D215", "D300", "D400", "D404", "D405", "D406", "D407", "D408",
+    "D409", "D410", "D411", "D413", "D415", "D416", "D417",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"openbb_hkex/hkex_router.py" = ["ARG001", "PLC0415"]
+"openbb_hkex/utils/widgets.py" = ["ARG001", "PLC0415", "PLR0915", "BLE001", "B008"]
+"openbb_hkex/utils/udf.py" = ["ARG001", "PLC0415", "PLR0915", "BLE001", "B008", "A002", "S110"]
+"openbb_hkex/utils/*.py" = ["PLR0911", "PLR0912", "PLR0914", "PLR0917", "BLE001"]
+"openbb_hkex/models/*.py" = ["ARG002", "PLC0415", "PLR0911", "PLR0912", "PLR0914", "PLR0917", "PLW0108", "BLE001"]
+"tests/**" = ["S101", "S108", "D", "SIM105", "SIM117"]
+"**/__init__.py" = ["F401"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-wrap-aliases = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ty]
+[tool.ty.environment]
+python-version = "3.10"
+
+[tool.ty.src]
+include = ["openbb_hkex"]
+exclude = ["tests"]
+
+[tool.ty.rules]
+unresolved-import = "ignore"
+
+# The HTTP-glue utils call ``openbb_core.provider.utils.helpers.amake_request``
+# with text/bytes ``response_callback``s. ``amake_request`` isn't generic over
+# its callback's return type (it's declared to return ``dict | list[dict]``), so
+# ty misreads every wrapped request. Relax those cascading rules for the glue
+# only — models, router and provider stay strictly checked.
+[[tool.ty.overrides]]
+include = ["openbb_hkex/utils/**"]
+
+[tool.ty.overrides.rules]
+invalid-argument-type = "ignore"
+unresolved-attribute = "ignore"
+invalid-return-type = "ignore"
+no-matching-overload = "ignore"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "record_http: pytest-recorder HTTP cassette tests",
+    "integration: live integration tests against HKEX open data",
+]

@@ -1,0 +1,64 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Language:
+      - en-US,en;q=0.9
+      Referer:
+      - https://www.hkex.com.hk/
+      User-Agent:
+      - MOCK_UA
+    method: GET
+    uri: https://www1.hkex.com.hk/hkexwidget/data/getderivativesfutures?lang=eng&token=MOCK_TOKEN&qid=MOCK_QID&callback=cb&ats=HSI&type=1
+  response:
+    body:
+      string: cb({"data":{"responsecode":"000","responsemsg":"","lastupd":"30/05/2026
+        02:59","futureslist":[{"op":"24,982","hi":"25,206","bd":"25,091","con":"Jun-26","lo":"24,934","ls":"25,098","con_l":"JUNE
+        2026","ric":"1HSIM6","as":"25,099","se":"24,989","pc":"+1.02","nc":"+253","vo":"15,312","oi":"126,487","hc":"24,989"},{"op":"24,945","hi":"25,185","bd":"25,050","con":"Jul-26","lo":"24,920","ls":"25,080","con_l":"JULY
+        2026","ric":"1HSIN6","as":"25,141","se":"24,967","pc":"+1.01","nc":"+251","vo":"67","oi":"8,010","hc":"24,967"},{"op":"","hi":"","bd":"24,908","con":"Aug-26","lo":"","ls":"","con_l":"AUGUST
+        2026","ric":"1HSIQ6","as":"26,000","se":"24,996","pc":"","nc":"","vo":"","oi":"1","hc":"24,996"},{"op":"24,939","hi":"25,087","bd":"24,970","con":"Sep-26","lo":"24,930","ls":"25,030","con_l":"SEPTEMBER
+        2026","ric":"1HSIU6","as":"25,099","se":"24,916","pc":"+0.99","nc":"+246","vo":"29","oi":"1,868","hc":"24,916"},{"op":"","hi":"","bd":"24,508","con":"Dec-26","lo":"","ls":"","con_l":"DECEMBER
+        2026","ric":"1HSIZ6","as":"25,500","se":"25,033","pc":"","nc":"","vo":"","oi":"1,031","hc":"25,033"},{"op":"","hi":"","bd":"25,000","con":"Mar-27","lo":"","ls":"","con_l":"MARCH
+        2027","ric":"1HSIH7","as":"26,000","se":"25,203","pc":"","nc":"","vo":"","oi":"39","hc":"25,203"},{"op":"","hi":"","bd":"","con":"Jun-27","lo":"","ls":"","con_l":"JUNE
+        2027","ric":"1HSIM7","as":"","se":"25,115","pc":"","nc":"","vo":"","oi":"1","hc":"25,115"},{"op":"","hi":"","bd":"","con":"Dec-27","lo":"","ls":"","con_l":"DECEMBER
+        2027","ric":"1HSIZ7","as":"","se":"25,210","pc":"","nc":"","vo":"","oi":"361","hc":"25,210"},{"op":"","hi":"","bd":"","con":"Jun-28","lo":"","ls":"","con_l":"JUNE
+        2028","ric":"1HSIM8","as":"","se":"25,240","pc":"","nc":"","vo":"","oi":"","hc":"25,240"},{"op":"","hi":"","bd":"","con":"Dec-28","lo":"","ls":"","con_l":"DECEMBER
+        2028","ric":"1HSIZ8","as":"","se":"25,304","pc":"","nc":"","vo":"","oi":"","hc":"25,304"},{"op":"","hi":"","bd":"","con":"Dec-29","lo":"","ls":"","con_l":"DECEMBER
+        2029","ric":"1HSIZ9","as":"","se":"25,431","pc":"","nc":"","vo":"","oi":"","hc":"25,431"},{"op":"","hi":"","bd":"","con":"Dec-30","lo":"","ls":"","con_l":"DECEMBER
+        2030","ric":"1HSIZ0","as":"","se":"25,558","pc":"","nc":"","vo":"","oi":"","hc":"25,558"},{"op":"","hi":"","bd":"","con":"Dec-31","lo":"","ls":"","con_l":"DECEMBER
+        2031","ric":"1HSIZ1","as":"","se":"25,687","pc":"","nc":"","vo":"","oi":"","hc":"25,687"}]},"qid":"1780259355741"})
+    headers:
+      Access-Control-Allow-Headers:
+      - Content-Type
+      Access-Control-Allow-Methods:
+      - OPTIONS, POST, DELETE, PUT, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Allow:
+      - OPTIONS, POST, DELETE, PUT, GET
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/json;charset=UTF-8
+      Date:
+      - Sun, 31 May 2026 20:29:16 GMT
+      Set-Cookie:
+      - JSESSIONID=fb9fe273749cac5ceb6d36dc4f7b; Path=/hkexwidget; HttpOnly
+      - TS01facf52=015e7ee60322fedb865a6bd9ea0aa2e998509320bf6ecc7b15fcadae2fc8413ffa849917e81ab1a1ac181392fb29e49423fe0b8740;
+        Path=/; Secure; HttpOnly
+      - TS0164a861=015e7ee603283022905dbda0e3962231db2d65d5916ecc7b15fcadae2fc8413ffa849917e8f336bf5e4bc36ad4b48012f736101d5c796dd89c972c5ed1a97965bc0b6f52c2;
+        path=/hkexwidget; HttpOnly; Secure
+      - TSe3955713027=08754bc291ab2000dccfb61e1fdd1c96a7387738b64eaa4314b1981503979adb81702a3354f1228d08fb245cfd1130008f4031689afe32d568130bf2c64f3fb3859c3c36be65fba13ed961396d18b78e8d50a62642a4928a6fc4f568b4ed3f2b;
+        Path=/
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '2441'
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,0 +1,49 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Language:
+      - en-US,en;q=0.9
+      Referer:
+      - https://www.hkex.com.hk/
+      User-Agent:
+      - MOCK_UA
+    method: GET
+    uri: https://www1.hkex.com.hk/hkexwidget/data/getmarketturnover?lang=eng&token=MOCK_TOKEN&qid=MOCK_QID&callback=cb
+  response:
+    body:
+      string: cb({"data":{"responsecode":"000","responsemsg":"","FVlastupdate":"30/05/2026
+        03:01","date":"29/5/2026","lastupdate":"29/05/2026 18:24","boardlist":{"main":{"u":"B","v":"462.07"},"gem":{"u":"M","v":"89"}},"marketlist":{"deriv":{"d":"1,836,438","n":"90,937"},"hsi":{"d":"98,995","n":"15,408"},"hcei":{"d":"115,811","n":"28,311"}}},"qid":"1780259369125"})
+    headers:
+      Access-Control-Allow-Headers:
+      - Content-Type
+      Access-Control-Allow-Methods:
+      - OPTIONS, POST, DELETE, PUT, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Allow:
+      - OPTIONS, POST, DELETE, PUT, GET
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '352'
+      Content-Type:
+      - text/json;charset=UTF-8
+      Date:
+      - Sun, 31 May 2026 20:29:29 GMT
+      Set-Cookie:
+      - JSESSIONID=fba324c4af8d6e4e27cc007a2c6d; Path=/hkexwidget; HttpOnly
+      - TS01facf52=01043817a59e20d051f0d870dcb73d00c95a7821affcdb231195655d46ad74b2a6800a2f86cb64c2a0149b31ab6fdef6772e2ce9fa;
+        Path=/; Secure; HttpOnly
+      - TS0164a861=01043817a54c25dc8817627b741448260eb3c71b28fcdb231195655d46ad74b2a6800a2f86c3238d81ca954f23dde8e5c8b76a5842ee0e70c0b0b4b81a2cb6cddca5b49e19;
+        path=/hkexwidget; HttpOnly; Secure
+      - TScb930f85027=086f2721efab2000c39d097e0149ababde01148afd04806bde3e5208ce456d26a067fa81ec332c7008b90b441f11300089565c0cd1537c24ec7c9e466cbef61659532519dd24dfc303efde08c18657ced9dbe52188ba7af07abc8a3e3637b45c;
+        Path=/
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    status:
+      code: 200
+      message: OK
+version: 1

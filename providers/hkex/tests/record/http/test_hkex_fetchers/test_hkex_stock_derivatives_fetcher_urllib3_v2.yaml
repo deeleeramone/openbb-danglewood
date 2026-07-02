@@ -1,0 +1,109 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Language:
+      - en-US,en;q=0.9
+      Referer:
+      - https://www.hkex.com.hk/
+      User-Agent:
+      - MOCK_UA
+    method: GET
+    uri: https://www1.hkex.com.hk/hkexwidget/data/getstockderivativeslist?lang=eng&token=MOCK_TOKEN&qid=MOCK_QID&callback=cb&type=2
+  response:
+    body:
+      string: cb({"data":{"responsecode":"000","responsemsg":"","lastupd":"29/05/2026
+        18:00","stocklist":[{"cd":"CKH","opt":"3,617","fut":"37","sym":"1","nm":"CKH
+        HOLDINGS"},{"cd":"CLP","opt":"275","fut":"0","sym":"2","nm":"CLP HOLDINGS"},{"cd":"HKG","opt":"371","fut":"0","sym":"3","nm":"HK
+        & CHINA GAS"},{"cd":"WHL","opt":"171","fut":"0","sym":"4","nm":"WHARF HOLDINGS"},{"cd":"HKB","opt":"13,817","fut":"81","sym":"5","nm":"HSBC
+        HOLDINGS"},{"cd":"HEH","opt":"376","fut":"0","sym":"6","nm":"POWER ASSETS"},{"cd":"HLD","opt":"415","fut":"0","sym":"12","nm":"HENDERSON
+        LAND"},{"cd":"SHK","opt":"515","fut":"11","sym":"16","nm":"SHK PPT"},{"cd":"NWD","opt":"938","fut":"4","sym":"17","nm":"NEW
+        WORLD DEV"},{"cd":"SWA","opt":"320","fut":"0","sym":"19","nm":"SWIRE PACIFIC
+        A"},{"cd":"SET","opt":"410","fut":"","sym":"20","nm":"SENSETIME-W"},{"cd":"BEA","opt":"385","fut":"0","sym":"23","nm":"BANK
+        OF E ASIA"},{"cd":"GLX","opt":"1,784","fut":"70","sym":"27","nm":"GALAXY ENT"},{"cd":"MTR","opt":"3,018","fut":"61","sym":"66","nm":"MTR
+        CORPORATION"},{"cd":"KLE","opt":"172","fut":"","sym":"135","nm":"KUNLUN ENERGY"},{"cd":"WWC","opt":"204","fut":"","sym":"151","nm":"WANT
+        WANT CHINA"},{"cd":"GAH","opt":"1,403","fut":"1","sym":"175","nm":"GEELY AUTO"},{"cd":"ALH","opt":"1,539","fut":"12","sym":"241","nm":"ALI
+        HEALTH"},{"cd":"CIT","opt":"668","fut":"0","sym":"267","nm":"CITIC"},{"cd":"KDS","opt":"726","fut":"3","sym":"268","nm":"KINGDEE
+        INT'L"},{"cd":"BYE","opt":"3,237","fut":"0","sym":"285","nm":"BYD ELECTRONIC"},{"cd":"WHG","opt":"175","fut":"","sym":"288","nm":"WH
+        GROUP"},{"cd":"WHD","opt":"0","fut":"","sym":"288","nm":"WH GROUP"},{"cd":"CPA","opt":"2,020","fut":"","sym":"293","nm":"CATHAY
+        PAC AIR"},{"cd":"MDG","opt":"3,039","fut":"","sym":"300","nm":"MIDEA GROUP"},{"cd":"JXC","opt":"606","fut":"","sym":"358","nm":"JIANGXI
+        COPPER"},{"cd":"CPC","opt":"14,132","fut":"0","sym":"386","nm":"SINOPEC CORP"},{"cd":"HEX","opt":"17,876","fut":"876","sym":"388","nm":"HKEX"},{"cd":"CRG","opt":"503","fut":"","sym":"390","nm":"CHINA
+        RAILWAY"},{"cd":"TIC","opt":"1,664","fut":"","sym":"669","nm":"TECHTRONIC
+        IND"},{"cd":"COL","opt":"3,995","fut":"7","sym":"688","nm":"CHINA OVERSEAS"},{"cd":"TCH","opt":"166,703","fut":"1,650","sym":"700","nm":"TENCENT"},{"cd":"CTC","opt":"2,688","fut":"4","sym":"728","nm":"CHINA
+        TELECOM"},{"cd":"AIR","opt":"598","fut":"","sym":"753","nm":"AIR CHINA"},{"cd":"CHU","opt":"3,306","fut":"0","sym":"762","nm":"CHINA
+        UNICOM"},{"cd":"XTW","opt":"1,910","fut":"","sym":"788","nm":"CHINA TOWER"},{"cd":"XTA","opt":"0","fut":"","sym":"788","nm":"CHINA
+        TOWER"},{"cd":"LNK","opt":"3,176","fut":"0","sym":"823","nm":"LINK REIT"},{"cd":"CRP","opt":"2,121","fut":"","sym":"836","nm":"CHINA
+        RES POWER"},{"cd":"PEC","opt":"3,207","fut":"0","sym":"857","nm":"PETROCHINA"},{"cd":"GHL","opt":"389","fut":"10","sym":"868","nm":"XINYI
+        GLASS"},{"cd":"ZSH","opt":"2,411","fut":"","sym":"881","nm":"ZHONGSHENG HLDG"},{"cd":"CNC","opt":"19,086","fut":"171","sym":"883","nm":"CNOOC"},{"cd":"HNP","opt":"4,106","fut":"130","sym":"902","nm":"HUANENG
+        POWER"},{"cd":"ACC","opt":"1,387","fut":"0","sym":"914","nm":"CONCH CEMENT"},{"cd":"XCC","opt":"17,399","fut":"","sym":"939","nm":"CCB"},{"cd":"CHT","opt":"13,272","fut":"162","sym":"941","nm":"CHINA
+        MOBILE"},{"cd":"SHL","opt":"706","fut":"0","sym":"968","nm":"XINYI SOLAR"},{"cd":"SMC","opt":"19,558","fut":"1,154","sym":"981","nm":"SMIC"},{"cd":"LEN","opt":"26,889","fut":"","sym":"992","nm":"LENOVO
+        GROUP"},{"cd":"CTB","opt":"16","fut":"0","sym":"998","nm":"CITIC BANK"},{"cd":"KST","opt":"42,827","fut":"21","sym":"1024","nm":"KUAISHOU-W"},{"cd":"HGN","opt":"1,266","fut":"","sym":"1044","nm":"HENGAN
+        INT'L"},{"cd":"CSE","opt":"2,163","fut":"33","sym":"1088","nm":"CHINA SHENHUA"},{"cd":"CSP","opt":"14,165","fut":"","sym":"1093","nm":"CSPC
+        PHARMA"},{"cd":"SNP","opt":"416","fut":"","sym":"1099","nm":"SINOPHARM"},{"cd":"CRL","opt":"5,007","fut":"","sym":"1109","nm":"CHINA
+        RES LAND"},{"cd":"CKP","opt":"535","fut":"","sym":"1113","nm":"CK ASSET"},{"cd":"YZC","opt":"11,259","fut":"761","sym":"1171","nm":"YANKUANG
+        ENERGY"},{"cd":"SBO","opt":"1,303","fut":"","sym":"1177","nm":"SBP GROUP"},{"cd":"CRC","opt":"45","fut":"","sym":"1186","nm":"CHINA
+        RAIL CONS"},{"cd":"BYD","opt":"32,365","fut":"166","sym":"1211","nm":"BYD
+        COMPANY"},{"cd":"BYA","opt":"100","fut":"","sym":"1211","nm":"BYD COMPANY"},{"cd":"XAB","opt":"295","fut":"","sym":"1288","nm":"ABC"},{"cd":"AIA","opt":"4,176","fut":"82","sym":"1299","nm":"AIA"},{"cd":"NCL","opt":"1,138","fut":"91","sym":"1336","nm":"NCI"},{"cd":"PIN","opt":"301","fut":"","sym":"1339","nm":"PICC
+        GROUP"},{"cd":"HOS","opt":"2,179","fut":"","sym":"1347","nm":"HUA HONG SEMI"},{"cd":"CDA","opt":"326","fut":"75","sym":"1359","nm":"CHINA
+        CINDA"},{"cd":"CHQ","opt":"4,448","fut":"","sym":"1378","nm":"CHINAHONGQIAO"},{"cd":"XIC","opt":"7,103","fut":"","sym":"1398","nm":"ICBC"},{"cd":"XPB","opt":"365","fut":"","sym":"1658","nm":"PSBC"},{"cd":"GLI","opt":"3,406","fut":"51","sym":"1772","nm":"GANFENGLITHIUM"},{"cd":"CCC","opt":"796","fut":"0","sym":"1800","nm":"CHINA
+        COMM CONS"},{"cd":"INB","opt":"2,375","fut":"","sym":"1801","nm":"INNOVENT
+        BIO"},{"cd":"MIU","opt":"42,571","fut":"201","sym":"1810","nm":"XIAOMI-W"},{"cd":"CGN","opt":"277","fut":"272","sym":"1816","nm":"CGN
+        POWER"},{"cd":"PHT","opt":"1,578","fut":"46","sym":"1833","nm":"PA GOODDOCTOR"},{"cd":"BUD","opt":"829","fut":"66","sym":"1876","nm":"BUD
+        APAC"},{"cd":"CCE","opt":"2,076","fut":"60","sym":"1898","nm":"CHINA COAL"},{"cd":"SUN","opt":"0","fut":"","sym":"1918","nm":"SUNAC"},{"cd":"COS","opt":"928","fut":"0","sym":"1919","nm":"COSCO
+        SHIP HOLD"},{"cd":"SAN","opt":"6,031","fut":"2","sym":"1928","nm":"SANDS CHINA
+        LTD"},{"cd":"MSB","opt":"273","fut":"23","sym":"1988","nm":"MINSHENG BANK"},{"cd":"COG","opt":"0","fut":"","sym":"2007","nm":"COUNTRY
+        GARDEN"},{"cd":"LAU","opt":"11,274","fut":"139","sym":"2015","nm":"LI AUTO-W"},{"cd":"AAC","opt":"7,264","fut":"53","sym":"2018","nm":"AAC
+        TECH"},{"cd":"ANA","opt":"5,298","fut":"","sym":"2020","nm":"ANTA SPORTS"},{"cd":"VNK","opt":"7,487","fut":"","sym":"2202","nm":"CHINA
+        VANKE"},{"cd":"GAC","opt":"103","fut":"1","sym":"2238","nm":"GAC GROUP"},{"cd":"ZJG","opt":"577","fut":"","sym":"2259","nm":"ZIJIN
+        GOLD INTL"},{"cd":"WXB","opt":"5,334","fut":"2","sym":"2269","nm":"WUXI BIO"},{"cd":"MGM","opt":"3,726","fut":"","sym":"2282","nm":"MGM
+        CHINA"},{"cd":"SHZ","opt":"1,505","fut":"","sym":"2313","nm":"SHENZHOU INTL"},{"cd":"PAI","opt":"49,745","fut":"383","sym":"2318","nm":"PING
+        AN"},{"cd":"MEN","opt":"1,098","fut":"","sym":"2319","nm":"MENGNIU DAIRY"},{"cd":"PIC","opt":"1,401","fut":"40","sym":"2328","nm":"PICC
+        P&C"},{"cd":"LNI","opt":"1,691","fut":"0","sym":"2331","nm":"LI NING"},{"cd":"GWM","opt":"6,041","fut":"0","sym":"2333","nm":"GWMOTOR"},{"cd":"WXA","opt":"780","fut":"","sym":"2359","nm":"WUXI
+        APPTEC"},{"cd":"SNO","opt":"17,464","fut":"327","sym":"2382","nm":"SUNNY OPTICAL"},{"cd":"BOC","opt":"2,115","fut":"14","sym":"2388","nm":"BOC
+        HONG KONG"},{"cd":"ALC","opt":"1,408","fut":"1","sym":"2600","nm":"CHALCO"},{"cd":"CPI","opt":"1,024","fut":"0","sym":"2601","nm":"CPIC"},{"cd":"CLI","opt":"4,715","fut":"30","sym":"2628","nm":"CHINA
+        LIFE"},{"cd":"TRF","opt":"3,827","fut":"0","sym":"2800","nm":"TRACKER FUND"},{"cd":"CSA","opt":"108","fut":"0","sym":"2822","nm":"CSOP
+        A50 ETF"},{"cd":"A50","opt":"258","fut":"0","sym":"2823","nm":"ISHARES A50"},{"cd":"HCF","opt":"1,363","fut":"10","sym":"2828","nm":"HSCEI
+        ETF"},{"cd":"ZJM","opt":"4,953","fut":"209","sym":"2899","nm":"ZIJIN MINING"},{"cd":"AMC","opt":"333","fut":"0","sym":"3188","nm":"CAM
+        CSI300"},{"cd":"NBM","opt":"1,480","fut":"","sym":"3323","nm":"CNBM"},{"cd":"BCM","opt":"1,413","fut":"3","sym":"3328","nm":"BANKCOMM"},{"cd":"MET","opt":"60,357","fut":"295","sym":"3690","nm":"MEITUAN-W"},{"cd":"CAT","opt":"12,280","fut":"","sym":"3750","nm":"CATL"},{"cd":"KSO","opt":"2,789","fut":"20","sym":"3888","nm":"KINGSOFT"},{"cd":"CMB","opt":"8,546","fut":"101","sym":"3968","nm":"CM
+        BANK"},{"cd":"XBC","opt":"14,857","fut":"","sym":"3988","nm":"BANK OF CHINA"},{"cd":"MOL","opt":"132","fut":"5","sym":"3993","nm":"CMOC"},{"cd":"CTS","opt":"2,959","fut":"27","sym":"6030","nm":"CITIC
+        SEC"},{"cd":"ZAO","opt":"1,217","fut":"1","sym":"6060","nm":"ZA ONLINE"},{"cd":"BOM","opt":"1,549","fut":"","sym":"6160","nm":"BEONE
+        MEDICINES"},{"cd":"LAO","opt":"2,767","fut":"","sym":"6181","nm":"LAOPU GOLD"},{"cd":"JDH","opt":"2,093","fut":"5","sym":"6618","nm":"JD
+        HEALTH"},{"cd":"HES","opt":"669","fut":"","sym":"6690","nm":"HAIER SMARTHOME"},{"cd":"HDO","opt":"1,159","fut":"3","sym":"6862","nm":"HAIDILAO"},{"cd":"JDC","opt":"28,985","fut":"62","sym":"9618","nm":"JD-SW"},{"cd":"BLI","opt":"7,676","fut":"220","sym":"9626","nm":"BILIBILI-W"},{"cd":"NFU","opt":"347","fut":"5","sym":"9633","nm":"NONGFU
+        SPRING"},{"cd":"HRB","opt":"11,445","fut":"","sym":"9660","nm":"HORIZONROBOT-W"},{"cd":"PEN","opt":"9,869","fut":"156","sym":"9868","nm":"XPENG-W"},{"cd":"BIU","opt":"48,239","fut":"891","sym":"9888","nm":"BIDU-SW"},{"cd":"WEB","opt":"0","fut":"","sym":"9898","nm":"WB-SW"},{"cd":"ORT","opt":"572","fut":"","sym":"9901","nm":"NEW
+        ORIENTAL-S"},{"cd":"AKS","opt":"1,743","fut":"","sym":"9926","nm":"AKESO"},{"cd":"TRP","opt":"2,607","fut":"109","sym":"9961","nm":"TRIP.COM-S"},{"cd":"ALB","opt":"117,348","fut":"351","sym":"9988","nm":"BABA-W"},{"cd":"POP","opt":"126,770","fut":"","sym":"9992","nm":"POP
+        MART"},{"cd":"NTE","opt":"5,161","fut":"36","sym":"9999","nm":"NTES-S"}]},"qid":"1780259368688"})
+    headers:
+      Access-Control-Allow-Headers:
+      - Content-Type
+      Access-Control-Allow-Methods:
+      - OPTIONS, POST, DELETE, PUT, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Allow:
+      - OPTIONS, POST, DELETE, PUT, GET
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/json;charset=UTF-8
+      Date:
+      - Sun, 31 May 2026 20:29:29 GMT
+      Set-Cookie:
+      - JSESSIONID=fba30aa0a8d0efb62c8a003b721d; Path=/hkexwidget; HttpOnly
+      - TS01facf52=01043817a51bda6797b702a639959114b6ebcf1cab1da796f1d7c09397c04fa39fb0f6e691fe0c44ad54f53bbd8f8c225df21e99b4;
+        Path=/; Secure; HttpOnly
+      - TS0164a861=01043817a54dac5259fc30765cadf439b22194c2211da796f1d7c09397c04fa39fb0f6e69169bc4ae64a38131bb186b26e35a64c319f530ce7cc26dd78cfed3a9b8d42b188;
+        path=/hkexwidget; HttpOnly; Secure
+      - TScb930f85027=086f2721efab200052ed4a90862e1f1072b2df7b37725ed374c6eac83654cd9077dbb768bc9e300208fd18918e113000c2350d3f4fe9967fec7c9e466cbef616a6ec6715c840b1dfced90d1798dcfe0eabc677102317b3b1c696922b5c62ac43;
+        Path=/
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '9472'
+    status:
+      code: 200
+      message: OK
+version: 1

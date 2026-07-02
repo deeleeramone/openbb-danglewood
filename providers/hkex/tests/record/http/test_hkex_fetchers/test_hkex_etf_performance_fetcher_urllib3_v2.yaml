@@ -1,0 +1,329 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Language:
+      - en-US,en;q=0.9
+      Referer:
+      - https://www.hkex.com.hk/
+      User-Agent:
+      - MOCK_UA
+    method: GET
+    uri: https://www1.hkex.com.hk/hkexwidget/data/getequityquote?lang=eng&token=MOCK_TOKEN&qid=MOCK_QID&callback=cb&sym=2823
+  response:
+    body:
+      string: cb({"data":{"responsecode":"000","responsemsg":"","quote":{"hi":"17.820","rs_stock_flag":false,"fiscal_year_end":"","hist_closedate":"1
+        Jun 2026","replication_method":"Physical","amt_os":"904,000,000","primaryexch":"HKEX","ric":"2823.HK","product_subtype":null,"db_updatetime":"02
+        Jun 2026 09:36","mkt_cap_u":"B","am_u":"M","ew_sub_right":"","secondary_listing":false,"ew_amt_os_cur":null,"ccy":"HKD","management_fee":"0.35","ew_underlying_code":null,"trdstatus":"N","nav":"17.74","original_offer_price":"44.44","issue":"","asset_class":"Equity","eps":null,"inline_upper_strike_price":"","sedol":"B046M96","am":"57.73","multiple_counter":[{"counter_sym":"82823","counter_trading_currency":"CNY"}],"iv":"","ew_strike":"","as":"17.800","geographic_focus":"China","incorpin":"Hong
+        Kong","etp_baseCur":"RMB","ew_amt_os":"","bd":"17.790","registrar":"HSBC Institutional
+        Trust Services (Asia) Ltd.","depositary":null,"investmentDesc":"The investment
+        objective of the Fund is to provide investment results that, before fees and
+        expenses, closely correspond to the performance of the FTSE China A50 Index.
+        The Fund uses a representative sampling investment strategy to achieve its
+        investment objective. The Fund invests primarily in A Shares included in the
+        Underlying Index, via (i) the QFII/RFQII status of each QFII/RQFII License
+        holder and (ii) the Stock Connect, a securities trading and clearing linked
+        programme with an aim to achieve mutual stock market access between mainland
+        China and Hong Kong.","exotic_type":null,"callput_indicator":null,"primary_market":null,"underlying_index":"FTSE
+        China A50 Index","lot":"100","update_time":"2026-06-02 01:36:31.0","lo52":"13.700","shares_issued_date":"28
+        May 2026","premium":"","strike_price_ccy":null,"yield":"","vo_u":"M","base_currency":"HKD","coupon":"","expiry_date":"","chairman":null,"underlying_ric":"2823.HK","hi52":"17.960","issuer_name":"BlackRock
+        Asset Management North Asia Limited","h_share_flag":false,"ew_sub_per_from":"","div_yield":"1.90","interest_payment_date":"-","updatetime":"02
+        Jun 2026 11:05","aum_date":"29 May 2026","lo":"17.500","mkt_cap":"16.09","f_aum_hkd":"1.60346096E10","ew_sub_per_to":"","ls":"17.800","nav_date":"29
+        May 2026","csic_classification":null,"counter_label":"counter","floating_flag":false,"issued_shares_note":null,"nom_ccy":null,"eff_gear":"","board_lot_nominal":null,"marketmakers":["BNP
+        Paribas Securities (Asia) Limited","Eclipse Options (HK) Limited","Flow Traders
+        Hong Kong Limited","Huatai Financial Holdings (Hong Kong) Limited","IMC Asia
+        Pacific Limited","Jane Street Asia Trading Limited","Jump Trading Hong Kong
+        Limited","Mirae Asset Securities (HK) Limited","Optiver Trading Hong Kong
+        Limited","Virtu Financial Singapore PTE. Ltd."],"hsic_ind_classification":null,"ew_desc":null,"inception_date":"15
+        Nov 2004","nc":"+0.290","aum":"16.03","issued_shares_class_B":null,"vo":"3.27","secondary_listing_flag":false,"listing_date":"18
+        Nov 2004","issued_shares_class_A":null,"as_at_label":"as at","ew_amt_os_dat":"","nm":"iShares
+        FTSE China A50 ETF","nm_s":"ISHARES A50","sym":"2823","inline_lower_strike_price":"","listing_category":"Primary
+        Listing","ew_strike_cur":null,"exotic_warrant_indicator":null,"investment_focus":"Broad
+        market","call_price":"","tck":"0.010","strike_price":"","summary":"iShares
+        FTSE A50 China Index ETF is a synthetic exchange traded fund (ETF). It is
+        a sub-fund of the iShares Asia Trust. Its primary objective is to provide
+        investment results that closely correspond to the performance of the FTSE
+        China A50 Index before fees and expenses. The FTSE China A50 Index covers
+        the top 50 A-Share companies by market capitalization in Shanghai and Shenzhen
+        markets. The Fund invests in A-Shares and derivative instruments. It holds
+        all the constituents comprising the FTSE China A50 Index. The Fund is managed
+        by BlackRock Asset Management North Asia Limited.","op":"17.500","aum_u":"B","nav_ccy":"HKD","class_B_description":null,"os":"","wnt_gear":"","div_distribution":"Annually
+        (if any)","transfer_of_listing_date":"","hsic_sub_sector_classification":null,"amt_ccy":null,"class_A_description":null,"domicile_country":"Hong
+        Kong","entitlement_ratio":"","product_type":"ETP","office_address":null,"pc":"+1.66","days_to_expiry":null,"underlying_code":null,"pe":"","eps_ccy":null,"hdr":false,"launch_date":"","hc":"17.510","isin":"HK2823028546","moneyness":""}},"qid":"1780370507361"})
+    headers:
+      Access-Control-Allow-Headers:
+      - Content-Type
+      Access-Control-Allow-Methods:
+      - OPTIONS, POST, DELETE, PUT, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Allow:
+      - OPTIONS, POST, DELETE, PUT, GET
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/json;charset=UTF-8
+      Date:
+      - Tue, 02 Jun 2026 03:21:48 GMT
+      Set-Cookie:
+      - JSESSIONID=65a08229d70706a4b3b967bab685; Path=/hkexwidget; HttpOnly
+      - TS01facf52=01043817a51329e3ad9792ce5679b620d1fe6a4df1995e01395936cb4b925b13f668b28d3084d0b06f569accdffec1167df6d63682;
+        Path=/; Secure; HttpOnly
+      - TS0164a861=01043817a5eef28840e874e2899e84bbbaf9436c27995e01395936cb4b925b13f668b28d3059f92cf85cd1fae0c0ae52964130320d52a31f5b57de5876c85e6ec5d5649d86;
+        path=/hkexwidget; HttpOnly; Secure
+      - TScb930f85027=086f2721efab20008cfa4298961b54def3adff99d0707fd0c4b67267e548005d06876419ab176cf7088b15df9211300006e88f15d1592e057a5f83ee44d0a031ddcd9f1389e527db9f54dbebc3aa7c0609ee40423b966233ca9bc06852894b83;
+        Path=/
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '4404'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Referer:
+      - https://www.blackrock.com/hk/en/products/etf-investments
+      User-Agent:
+      - MOCK_UA
+      X-Requested-With:
+      - XMLHttpRequest
+    method: GET
+    uri: https://www.blackrock.com/hk/en/product-screener/product-screener-v3.1.jsn?dcrPath=%2Ftemplatedata%2Fconfig%2Fproduct-screener-v3%2Fdata%2Fen%2Fhk-one%2Fproduct-screener%2Fishares-product-screener-backend-config
+  response:
+    body:
+      string: '{"251590":{"aladdinAssetClass":"Equity","aladdinAssetClassCode":"43511","aladdinCountry":"India","aladdinCountryCode":"43570","aladdinEsgClassification":"-","aladdinEsgClassificationCode":"-","aladdinMarketType":"Emerging","aladdinMarketTypeCode":"43524","aladdinRegion":"Asia
+        Pacific","aladdinRegionCode":"43526","aladdinSfdr":"-","aladdinSfdrCode":"-","aladdinStrategy":"[Core
+        ETFs]","aladdinStrategyCode":"[50567]","aladdinSubAssetClass":"Large Cap","aladdinSubAssetClassCode":"43580","bidPrice":"-","calendarFiveYear":{"d":"18.48","r":18.48033},"calendarFourYear":{"d":"-6.10","r":-6.098541},"calendarOneYear":{"d":"3.11","r":3.114771},"calendarPerfAsOfdate":{"d":"31-Dec-2025","r":20251231},"calendarThreeYear":{"d":"16.70","r":16.7035},"calendarTwoYear":{"d":"4.11","r":4.111503},"discreteFiveYear":{"d":"12.90","r":12.899021},"discreteFourYear":{"d":"-6.67","r":-6.669081},"discreteOneYear":{"d":"-15.51","r":-15.510814},"discretePerfAsOfdate":{"d":"31-Mar-2026","r":20260331},"discreteThreeYear":{"d":"20.60","r":20.597652},"discreteTwoYear":{"d":"2.42","r":2.423516},"distYield":{"d":"1.14","r":1.139497},"domicile":"Hong
+        Kong","effectiveDuration":"-","esgMsciQualityScore":{"d":"6.24","r":6.236},"esgRating":"A","fundName":"iShares
+        Core SENSEX India ETF","inceptionDate":{"d":"31-Oct-2006","r":20061031},"investmentStyle":"[Passive]","investmentStyleCode":"[44342]","investorClassCode":"
+        ","investorClassName":"-","isin":"HK2836036130","localExchangeTicker":"2836","mgt":{"d":"0.25","r":0.25},"modelOad":"-","navAmount":{"d":"4.36","r":4.3587},"navAmountAsOf":{"d":"01-Jun-2026","r":20260601},"navAnnualisedAsOf":{"d":"30-Apr-2026","r":20260430},"navFiveYear":{"d":"20.23","r":20.231746},"navFiveYearAnnualized":{"d":"3.75","r":3.753757},"navInception":{"d":"178.78","r":178.784862},"navOneYearAnnualized":{"d":"-13.70","r":-13.704995},"navPerfAsOf":{"d":"30-Apr-2026","r":20260430},"navSinceInceptionAnnualized":{"d":"5.40","r":5.398473},"navSixMonth":{"d":"-13.11","r":-13.113798},"navTenYear":{"d":"105.41","r":105.405563},"navThreeYear":{"d":"7.24","r":7.243688},"navThreeYearAnnualized":{"d":"2.36","r":2.3585},"navTwoYearAnnualized":{"d":"-4.44","r":-4.442098},"navYearToDate":{"d":"-13.14","r":-13.135846},"onGoingCharges":{"d":"0.25","r":0.25},"portfolioId":251590,"productPageUrl":"/hk/en/products/251590/ishares-core-s-and-p-bse-sensex-india-index-etf","productType":"ISHARES_FUND_DATA","productView":["etf"],"seriesBaseCurrency":"U.S.
+        Dollar","seriesBaseCurrencyCode":"USD","ter":"-","totalFundSizeInMillions":{"d":"578.83","r":578.83454651},"totalFundSizeInMillionsAsOf":{"d":"01-Jun-2026","r":20260601},"totalNetAssets":{"d":"578,834,546.51","r":5.7883454651E8},"useOfProfits":"Distributing","weightedAvgYieldToMaturity":"-","wtdAvgCarbonIntensity":{"d":"622.10","r":622.1},"esg.suiteCategory":"-","esg.suiteCategoryCode":"-","modelOad_effectiveDuration":"-"},"251797":{"aladdinAssetClass":"Equity","aladdinAssetClassCode":"43511","aladdinCountry":"China","aladdinCountryCode":"43544","aladdinEsgClassification":"-","aladdinEsgClassificationCode":"-","aladdinMarketType":"Emerging","aladdinMarketTypeCode":"43524","aladdinRegion":"Asia
+        Pacific","aladdinRegionCode":"43526","aladdinSfdr":"-","aladdinSfdrCode":"-","aladdinStrategy":"-","aladdinStrategyCode":"-","aladdinSubAssetClass":"Large
+        Cap","aladdinSubAssetClassCode":"43580","bidPrice":"-","calendarFiveYear":{"d":"-10.04","r":-10.038714},"calendarFourYear":{"d":"-15.56","r":-15.564835},"calendarOneYear":{"d":"16.44","r":16.438561},"calendarPerfAsOfdate":{"d":"31-Dec-2025","r":20251231},"calendarThreeYear":{"d":"-9.46","r":-9.456685},"calendarTwoYear":{"d":"20.89","r":20.890535},"discreteFiveYear":{"d":"-19.13","r":-19.132512},"discreteFourYear":{"d":"-1.81","r":-1.813898},"discreteOneYear":{"d":"12.20","r":12.203337},"discretePerfAsOfdate":{"d":"31-Mar-2026","r":20260331},"discreteThreeYear":{"d":"-6.51","r":-6.509156},"discreteTwoYear":{"d":"13.91","r":13.907727},"distYield":{"d":"2.22","r":2.221888},"domicile":"Hong
+        Kong","effectiveDuration":"-","esgMsciQualityScore":"-","esgRating":"-","fundName":"iShares
+        FTSE China A50 ETF","inceptionDate":{"d":"15-Nov-2004","r":20041115},"investmentStyle":"[Passive]","investmentStyleCode":"[44342]","investorClassCode":"
+        ","investorClassName":"-","isin":"HK2823028546","localExchangeTicker":"2823","mgt":{"d":"0.35","r":0.35},"modelOad":"-","navAmount":{"d":"15.14","r":15.1393},"navAmountAsOf":{"d":"01-Jun-2026","r":20260601},"navAnnualisedAsOf":{"d":"30-Apr-2026","r":20260430},"navFiveYear":{"d":"1.40","r":1.398847},"navFiveYearAnnualized":{"d":"0.28","r":0.278217},"navInception":{"d":"356.34","r":356.337687},"navOneYearAnnualized":{"d":"22.83","r":22.825287},"navPerfAsOf":{"d":"30-Apr-2026","r":20260430},"navSinceInceptionAnnualized":{"d":"7.33","r":7.330715},"navSixMonth":{"d":"3.03","r":3.030355},"navTenYear":{"d":"103.34","r":103.336442},"navThreeYear":{"d":"28.74","r":28.740872},"navThreeYearAnnualized":{"d":"8.79","r":8.785785},"navTwoYearAnnualized":{"d":"15.16","r":15.157431},"navYearToDate":{"d":"2.46","r":2.456949},"onGoingCharges":{"d":"0.35","r":0.35},"portfolioId":251797,"productPageUrl":"/hk/en/products/251797/ishares-ftse-a50-china-index-etf","productType":"ISHARES_FUND_DATA","productView":["etf"],"seriesBaseCurrency":"RMB","seriesBaseCurrencyCode":"CNY","ter":"-","totalFundSizeInMillions":{"d":"13,716.21","r":13716.20796182},"totalFundSizeInMillionsAsOf":{"d":"01-Jun-2026","r":20260601},"totalNetAssets":{"d":"13,716,207,961.82","r":1.371620796182E10},"useOfProfits":"Distributing","weightedAvgYieldToMaturity":"-","wtdAvgCarbonIntensity":"-","esg.suiteCategory":"-","esg.suiteCategoryCode":"-","modelOad_effectiveDuration":"-"},"282434":{"aladdinAssetClass":"Equity","aladdinAssetClassCode":"43511","aladdinCountry":"Taiwan","aladdinCountryCode":"43624","aladdinEsgClassification":"-","aladdinEsgClassificationCode":"-","aladdinMarketType":"Emerging","aladdinMarketTypeCode":"43524","aladdinRegion":"Asia
+        Pacific","aladdinRegionCode":"43526","aladdinSfdr":"-","aladdinSfdrCode":"-","aladdinStrategy":"[Core
+        ETFs]","aladdinStrategyCode":"[50567]","aladdinSubAssetClass":"Large Cap","aladdinSubAssetClassCode":"43580","bidPrice":"-","calendarFiveYear":{"d":"28.07","r":28.07399},"calendarFourYear":{"d":"-29.31","r":-29.311702},"calendarOneYear":{"d":"32.26","r":32.261829},"calendarPerfAsOfdate":{"d":"31-Dec-2025","r":20251231},"calendarThreeYear":{"d":"29.12","r":29.117739},"calendarTwoYear":{"d":"24.34","r":24.336681},"discreteFiveYear":{"d":"6.74","r":6.743231},"discreteFourYear":{"d":"-13.89","r":-13.887778},"discreteOneYear":{"d":"59.72","r":59.718803},"discretePerfAsOfdate":{"d":"31-Mar-2026","r":20260331},"discreteThreeYear":{"d":"23.26","r":23.255257},"discreteTwoYear":{"d":"1.96","r":1.955638},"distYield":{"d":"1.34","r":1.342876},"domicile":"Hong
+        Kong","effectiveDuration":"-","esgMsciQualityScore":{"d":"6.78","r":6.7794},"esgRating":"A","fundName":"iShares
+        Core MSCI Taiwan ETF","inceptionDate":{"d":"22-Jun-2016","r":20160622},"investmentStyle":"[Passive]","investmentStyleCode":"[44342]","investorClassCode":"
+        ","investorClassName":"-","isin":"HK0000297777","localExchangeTicker":"3074","mgt":{"d":"0.30","r":0.3},"modelOad":"-","navAmount":{"d":"61.21","r":61.2124},"navAmountAsOf":{"d":"01-Jun-2026","r":20260601},"navAnnualisedAsOf":{"d":"30-Apr-2026","r":20260430},"navFiveYear":{"d":"118.61","r":118.610322},"navFiveYearAnnualized":{"d":"16.93","r":16.932203},"navInception":{"d":"516.92","r":516.91624},"navOneYearAnnualized":{"d":"101.88","r":101.879271},"navPerfAsOf":{"d":"30-Apr-2026","r":20260430},"navSinceInceptionAnnualized":{"d":"20.28","r":20.276501},"navSixMonth":{"d":"38.26","r":38.256256},"navTenYear":"-","navThreeYear":{"d":"168.62","r":168.617085},"navThreeYearAnnualized":{"d":"39.01","r":39.00952},"navTwoYearAnnualized":{"d":"46.25","r":46.25233},"navYearToDate":{"d":"38.28","r":38.28178},"onGoingCharges":{"d":"0.30","r":0.3},"portfolioId":282434,"productPageUrl":"/hk/en/products/282434/ishares-core-msci-taiwan-etf","productType":"ISHARES_FUND_DATA","productView":["etf"],"seriesBaseCurrency":"U.S.
+        Dollar","seriesBaseCurrencyCode":"USD","ter":"-","totalFundSizeInMillions":{"d":"111.41","r":111.4066487},"totalFundSizeInMillionsAsOf":{"d":"01-Jun-2026","r":20260601},"totalNetAssets":{"d":"111,406,648.70","r":1.114066487E8},"useOfProfits":"Distributing","weightedAvgYieldToMaturity":"-","wtdAvgCarbonIntensity":{"d":"148.71","r":148.71},"esg.suiteCategory":"-","esg.suiteCategoryCode":"-","modelOad_effectiveDuration":"-"},"315923":{"aladdinAssetClass":"Equity","aladdinAssetClassCode":"43511","aladdinCountry":"Hong
+        Kong","aladdinCountryCode":"43568","aladdinEsgClassification":"-","aladdinEsgClassificationCode":"-","aladdinMarketType":"Developed","aladdinMarketTypeCode":"43513","aladdinRegion":"Asia
+        Pacific","aladdinRegionCode":"43526","aladdinSfdr":"-","aladdinSfdrCode":"-","aladdinStrategy":"-","aladdinStrategyCode":"-","aladdinSubAssetClass":"Large/Mid
+        Cap","aladdinSubAssetClassCode":"43581","bidPrice":"-","calendarFiveYear":{"d":"-32.64","r":-32.641302},"calendarFourYear":{"d":"-26.89","r":-26.886871},"calendarOneYear":{"d":"24.34","r":24.335196},"calendarPerfAsOfdate":{"d":"31-Dec-2025","r":20251231},"calendarThreeYear":{"d":"-8.54","r":-8.536826},"calendarTwoYear":{"d":"19.48","r":19.482694},"discreteFiveYear":{"d":"-44.26","r":-44.262881},"discreteFourYear":{"d":"-5.19","r":-5.186586},"discreteOneYear":{"d":"-13.17","r":-13.174446},"discretePerfAsOfdate":{"d":"31-Mar-2026","r":20260331},"discreteThreeYear":{"d":"-18.90","r":-18.89727},"discreteTwoYear":{"d":"56.16","r":56.155793},"distYield":{"d":"0.78","r":0.779218},"domicile":"Hong
+        Kong","effectiveDuration":"-","esgMsciQualityScore":{"d":"7.36","r":7.3609},"esgRating":"AA","fundName":"iShares
+        Hang Seng TECH ETF","inceptionDate":{"d":"14-Sept-2020","r":20200914},"investmentStyle":"[Passive]","investmentStyleCode":"[44342]","investorClassCode":"
+        ","investorClassName":"-","isin":"HK0000651213","localExchangeTicker":"3067","mgt":{"d":"0.25","r":0.25},"modelOad":"-","navAmount":{"d":"10.44","r":10.4364},"navAmountAsOf":{"d":"01-Jun-2026","r":20260601},"navAnnualisedAsOf":{"d":"30-Apr-2026","r":20260430},"navFiveYear":{"d":"-39.98","r":-39.983592},"navFiveYearAnnualized":{"d":"-9.71","r":-9.707017},"navInception":{"d":"-32.23","r":-32.225494},"navOneYearAnnualized":{"d":"-3.61","r":-3.614495},"navPerfAsOf":{"d":"30-Apr-2026","r":20260430},"navSinceInceptionAnnualized":{"d":"-6.68","r":-6.681585},"navSixMonth":{"d":"-17.41","r":-17.410082},"navTenYear":"-","navThreeYear":{"d":"27.19","r":27.189082},"navThreeYearAnnualized":{"d":"8.35","r":8.34693},"navTwoYearAnnualized":{"d":"15.49","r":15.494777},"navYearToDate":{"d":"-11.54","r":-11.537098},"onGoingCharges":{"d":"0.25","r":0.25},"portfolioId":315923,"productPageUrl":"/hk/en/products/315923/ishares-hang-seng-tech-etf","productType":"ISHARES_FUND_DATA","productView":["etf"],"seriesBaseCurrency":"Hong
+        Kong Dollar","seriesBaseCurrencyCode":"HKD","ter":"-","totalFundSizeInMillions":{"d":"15,239.82","r":15239.824554030001},"totalFundSizeInMillionsAsOf":{"d":"01-Jun-2026","r":20260601},"totalNetAssets":{"d":"15,239,824,554.03","r":1.523982455403E10},"useOfProfits":"Distributing","weightedAvgYieldToMaturity":"-","wtdAvgCarbonIntensity":{"d":"65.92","r":65.92},"esg.suiteCategory":"-","esg.suiteCategoryCode":"-","modelOad_effectiveDuration":"-"},"251579":{"aladdinAssetClass":"Equity","aladdinAssetClassCode":"43511","aladdinCountry":"Broad","aladdinCountryCode":"43769","aladdinEsgClassification":"-","aladdinEsgClassificationCode":"-","aladdinMarketType":"Emerging","aladdinMarketTypeCode":"43524","aladdinRegion":"Asia
+        Pacific","aladdinRegionCode":"43526","aladdinSfdr":"-","aladdinSfdrCode":"-","aladdinStrategy":"[Core
+        ETFs]","aladdinStrategyCode":"[50567]","aladdinSubAssetClass":"Large/Mid Cap","aladdinSubAssetClassCode":"43581","bidPrice":"-","calendarFiveYear":{"d":"-5.33","r":-5.333708},"calendarFourYear":{"d":"-19.86","r":-19.858303},"calendarOneYear":{"d":"32.07","r":32.07138},"calendarPerfAsOfdate":{"d":"31-Dec-2025","r":20251231},"calendarThreeYear":{"d":"5.41","r":5.414064},"calendarTwoYear":{"d":"11.43","r":11.433212},"discreteFiveYear":{"d":"-15.18","r":-15.175081},"discreteFourYear":{"d":"-8.96","r":-8.956214},"discreteOneYear":{"d":"28.36","r":28.356636},"discretePerfAsOfdate":{"d":"31-Mar-2026","r":20260331},"discreteThreeYear":{"d":"2.64","r":2.636297},"discreteTwoYear":{"d":"11.75","r":11.746368},"distYield":{"d":"0.86","r":0.855439},"domicile":"Hong
+        Kong","effectiveDuration":"-","esgMsciQualityScore":{"d":"6.68","r":6.6753},"esgRating":"A","fundName":"iShares
+        Core MSCI Asia ex Japan ETF","inceptionDate":{"d":"12-Mar-2009","r":20090312},"investmentStyle":"[Passive]","investmentStyleCode":"[44342]","investorClassCode":"
+        ","investorClassName":"-","isin":"HK0000051877","localExchangeTicker":"3010","mgt":{"d":"0.28","r":0.28},"modelOad":"-","navAmount":{"d":"11.88","r":11.8809},"navAmountAsOf":{"d":"01-Jun-2026","r":20260601},"navAnnualisedAsOf":{"d":"30-Apr-2026","r":20260430},"navFiveYear":{"d":"28.87","r":28.867443},"navFiveYearAnnualized":{"d":"5.20","r":5.203125},"navInception":{"d":"459.66","r":459.655497},"navOneYearAnnualized":{"d":"48.22","r":48.224458},"navPerfAsOf":{"d":"30-Apr-2026","r":20260430},"navSinceInceptionAnnualized":{"d":"10.57","r":10.573985},"navSixMonth":{"d":"14.74","r":14.737736},"navTenYear":{"d":"148.99","r":148.993243},"navThreeYear":{"d":"74.79","r":74.785431},"navThreeYearAnnualized":{"d":"20.46","r":20.457841},"navTwoYearAnnualized":{"d":"28.13","r":28.1284},"navYearToDate":{"d":"15.09","r":15.092666},"onGoingCharges":{"d":"0.28","r":0.28},"portfolioId":251579,"productPageUrl":"/hk/en/products/251579/ishares-core-msci-ac-asia-ex-apan-index-etf
+        ","productType":"ISHARES_FUND_DATA","productView":["etf"],"seriesBaseCurrency":"U.S.
+        Dollar","seriesBaseCurrencyCode":"USD","ter":"-","totalFundSizeInMillions":{"d":"6,022.17","r":6022.16968858},"totalFundSizeInMillionsAsOf":{"d":"01-Jun-2026","r":20260601},"totalNetAssets":{"d":"6,022,169,688.58","r":6.02216968858E9},"useOfProfits":"Distributing","weightedAvgYieldToMaturity":"-","wtdAvgCarbonIntensity":{"d":"318.39","r":318.39},"esg.suiteCategory":"-","esg.suiteCategoryCode":"-","modelOad_effectiveDuration":"-"},"251754":{"aladdinAssetClass":"Equity","aladdinAssetClassCode":"43511","aladdinCountry":"China","aladdinCountryCode":"43544","aladdinEsgClassification":"-","aladdinEsgClassificationCode":"-","aladdinMarketType":"Emerging","aladdinMarketTypeCode":"43524","aladdinRegion":"Asia
+        Pacific","aladdinRegionCode":"43526","aladdinSfdr":"-","aladdinSfdrCode":"-","aladdinStrategy":"[Core
+        ETFs]","aladdinStrategyCode":"[50567]","aladdinSubAssetClass":"Large/Mid Cap","aladdinSubAssetClassCode":"43581","bidPrice":"-","calendarFiveYear":{"d":"-4.11","r":-4.112746},"calendarFourYear":{"d":"-20.35","r":-20.353341},"calendarOneYear":{"d":"20.42","r":20.423885},"calendarPerfAsOfdate":{"d":"31-Dec-2025","r":20251231},"calendarThreeYear":{"d":"-9.61","r":-9.614783},"calendarTwoYear":{"d":"17.40","r":17.399134},"discreteFiveYear":{"d":"-15.37","r":-15.37054},"discreteFourYear":{"d":"-2.49","r":-2.486879},"discreteOneYear":{"d":"17.10","r":17.09682},"discretePerfAsOfdate":{"d":"31-Mar-2026","r":20260331},"discreteThreeYear":{"d":"-11.33","r":-11.328438},"discreteTwoYear":{"d":"13.28","r":13.278224},"distYield":{"d":"1.34","r":1.335053},"domicile":"Hong
+        Kong","effectiveDuration":"-","esgMsciQualityScore":{"d":"5.32","r":5.321},"esgRating":"BBB","fundName":"iShares
+        Core CSI 300 ETF","inceptionDate":{"d":"12-Nov-2009","r":20091112},"investmentStyle":"[Passive]","investmentStyleCode":"[44342]","investorClassCode":"
+        ","investorClassName":"-","isin":"HK0000057395","localExchangeTicker":"2846","mgt":{"d":"0.16","r":0.16},"modelOad":"-","navAmount":{"d":"32.64","r":32.6352},"navAmountAsOf":{"d":"01-Jun-2026","r":20260601},"navAnnualisedAsOf":{"d":"30-Apr-2026","r":20260430},"navFiveYear":{"d":"3.36","r":3.361463},"navFiveYearAnnualized":{"d":"0.66","r":0.663431},"navInception":{"d":"51.21","r":51.213343},"navOneYearAnnualized":{"d":"30.36","r":30.359347},"navPerfAsOf":{"d":"30-Apr-2026","r":20260430},"navSinceInceptionAnnualized":{"d":"2.54","r":2.543062},"navSixMonth":{"d":"4.00","r":4.003938},"navTenYear":{"d":"79.21","r":79.213999},"navThreeYear":{"d":"27.80","r":27.803864},"navThreeYearAnnualized":{"d":"8.52","r":8.521218},"navTwoYearAnnualized":{"d":"18.31","r":18.311347},"navYearToDate":{"d":"4.06","r":4.059963},"onGoingCharges":{"d":"0.16","r":0.16},"portfolioId":251754,"productPageUrl":"/hk/en/products/251754/ishares-csi-300-a-share-index-etf","productType":"ISHARES_FUND_DATA","productView":["etf"],"seriesBaseCurrency":"RMB","seriesBaseCurrencyCode":"CNY","ter":"-","totalFundSizeInMillions":{"d":"7,440.83","r":7440.8312916800005},"totalFundSizeInMillionsAsOf":{"d":"01-Jun-2026","r":20260601},"totalNetAssets":{"d":"7,440,831,291.68","r":7.44083129168E9},"useOfProfits":"Distributing","weightedAvgYieldToMaturity":"-","wtdAvgCarbonIntensity":{"d":"716.68","r":716.68},"esg.suiteCategory":"-","esg.suiteCategoryCode":"-","modelOad_effectiveDuration":"-"},"282238":{"aladdinAssetClass":"Equity","aladdinAssetClassCode":"43511","aladdinCountry":"United
+        States","aladdinCountryCode":"43632","aladdinEsgClassification":"-","aladdinEsgClassificationCode":"-","aladdinMarketType":"Developed","aladdinMarketTypeCode":"43513","aladdinRegion":"North
+        America","aladdinRegionCode":"43512","aladdinSfdr":"-","aladdinSfdrCode":"-","aladdinStrategy":"-","aladdinStrategyCode":"-","aladdinSubAssetClass":"Large
+        Cap","aladdinSubAssetClassCode":"43580","bidPrice":"-","calendarFiveYear":{"d":"26.88","r":26.881156},"calendarFourYear":{"d":"-32.74","r":-32.735516},"calendarOneYear":{"d":"20.44","r":20.438993},"calendarPerfAsOfdate":{"d":"31-Dec-2025","r":20251231},"calendarThreeYear":{"d":"54.22","r":54.218291},"calendarTwoYear":{"d":"25.20","r":25.20097},"discreteFiveYear":{"d":"13.57","r":13.571198},"discreteFourYear":{"d":"-10.84","r":-10.840916},"discreteOneYear":{"d":"23.40","r":23.398535},"discretePerfAsOfdate":{"d":"31-Mar-2026","r":20260331},"discreteThreeYear":{"d":"38.84","r":38.844431},"discreteTwoYear":{"d":"5.89","r":5.887961},"distYield":"-","domicile":"Hong
+        Kong","effectiveDuration":"-","esgMsciQualityScore":{"d":"6.38","r":6.38},"esgRating":"A","fundName":"iShares
+        NASDAQ 100 ETF","inceptionDate":{"d":"22-Jun-2016","r":20160622},"investmentStyle":"[Passive]","investmentStyleCode":"[44342]","investorClassCode":"
+        ","investorClassName":"-","isin":"HK0000297652","localExchangeTicker":"2834","mgt":{"d":"0.28","r":0.28},"modelOad":"-","navAmount":{"d":"74.52","r":74.515},"navAmountAsOf":{"d":"01-Jun-2026","r":20260601},"navAnnualisedAsOf":{"d":"30-Apr-2026","r":20260430},"navFiveYear":{"d":"100.61","r":100.614788},"navFiveYearAnnualized":{"d":"14.94","r":14.940369},"navInception":{"d":"543.24","r":543.236084},"navOneYearAnnualized":{"d":"40.55","r":40.548226},"navPerfAsOf":{"d":"30-Apr-2026","r":20260430},"navSinceInceptionAnnualized":{"d":"20.79","r":20.787446},"navSixMonth":{"d":"6.26","r":6.263377},"navTenYear":"-","navThreeYear":{"d":"108.73","r":108.731669},"navThreeYearAnnualized":{"d":"27.80","r":27.799586},"navTwoYearAnnualized":{"d":"25.75","r":25.747879},"navYearToDate":{"d":"8.77","r":8.772533},"onGoingCharges":{"d":"0.28","r":0.28},"portfolioId":282238,"productPageUrl":"/hk/en/products/282238/ishares-nasdaq-100-etf","productType":"ISHARES_FUND_DATA","productView":["etf"],"seriesBaseCurrency":"U.S.
+        Dollar","seriesBaseCurrencyCode":"USD","ter":"-","totalFundSizeInMillions":{"d":"170.37","r":170.37346064},"totalFundSizeInMillionsAsOf":{"d":"29-May-2026","r":20260529},"totalNetAssets":{"d":"171,384,398.46","r":1.7138439846E8},"useOfProfits":"Distributing","weightedAvgYieldToMaturity":"-","wtdAvgCarbonIntensity":{"d":"59.38","r":59.38},"esg.suiteCategory":"-","esg.suiteCategoryCode":"-","modelOad_effectiveDuration":"-"},"284479":{"aladdinAssetClass":"Equity","aladdinAssetClassCode":"43511","aladdinCountry":"Hong
+        Kong","aladdinCountryCode":"43568","aladdinEsgClassification":"-","aladdinEsgClassificationCode":"-","aladdinMarketType":"Developed","aladdinMarketTypeCode":"43513","aladdinRegion":"Asia
+        Pacific","aladdinRegionCode":"43526","aladdinSfdr":"-","aladdinSfdrCode":"-","aladdinStrategy":"[Core
+        ETFs]","aladdinStrategyCode":"[50567]","aladdinSubAssetClass":"Large Cap","aladdinSubAssetClassCode":"43580","bidPrice":"-","calendarFiveYear":{"d":"-12.54","r":-12.540576},"calendarFourYear":{"d":"-12.79","r":-12.785478},"calendarOneYear":{"d":"32.06","r":32.057731},"calendarPerfAsOfdate":{"d":"31-Dec-2025","r":20251231},"calendarThreeYear":{"d":"-10.80","r":-10.801353},"calendarTwoYear":{"d":"22.46","r":22.459988},"discreteFiveYear":{"d":"-21.06","r":-21.055144},"discreteFourYear":{"d":"-4.34","r":-4.340332},"discreteOneYear":{"d":"10.42","r":10.424932},"discretePerfAsOfdate":{"d":"31-Mar-2026","r":20260331},"discreteThreeYear":{"d":"-15.98","r":-15.978065},"discreteTwoYear":{"d":"45.74","r":45.738362},"distYield":{"d":"2.82","r":2.824996},"domicile":"Hong
+        Kong","effectiveDuration":"-","esgMsciQualityScore":{"d":"7.28","r":7.281},"esgRating":"AA","fundName":"iShares
+        Core Hang Seng Index ETF","inceptionDate":{"d":"18-Nov-2016","r":20161118},"investmentStyle":"[Passive]","investmentStyleCode":"[44342]","investorClassCode":"
+        ","investorClassName":"-","isin":"HK0000313426","localExchangeTicker":"3115","mgt":{"d":"0.09","r":0.09},"modelOad":"-","navAmount":{"d":"93.19","r":93.1912},"navAmountAsOf":{"d":"01-Jun-2026","r":20260601},"navAnnualisedAsOf":{"d":"30-Apr-2026","r":20260430},"navFiveYear":{"d":"4.89","r":4.891017},"navFiveYearAnnualized":{"d":"0.96","r":0.959609},"navInception":{"d":"53.82","r":53.818601},"navOneYearAnnualized":{"d":"19.74","r":19.739906},"navPerfAsOf":{"d":"30-Apr-2026","r":20260430},"navSinceInceptionAnnualized":{"d":"4.66","r":4.662065},"navSixMonth":{"d":"0.21","r":0.211207},"navTenYear":"-","navThreeYear":{"d":"44.20","r":44.201111},"navThreeYearAnnualized":{"d":"12.98","r":12.976869},"navTwoYearAnnualized":{"d":"24.83","r":24.83395},"navYearToDate":{"d":"0.91","r":0.909432},"onGoingCharges":{"d":"0.09","r":0.09},"portfolioId":284479,"productPageUrl":"/hk/en/products/284479/ishares-core-hang-seng-index-etf","productType":"ISHARES_FUND_DATA","productView":["etf"],"seriesBaseCurrency":"Hong
+        Kong Dollar","seriesBaseCurrencyCode":"HKD","ter":"-","totalFundSizeInMillions":{"d":"2,295.88","r":2295.8782910500004},"totalFundSizeInMillionsAsOf":{"d":"29-May-2026","r":20260529},"totalNetAssets":{"d":"2,315,800,880.18","r":2.31580088018E9},"useOfProfits":"Distributing","weightedAvgYieldToMaturity":"-","wtdAvgCarbonIntensity":{"d":"233.13","r":233.13},"esg.suiteCategory":"-","esg.suiteCategoryCode":"-","modelOad_effectiveDuration":"-"},"251576":{"aladdinAssetClass":"Equity","aladdinAssetClassCode":"43511","aladdinCountry":"China","aladdinCountryCode":"43544","aladdinEsgClassification":"-","aladdinEsgClassificationCode":"-","aladdinMarketType":"Emerging","aladdinMarketTypeCode":"43524","aladdinRegion":"Asia
+        Pacific","aladdinRegionCode":"43526","aladdinSfdr":"-","aladdinSfdrCode":"-","aladdinStrategy":"[Core
+        ETFs]","aladdinStrategyCode":"[50567]","aladdinSubAssetClass":"Large/Mid Cap","aladdinSubAssetClassCode":"43581","bidPrice":"-","calendarFiveYear":{"d":"-21.42","r":-21.418746},"calendarFourYear":{"d":"-21.93","r":-21.926396},"calendarOneYear":{"d":"31.15","r":31.151731},"calendarPerfAsOfdate":{"d":"31-Dec-2025","r":20251231},"calendarThreeYear":{"d":"-11.34","r":-11.339871},"calendarTwoYear":{"d":"18.63","r":18.631124},"discreteFiveYear":{"d":"-32.17","r":-32.169213},"discreteFourYear":{"d":"-4.62","r":-4.62371},"discreteOneYear":{"d":"4.40","r":4.397043},"discretePerfAsOfdate":{"d":"31-Mar-2026","r":20260331},"discreteThreeYear":{"d":"-17.54","r":-17.543513},"discreteTwoYear":{"d":"39.53","r":39.534309},"distYield":{"d":"2.01","r":2.00546},"domicile":"Hong
+        Kong","effectiveDuration":"-","esgMsciQualityScore":{"d":"6.28","r":6.2823},"esgRating":"A","fundName":"iShares
+        Core MSCI China ETF","inceptionDate":{"d":"23-Nov-2001","r":20011123},"investmentStyle":"[Passive]","investmentStyleCode":"[44342]","investorClassCode":"
+        ","investorClassName":"-","isin":"HK2801040828","localExchangeTicker":"2801","mgt":{"d":"0.20","r":0.2},"modelOad":"-","navAmount":{"d":"24.63","r":24.6312},"navAmountAsOf":{"d":"01-Jun-2026","r":20260601},"navAnnualisedAsOf":{"d":"30-Apr-2026","r":20260430},"navFiveYear":{"d":"-20.57","r":-20.572844},"navFiveYearAnnualized":{"d":"-4.50","r":-4.502104},"navInception":{"d":"614.42","r":614.419911},"navOneYearAnnualized":{"d":"13.28","r":13.280236},"navPerfAsOf":{"d":"30-Apr-2026","r":20260430},"navSinceInceptionAnnualized":{"d":"8.38","r":8.379309},"navSixMonth":{"d":"-8.53","r":-8.532172},"navTenYear":{"d":"66.59","r":66.593715},"navThreeYear":{"d":"31.08","r":31.083655},"navThreeYearAnnualized":{"d":"9.44","r":9.441704},"navTwoYearAnnualized":{"d":"18.93","r":18.93151},"navYearToDate":{"d":"-5.11","r":-5.111736},"onGoingCharges":{"d":"0.20","r":0.2},"portfolioId":251576,"productPageUrl":"/hk/en/products/251576/ishares-msci-china-index-etf","productType":"ISHARES_FUND_DATA","productView":["etf"],"seriesBaseCurrency":"Hong
+        Kong Dollar","seriesBaseCurrencyCode":"HKD","ter":"-","totalFundSizeInMillions":{"d":"15,063.13","r":15063.12737474},"totalFundSizeInMillionsAsOf":{"d":"29-May-2026","r":20260529},"totalNetAssets":{"d":"14,800,879,137.08","r":1.480087913708E10},"useOfProfits":"Distributing","weightedAvgYieldToMaturity":"-","wtdAvgCarbonIntensity":{"d":"316.69","r":316.69},"esg.suiteCategory":"-","esg.suiteCategoryCode":"-","modelOad_effectiveDuration":"-"},"321096":{"aladdinAssetClass":"Fixed
+        Income","aladdinAssetClassCode":"43515","aladdinCountry":"China","aladdinCountryCode":"43544","aladdinEsgClassification":"-","aladdinEsgClassificationCode":"-","aladdinMarketType":"Emerging","aladdinMarketTypeCode":"43524","aladdinRegion":"Asia
+        Pacific","aladdinRegionCode":"43526","aladdinSfdr":"-","aladdinSfdrCode":"-","aladdinStrategy":"-","aladdinStrategyCode":"-","aladdinSubAssetClass":"Government","aladdinSubAssetClassCode":"43563","bidPrice":"-","calendarFiveYear":"-","calendarFourYear":{"d":"3.12","r":3.117436},"calendarOneYear":{"d":"0.46","r":0.455221},"calendarPerfAsOfdate":{"d":"31-Dec-2025","r":20251231},"calendarThreeYear":{"d":"4.23","r":4.225649},"calendarTwoYear":{"d":"7.86","r":7.862585},"discreteFiveYear":"-","discreteFourYear":{"d":"3.06","r":3.058517},"discreteOneYear":{"d":"2.02","r":2.015992},"discretePerfAsOfdate":{"d":"31-Mar-2026","r":20260331},"discreteThreeYear":{"d":"5.51","r":5.511991},"discreteTwoYear":{"d":"5.09","r":5.090462},"distYield":{"d":"2.23","r":2.230249},"domicile":"Hong
+        Kong","effectiveDuration":{"d":"5.50","r":5.49581},"esgMsciQualityScore":"-","esgRating":"-","fundName":"iShares
+        China Government Bond ETF","inceptionDate":{"d":"18-Oct-2021","r":20211018},"investmentStyle":"[Passive]","investmentStyleCode":"[44342]","investorClassCode":"
+        ","investorClassName":"-","isin":"HK0000782851","localExchangeTicker":"2829","mgt":{"d":"0.18","r":0.18},"modelOad":{"d":"5.50","r":5.49581},"navAmount":{"d":"54.74","r":54.7366},"navAmountAsOf":{"d":"01-Jun-2026","r":20260601},"navAnnualisedAsOf":{"d":"30-Apr-2026","r":20260430},"navFiveYear":"-","navFiveYearAnnualized":"-","navInception":{"d":"20.01","r":20.00972},"navOneYearAnnualized":{"d":"1.21","r":1.206892},"navPerfAsOf":{"d":"30-Apr-2026","r":20260430},"navSinceInceptionAnnualized":{"d":"4.11","r":4.105629},"navSixMonth":{"d":"0.86","r":0.856239},"navTenYear":"-","navThreeYear":{"d":"12.83","r":12.831238},"navThreeYearAnnualized":{"d":"4.11","r":4.106166},"navTwoYearAnnualized":{"d":"3.49","r":3.48937},"navYearToDate":{"d":"1.14","r":1.137997},"onGoingCharges":{"d":"0.18","r":0.18},"portfolioId":321096,"productPageUrl":"/hk/en/products/321096/ishares-china-government-bond-etf","productType":"ISHARES_FUND_DATA","productView":["etf"],"seriesBaseCurrency":"RMB","seriesBaseCurrencyCode":"CNY","ter":"-","totalFundSizeInMillions":{"d":"3,408.79","r":3408.79111383},"totalFundSizeInMillionsAsOf":{"d":"29-May-2026","r":20260529},"totalNetAssets":{"d":"3,410,921,918.10","r":3.4109219181E9},"useOfProfits":"Distributing","weightedAvgYieldToMaturity":{"d":"1.46","r":1.46},"wtdAvgCarbonIntensity":"-","esg.suiteCategory":"-","esg.suiteCategoryCode":"-","modelOad_effectiveDuration":{"d":"5.50","r":5.49581}}}'
+    headers:
+      Cache-Control:
+      - public, max-age=450
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - 'default-src https: ''unsafe-inline'' ''unsafe-eval''; img-src https: data:;
+        frame-ancestors ''self'' https://*.blackrock.com https://*.ishares.com;'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Date:
+      - Tue, 02 Jun 2026 03:21:50 GMT
+      Expires:
+      - Tue, 02 Jun 2026 03:29:18 GMT
+      Server:
+      - istio-envoy
+      Set-Cookie:
+      - ts-hk-one-locale=en_HK; Expires=Sun, 01 Jun 2031 03:21:48 GMT; Max-Age=157680000;
+        Path=/; Secure; HttpOnly; SameSite=Lax
+      - StatisticalAnalyticsEnabled=true; Expires=Mon, 31 Aug 2026 03:21:48 GMT; Max-Age=7776000;
+        Path=/; Secure; SameSite=Lax
+      - SSESSIONID_apac-retail01=ZjVlNTA1YzItZTIxNy00NTcyLTk1YTItMzhmMTljN2IwZmE0;
+        Path=/; Secure; HttpOnly; SameSite=Lax
+      - STICKY_SESSION_COOKIE_APAC_RETAIL01_LIVE="0b5667d94d818bd0"; Max-Age=3600;
+        Path=/; HttpOnly
+      - DC_STICKY_SESSION_COOKIE=musw2; Path=/; Max-Age=28800; HttpOnly; Secure; SameSite=None
+      Vary:
+      - Accept-Encoding
+      content-length:
+      - '28540'
+      referrer-policy:
+      - no-referrer-when-downgrade
+      strict-transport-security:
+      - max-age=31536000;preload
+      x-cache-status:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '2103'
+      x-frame-options:
+      - SAMEORIGIN
+      x-host-ref:
+      - apac-retail01-live-586cf765cb-b7xbw/orca
+      x-locale:
+      - en_HK
+      x-region-ref:
+      - musw2
+      x-request-id:
+      - a73c9ac1-19e6f03a2bf
+      x-site-name:
+      - hk-one
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Referer:
+      - https://www.blackrock.com/hk/en/products/etf-investments
+      User-Agent:
+      - MOCK_UA
+    method: GET
+    uri: https://www.blackrock.com/hk/en/products/251797/fund/1478358625284.ajax?tab=cumulative
+  response:
+    body:
+      string: "<!DOCTYPE html>\n<html xmlns=\"http://www.w3.org/1999/xhtml\" prefix=\"og:
+        http://ogp.me/ns#\" lang=\"en\" xml:lang=\"en\">\n<div id=\"cumulativeTabs\"
+        data-ajaxUri=\"/hk/en/products/251797/ishares-ftse-a50-china-index-etf/1478358625284.ajax?tab=cumulative\">\n<div
+        class=\"component-date-list\">\n<form action=\"#\">\n<label class=\"product-dropdown\">\nas
+        of <select class=\"date-dropdown\">\n<option value=\"20260430\" selected>\n30-Apr-2026\n</option>\n<option
+        value=\"20260331\" >\n31-Mar-2026\n</option>\n<option value=\"20251231\" >\n31-Dec-2025\n</option>\n</select>\n</label>\n</form>\n</div>\n<div
+        class=\"mobile-scroll-wrapper\">\n<div class=\"mobile-scroll\">\n<table class=\"product-table
+        border-row cumulative-returns\">\n<thead>\n<tr>\n<th>&nbsp;</th>\n<th class=\"yearToDate
+        \">\nYTD </th>\n<th class=\"oneMonth \">\n1m </th>\n<th class=\"threeMonth
+        \">\n3m </th>\n<th class=\"sixMonth \">\n6m </th>\n<th class=\"oneYear \">\n1y
+        </th>\n<th class=\"threeYear \">\n3y </th>\n<th class=\"fiveYear \">\n5y </th>\n<th
+        class=\"tenYear \">\n10y </th>\n<th class=\"inception \">\nIncept. </th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td
+        class=\"align-left navSourced\" >\n<span>\nTotal Return (%)\n<button class=\"product-info-bubble
+        \" title=\"Total return represents changes to the NAV and accounts for distributions
+        from the fund.\"\naria-haspopup=\"true\" aria-label=\"More Info\" aria-expanded=\"true\">\n<i
+        aria-hidden=\"true\" class=\"tooltip-info-icon fas fa-info-circle\"></i>\n</button>\n<!--
+        30-Apr-2026 -->\n</td>\n<td class=\"yearToDate \">\n2.46\n</td>\n<td class=\"oneMonth
+        \">\n7.43\n</td>\n<td class=\"threeMonth \">\n4.57\n</td>\n<td class=\"sixMonth
+        \">\n3.03\n</td>\n<td class=\"oneYear \">\n22.83\n</td>\n<td class=\"threeYear
+        \">\n28.74\n</td>\n<td class=\"fiveYear \">\n1.40\n</td>\n<td class=\"tenYear
+        \">\n103.34\n</td>\n<td class=\"inception \">\n356.34\n</td>\n</tr>\n<tr>\n<td
+        class=\"align-left benchmarkSourced\" data-rel-type-code=\"PERF_BENCH\">\n<span>\nBenchmark
+        (%)\n<button class=\"product-info-bubble \" title=\"Index: FTSE Xinhua China
+        A50 Net Index (CNY).&lt;br /&gt;&lt;br /&gt; Index returns are for illustrative
+        purposes only. Index performance returns do not reflect any management fees,
+        transaction costs or expenses. Indexes are unmanaged and one cannot invest
+        directly in an index. Past performance does not guarantee future results.\"\naria-haspopup=\"true\"
+        aria-label=\"More Info\" aria-expanded=\"true\">\n<i aria-hidden=\"true\"
+        class=\"tooltip-info-icon fas fa-info-circle\"></i>\n</button>\n<!-- 30-Apr-2026
+        -->\n</td>\n<td class=\"yearToDate \">\n2.59\n</td>\n<td class=\"oneMonth
+        \">\n7.47\n</td>\n<td class=\"threeMonth \">\n4.68\n</td>\n<td class=\"sixMonth
+        \">\n3.25\n</td>\n<td class=\"oneYear \">\n23.31\n</td>\n<td class=\"threeYear
+        \">\n30.21\n</td>\n<td class=\"fiveYear \">\n3.31\n</td>\n<td class=\"tenYear
+        \">\n112.35\n</td>\n<td class=\"inception \">\n474.60\n</td>\n</tr>\n</tbody>\n</table>\n</div>\n</div>\n<div
+        class=\"display-none\" id=\"no-average-ann-perf-msg\">\n\_ </div>\n</div>\n<div
+        class=\"data-loading\"></div></html>"
+    headers:
+      Cache-Control:
+      - no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2844'
+      Content-Security-Policy:
+      - 'default-src https: ''unsafe-inline'' ''unsafe-eval''; img-src https: data:;
+        frame-ancestors ''self'' https://*.blackrock.com https://*.ishares.com;'
+      Content-Type:
+      - text/html;charset=UTF-8
+      Date:
+      - Tue, 02 Jun 2026 03:21:50 GMT
+      Expires:
+      - Tue, 02 Jun 2026 03:21:50 GMT
+      Server:
+      - istio-envoy
+      Set-Cookie:
+      - ts-hk-one-locale=en_HK; Expires=Sun, 01 Jun 2031 03:21:50 GMT; Max-Age=157680000;
+        Path=/; Secure; HttpOnly; SameSite=Lax
+      - StatisticalAnalyticsEnabled=true; Expires=Mon, 31 Aug 2026 03:21:50 GMT; Max-Age=7776000;
+        Path=/; Secure; SameSite=Lax
+      - hk-one-recent-funds=251797; Expires=Sun, 01 Jun 2031 03:21:50 GMT; Max-Age=157680000;
+        Path=/; Secure; HttpOnly; SameSite=Lax
+      - STICKY_SESSION_COOKIE_APAC_RETAIL01_LIVE="0b5667d94d818bd0"; Max-Age=3600;
+        Path=/; HttpOnly
+      - DC_STICKY_SESSION_COOKIE=musw2; Path=/; Max-Age=28800; HttpOnly; Secure; SameSite=None
+      referrer-policy:
+      - no-referrer-when-downgrade
+      strict-transport-security:
+      - max-age=31536000;preload
+      x-cache-status:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '274'
+      x-frame-options:
+      - SAMEORIGIN
+      x-host-ref:
+      - apac-retail01-live-586cf765cb-b7xbw/orca
+      x-locale:
+      - en_HK
+      x-page-name:
+      - products/overview-v3
+      x-region-ref:
+      - musw2
+      x-request-id:
+      - a73c9ac1-19e6f03a2cf
+      x-robots-tag:
+      - noindex
+      x-site-name:
+      - hk-one
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,0 +1,117 @@
+interactions:
+- request:
+    body: null
+    headers:
+      User-Agent:
+      - MOCK_UA
+    method: GET
+    uri: https://www1.hkexnews.hk/search/prefix.do?callback=callback&lang=EN&type=A&name=00700&market=SEHK
+  response:
+    body:
+      string: "callback({\"more\":\"1\",\"stockInfo\":[{\"stockId\":7609,\"code\":\"00700\",\"name\":\"TENCENT\"}]});\r\n"
+    headers:
+      Access-Control-Allow-Origin:
+      - https://sc.hkexnews.hk
+      Cache-Control:
+      - private, no-store, no-cache, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '88'
+      Content-Security-Policy:
+      - frame-ancestors 'self' http://sc.hkexnews.hk; frame-src 'self' http://sc.hkexnews.hk;
+      Content-Type:
+      - application/javascript;charset=utf-8
+      Date:
+      - Sun, 31 May 2026 22:54:20 GMT
+      Permissions-Policy:
+      - camera=()
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Set-Cookie:
+      - TS4e849b71027=08754bc291ab200030bfaeb02bfbc7bdaafdbfeb8d9f0048ae7b4d7f47ebd4c8662e6d031d82263a084609e1341130006c06423580f86807ac1a9e8425200ed86acd825083151b4ebc9815c76160ee9b89bd8386b1cc2ac015af3e1eede363cc;
+        Path=/
+      - bm_ss=ab8e18ef4e; Secure; SameSite=None; Domain=.hkexnews.hk; Path=/; HttpOnly;
+        Max-Age=3600
+      - bm_s=YAAQpDfLF3Te/0ueAQAAwM8+gAWiI3J/Xo5USCbTpWMaTKUJg730O+FieYoryQkXEogBYGxC7QX/WF04rPOVf7AIjrsbsmNv/CTiyKEvaD28aUYfrioLfzjoBoW/2t0b0Q0EMnPQx0i72AkDBhEogu3xzOx6DeF+Inz5EJR+vcLUtrV4eqk/q4im/gNgU+PY4ZoUAS/8gIB/B0GH/L6xXV2u+S/juyd8UKvgC6VQADWhSA9aSOWNcBTGhFG6OWwevHE2/I9PNCviJjl5WuHjxmbwfIJMeOjRWffj1k6tCB27N1bLbwcfCev1O4qTvABo8TZpy3RdBPpzeb5St4ezQr/TL9RcigFNhZB5LbzuVXblzraRy/qk7BpIUpR5b/37DlPJm2Si2ANrexDreP7Z7vupBL4GAtfFcMYXfabP92Ll01KlNaPFPNfpGzEGF7rGG+ZzhpjOjV4lVoXskoO+oTQU29W248uAXaV7g+zODeH9sLWwvhfq8GhO/RKSUEpZqcMlis0VMlAUwWGwxI9oa3WJECisdQWMuaza0n5I8nUrRPrCv9HzYAHKFW0=;
+        Domain=.hkexnews.hk; Path=/; Expires=Wed, 01 Jul 2026 22:54:20 GMT; Max-Age=2678400;
+        Secure; HttpOnly
+      - bm_so=37500890848B79D46F10CD90956B66C46343202C5B314F6E3261D1EB85EB6D65~YAAQpDfLF3Xe/0ueAQAAwM8+gAd53oV5fWBYmK/ZoVvcoC0/oiqwZRv2MuyQO8NJJL0/pxapCKsrv+7yoICVr7UUipHfuGeGE3+eJLWGikw1iJRvoIZorqiYCqWPyxClu8xc5nTvMTr33cI3OhVWYP9/jsVQ5t0JhAllpbK4HY30jTEml7QUpqNymPi9z1O3IJUWiw9PMt/UFIgOxouZUq7d56gqDS6cWn1bV1Yf/P59OdINFQp9RetQuL2jHeZnX4xm6C6L+HZUvLe8y++Ebub9aNf+q31e/ab9IWZDzxa5LiNBmsdwCCRTyLGBqaoM8L1HCoviHS5M0mP2pBgCJb5/FDzzzIWIf8Uft7tedGDqasAMPY2PxPU993QD8663CwxS1qp8aCjG4dFlcnCvr9VYrsD+7s5u/oAh94dbwlRN6qMmFWE3mzHKiC7dHl306Tn/kjKfAM35Z4hG8iXjen8=;
+        Domain=.hkexnews.hk; Path=/; Expires=Mon, 01 Jun 2026 22:54:20 GMT; Max-Age=86400;
+        Secure
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN, ALLOW-FROM https://sc.hkexnews.hk/
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Connection:
+      - close
+      Host:
+      - www1.hkexnews.hk
+      User-Agent:
+      - MOCK_UA
+    method: GET
+    uri: https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=7609&documentType=-1&fromDate=20250101&toDate=20251231&title=&searchType=1&t1code=40000&t2Gcode=-2&t2code=40100&rowRange=50000&lang=EN
+  response:
+    body:
+      string: '{"result":"[{\"FILE_INFO\":\"5MB\",\"NEWS_ID\":\"11618397\",\"SHORT_TEXT\":\"Financial
+        Statements\\u0026#x2f;ESG Information - [Annual Report]\\u003cbr/\\u003e\",\"TOTAL_COUNT\":\"1\",\"DOD_WEB_PATH\":\"\",\"STOCK_NAME\":\"TENCENT\\u003cbr/\\u003eTENCENT-R\",\"TITLE\":\"ANNUAL
+        REPORT 2024\",\"FILE_TYPE\":\"PDF\",\"DATE_TIME\":\"08/04/2025 17:02\",\"LONG_TEXT\":\"Financial
+        Statements\\u0026#x2f;ESG Information - [Annual Report]\",\"STOCK_CODE\":\"00700\\u003cbr/\\u003e80700\",\"FILE_LINK\":\"/listedco/listconews/sehk/2025/0408/2025040800667.pdf\"}]","hasNextRow":false,"sortList":"[[0,0]]","rowRange":50000,"lang":"E","loadedRecord":1,"recordCnt":1}'
+    headers:
+      Access-Control-Allow-Origin:
+      - https://sc.hkexnews.hk
+      Cache-Control:
+      - private, no-store, no-cache, must-revalidate
+      Connection:
+      - close
+      Content-Length:
+      - '654'
+      Content-Security-Policy:
+      - frame-ancestors 'self' http://sc.hkexnews.hk; frame-src 'self' http://sc.hkexnews.hk;
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Sun, 31 May 2026 22:54:22 GMT
+      Permissions-Policy:
+      - camera=()
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Set-Cookie:
+      - TS4e849b71027=08754bc291ab20004cde593bb0894c5b0fd82c9a3d8b7f4b8d35353997e5b57a6d86fc884a6afeac08bd23b67d1130001201a3e3d3a78a7fc656858ba8bbe14f2a57dbe278b8a29d516d8939b2ceb03ca086d90755f74f40d28a559e2379efab;
+        Path=/
+      - bm_ss=ab8e18ef4e; Secure; SameSite=None; Domain=.hkexnews.hk; Path=/; HttpOnly;
+        Max-Age=3600
+      - bm_s=YAAQqjfLF6HIzEqeAQAA89g+gAXVOnnRuU73Q8p734y+UE3DyGkMX1CVQU9tuYwISjhWV9Q7ONt6Wxw6nJh3Pv/BHmVxcI8g2MlsjlxukXIH0Hz6PpWiLM3o3HF8UgaffsBQEgNkRfN8kfTtOhmrRu7Lkb4StXBopugEFw60V/VhEaj4aA1vuV9CaWS1wGOrwk5G+TD/Dj5rwRPQq8rl9cFnUIe0KZtANwErCfTzN6nZ9nU+Jc3sQYKaDDBcXEvGA3Mi3iPHOkjwT0iD2vz31tTJ91gycDvwgelo9GvEUoyjb2T5yyBjzf+S6xvMPhw9Hfz/CLCg8KCzNYEUS0UxHG8ziRBTTeCLIT/iwsjAisiOprNapYpkR1G9lg/v0Z5rXXN3m9DTp8OR9HGEu9RVpjNau/IpOWpw202MYHGHUOHWxTe2CrFNo7gFmhL2uiha89aVf7X6ccgJX4pG+1hNVEGWih4+JVaLuXmU5MZQP2adOtqLPP6K70Dvx1r9N4RrojnzUr3cmnW5kAsFcIp0A382TKg3/K62I6CR5KIBUKMZGPunQQfje4iss0E=;
+        Domain=.hkexnews.hk; Path=/; Expires=Wed, 01 Jul 2026 22:54:22 GMT; Max-Age=2678400;
+        Secure; HttpOnly
+      - bm_so=6C10568141C61C6C78B1BF8634C857853CC670C42F5DACB6B4F14736EDAC67E4~YAAQqjfLF6LIzEqeAQAA89g+gAcLzvGsoQtrYEyl/0stfvDunLOHh2Vawx/jnMN2+X5Bgg/TtTosXMyqjDZNJGPjbEtpd59q1Ay4BU6p307C1cql0DocI33VMNrS35nLpSSjFYPhIAnLFGv3AW/esONHWNfqhkZBnZxJaU67QpyFQ1oJYOob4KW4NT/9lIouZdpjRBpVLydVhY2MrvMu6Cl/E1qh8jF1GJlGc0n6xt+SLNMQN0wLkOkpFb018SJdaVWRI/meO7rW+V/dzcs0kSPRmcPn9mIH2r4Xxy+DtkQ2G9mPUHJZNTiIBHYjnuRXoFrt7GGnGJ9xSQj4ggnA3wthyoggM+amNTeSp6XEsqReznsx3pC/aLZEMu6CFx8ryz98AsweuCrsjjvSw8LsMlSmB4TKWjjrNkpy//qYYsf6bkTI4iBH50bH/w0mb2ZI+IxHwd/iHjRz2C0nnEB9zk4=;
+        Domain=.hkexnews.hk; Path=/; Expires=Mon, 01 Jun 2026 22:54:22 GMT; Max-Age=86400;
+        Secure
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN, ALLOW-FROM https://sc.hkexnews.hk/
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

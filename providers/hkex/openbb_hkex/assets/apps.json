@@ -1,0 +1,344 @@
+[
+  {
+    "name": "HKEX — Hong Kong Exchange",
+    "img": "https://www.companieshistory.com/wp-content/uploads/2014/02/Hong-Kong-Exchanges1.jpg",
+    "description": "Live Hong Kong market data: securities search & reference, ticker information/profile cards, full price history (1m to quarterly, ~10y), disclosures and company filings, the Hang Seng index family with constituents & weights, ETF holdings / NAV / performance / tracking across the major HK issuers, index & stock derivatives.",
+    "allowCustomization": true,
+    "tabs": {
+      "overview": {
+        "id": "overview",
+        "name": "Overview",
+        "layout": [
+          {
+            "i": "hkex_market_data",
+            "x": 0,
+            "y": 2,
+            "w": 40,
+            "h": 16,
+            "state": {
+              "params": {
+                "group_by": "venue",
+                "programme": "all"
+              }
+            }
+          },
+          {
+            "i": "hkex_index_snapshots_hkex_obb",
+            "x": 0,
+            "y": 18,
+            "w": 40,
+            "h": 16,
+            "state": {
+              "params": {
+                "region": "hk"
+              }
+            }
+          }
+        ]
+      },
+      "securities": {
+        "id": "securities",
+        "name": "Securities",
+        "layout": [
+          {
+            "i": "hkex_lookup",
+            "x": 0,
+            "y": 2,
+            "w": 40,
+            "h": 16,
+            "state": {
+              "params": {
+                "venue": "all",
+                "keyword": "",
+                "limit": 25
+              }
+            }
+          },
+          {
+            "i": "hkex_search_hkex_obb",
+            "x": 0,
+            "y": 18,
+            "w": 40,
+            "h": 12,
+            "state": {
+              "params": {
+                "query": "tencent"
+              }
+            }
+          },
+          {
+            "i": "hkex_ticker",
+            "x": 0,
+            "y": 30,
+            "w": 16,
+            "h": 24,
+            "state": {
+              "params": {
+                "symbol": "00700"
+              }
+            }
+          },
+          {
+            "i": "hkex_quote_hkex_obb",
+            "x": 16,
+            "y": 30,
+            "w": 24,
+            "h": 8,
+            "state": {
+              "params": {
+                "symbol": "00700"
+              }
+            }
+          },
+          {
+            "i": "hkex_historical_hkex_obb",
+            "x": 16,
+            "y": 38,
+            "w": 24,
+            "h": 16,
+            "state": {
+              "params": {
+                "symbol": "00700"
+              }
+            }
+          },
+          {
+            "i": "hkex_company_filings",
+            "x": 0,
+            "y": 54,
+            "w": 40,
+            "h": 22,
+            "state": {
+              "params": {
+                "symbol": "00700",
+                "form_group": "all"
+              }
+            }
+          }
+        ]
+      },
+      "derivatives": {
+        "id": "derivatives",
+        "name": "Derivatives",
+        "layout": [
+          {
+            "i": "hkex_options_chains_hkex_obb",
+            "x": 0,
+            "y": 2,
+            "w": 40,
+            "h": 14,
+            "state": {
+              "params": {
+                "symbol": "HSI"
+              }
+            }
+          },
+          {
+            "i": "hkex_futures_curve_hkex_obb",
+            "x": 0,
+            "y": 16,
+            "w": 40,
+            "h": 10,
+            "state": {
+              "params": {
+                "symbol": "HSI"
+              }
+            }
+          },
+          {
+            "i": "hkex_stock_derivatives_hkex_obb",
+            "x": 0,
+            "y": 26,
+            "w": 40,
+            "h": 10,
+            "state": {
+              "params": {
+                "kind": "options"
+              }
+            }
+          }
+        ]
+      },
+      "etfs": {
+        "id": "etfs",
+        "name": "ETFs",
+        "layout": [
+          {
+            "i": "hkex_etf_holdings_hkex_obb",
+            "x": 0,
+            "y": 2,
+            "w": 40,
+            "h": 14,
+            "state": {
+              "params": {
+                "symbol": "03037"
+              }
+            }
+          },
+          {
+            "i": "hkex_etf_performance_hkex_obb",
+            "x": 0,
+            "y": 16,
+            "w": 20,
+            "h": 9,
+            "state": {
+              "params": {
+                "symbol": "03037"
+              }
+            }
+          },
+          {
+            "i": "hkex_etf_tracking_hkex_obb",
+            "x": 20,
+            "y": 16,
+            "w": 20,
+            "h": 9,
+            "state": {
+              "params": {
+                "symbol": "03037"
+              }
+            }
+          },
+          {
+            "i": "hkex_etf_nav_hkex_obb",
+            "x": 0,
+            "y": 25,
+            "w": 40,
+            "h": 12,
+            "state": {
+              "params": {
+                "symbol": "03037"
+              }
+            }
+          },
+          {
+            "i": "hkex_etf_sectors",
+            "x": 0,
+            "y": 37,
+            "w": 40,
+            "h": 14,
+            "state": {
+              "params": {
+                "symbol": "03037"
+              }
+            }
+          }
+        ]
+      },
+      "indices": {
+        "id": "indices",
+        "name": "Indices",
+        "layout": [
+          {
+            "i": "hkex_index_performance",
+            "x": 0,
+            "y": 2,
+            "w": 40,
+            "h": 16,
+            "state": {
+              "params": {
+                "series": "hsi"
+              }
+            }
+          },
+          {
+            "i": "hkex_index_constituents_hkex_obb",
+            "x": 0,
+            "y": 18,
+            "w": 40,
+            "h": 18,
+            "state": {
+              "params": {
+                "symbol": "HSI"
+              }
+            }
+          },
+          {
+            "i": "hkex_hsi_documents",
+            "x": 0,
+            "y": 36,
+            "w": 20,
+            "h": 30,
+            "state": {}
+          },
+          {
+            "i": "hkex_index_reports",
+            "x": 20,
+            "y": 36,
+            "w": 20,
+            "h": 30,
+            "state": {}
+          }
+        ]
+      },
+      "reference": {
+        "id": "reference",
+        "name": "Reference",
+        "layout": [
+          {
+            "i": "hkex_securities_master_hkex_obb",
+            "x": 0,
+            "y": 2,
+            "w": 20,
+            "h": 16,
+            "state": {}
+          },
+          {
+            "i": "hkex_derivative_products_hkex_obb",
+            "x": 20,
+            "y": 2,
+            "w": 20,
+            "h": 16,
+            "state": {}
+          }
+        ]
+      },
+      "chart": {
+        "id": "chart",
+        "name": "Chart",
+        "layout": [
+          {
+            "i": "hkex_advanced_chart",
+            "x": 0,
+            "y": 2,
+            "w": 40,
+            "h": 22,
+            "state": {
+              "params": {
+                "defaultSymbol": "HKEX:00700"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "groups": [
+      {
+        "name": "Symbol",
+        "type": "param",
+        "paramName": "symbol",
+        "defaultValue": "00700",
+        "widgetIds": [
+          "hkex_search_hkex_obb",
+          "hkex_ticker",
+          "hkex_quote_hkex_obb",
+          "hkex_historical_hkex_obb",
+          "hkex_company_filings"
+        ]
+      },
+      {
+        "name": "ETF Symbol",
+        "type": "param",
+        "paramName": "symbol",
+        "defaultValue": "03037",
+        "widgetIds": [
+          "hkex_etf_holdings_hkex_obb",
+          "hkex_etf_performance_hkex_obb",
+          "hkex_etf_tracking_hkex_obb",
+          "hkex_etf_nav_hkex_obb",
+          "hkex_etf_sectors"
+        ]
+      }
+    ]
+  }
+]
