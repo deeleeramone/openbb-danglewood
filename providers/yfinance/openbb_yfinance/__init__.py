@@ -41,6 +41,12 @@ from openbb_yfinance.models.historical_dividends import (
     YFinanceHistoricalDividendsFetcher,
 )
 from openbb_yfinance.models.historical_eps import YFinanceHistoricalEpsFetcher
+from openbb_yfinance.models.historical_market_cap import (
+    YFinanceHistoricalMarketCapFetcher,
+)
+from openbb_yfinance.models.historical_splits import (
+    YFinanceHistoricalSplitsFetcher,
+)
 from openbb_yfinance.models.income_statement import YFinanceIncomeStatementFetcher
 from openbb_yfinance.models.index_historical import YFinanceIndexHistoricalFetcher
 from openbb_yfinance.models.industry_overview import YFinanceIndustryOverviewFetcher
@@ -152,6 +158,12 @@ financial markets and assets.""",
         ),
         _key("HistoricalEps", "YfHistoricalEps", EQUITY_INSTALLED): (
             YFinanceHistoricalEpsFetcher
+        ),
+        _key("HistoricalMarketCap", "YfHistoricalMarketCap", EQUITY_INSTALLED): (
+            YFinanceHistoricalMarketCapFetcher
+        ),
+        _key("HistoricalSplits", "YfHistoricalSplits", EQUITY_INSTALLED): (
+            YFinanceHistoricalSplitsFetcher
         ),
         _key("CompanyFilings", "YfCompanyFilings", EQUITY_INSTALLED): (
             YFinanceCompanyFilingsFetcher

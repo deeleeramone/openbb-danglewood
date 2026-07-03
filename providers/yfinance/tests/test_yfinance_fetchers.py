@@ -42,6 +42,12 @@ from openbb_yfinance.models.historical_dividends import (
     YFinanceHistoricalDividendsFetcher,
 )
 from openbb_yfinance.models.historical_eps import YFinanceHistoricalEpsFetcher
+from openbb_yfinance.models.historical_market_cap import (
+    YFinanceHistoricalMarketCapFetcher,
+)
+from openbb_yfinance.models.historical_splits import (
+    YFinanceHistoricalSplitsFetcher,
+)
 from openbb_yfinance.models.income_statement import YFinanceIncomeStatementFetcher
 from openbb_yfinance.models.index_historical import (
     YFinanceIndexHistoricalFetcher,
@@ -821,5 +827,29 @@ def test_y_finance_equity_screener_etf_metadata_fetcher(
     params = {"preset": "top_etfs_us", "limit": 3}
 
     fetcher = YFinanceEquityScreenerFetcher()
+    result = fetcher.test(params, credentials)
+    assert result is None
+
+
+@pytest.mark.record_curl
+def test_y_finance_historical_splits_fetcher(credentials=test_credentials):
+    """Test YFinanceHistoricalSplitsFetcher."""
+    params = {"symbol": "AAPL"}
+
+    fetcher = YFinanceHistoricalSplitsFetcher()
+    result = fetcher.test(params, credentials)
+    assert result is None
+
+
+@pytest.mark.record_curl
+def test_y_finance_historical_market_cap_fetcher(credentials=test_credentials):
+    """Test YFinanceHistoricalMarketCapFetcher."""
+    params = {
+        "symbol": "AAPL",
+        "start_date": date(2024, 8, 1),
+        "end_date": date(2024, 9, 1),
+    }
+
+    fetcher = YFinanceHistoricalMarketCapFetcher()
     result = fetcher.test(params, credentials)
     assert result is None
