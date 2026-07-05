@@ -25,7 +25,7 @@ jobs:
         shell: bash
         working-directory: providers/hkex
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v6
         with:
@@ -36,7 +36,7 @@ jobs:
       - name: Build the wheel
         run: uv build --wheel
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: openbb-hkex-dist
           path: providers/hkex/dist/
@@ -52,13 +52,13 @@ jobs:
         shell: bash
         working-directory: providers/hkex
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: openbb-hkex-dist
           path: providers/hkex/dist
@@ -103,14 +103,14 @@ jobs:
         shell: bash
         working-directory: providers/hkex
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python_version }}
           allow-prereleases: true
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: openbb-hkex-dist
           path: providers/hkex/dist

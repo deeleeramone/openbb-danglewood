@@ -25,12 +25,12 @@ jobs:
         shell: bash
         working-directory: providers/yfinance
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # openbb-core/-charting/-platform-api target the unpublished v5 line, so
       # their sources are vendored into the wheel at build time (hatch_build.py).
       - name: Check out OpenBB v5 sources to vendor
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: OpenBB-finance/OpenBB
           ref: v5
@@ -51,7 +51,7 @@ jobs:
           OPENBB_VENDOR_SRC: ${{ github.workspace }}/_openbb_v5
         run: uv build --wheel --no-sources
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: openbb-yfinance-dist
           path: providers/yfinance/dist/
@@ -67,13 +67,13 @@ jobs:
         shell: bash
         working-directory: providers/yfinance
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: openbb-yfinance-dist
           path: providers/yfinance/dist
@@ -116,14 +116,14 @@ jobs:
         shell: bash
         working-directory: providers/yfinance
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python_version }}
           allow-prereleases: true
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: openbb-yfinance-dist
           path: providers/yfinance/dist

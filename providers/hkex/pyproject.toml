@@ -1,6 +1,6 @@
 [project]
 name = "openbb-hkex"
-version = "0.1.0"
+version = "0.1.1"
 description = "OpenBB provider extension for Hong Kong Exchange (HKEX) open data."
 authors = [{ name = "Darren Lee", email = "deeleeramone@gmail.com" }]
 license = { text = "AGPL-3.0-only" }

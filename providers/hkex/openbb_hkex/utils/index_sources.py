@@ -210,12 +210,12 @@ async def fetch_document_manifest(kind: str) -> list[dict]:
         for it in items or []:
             code = (it.get("indexShortName") or "").strip()
             doc = _doc_file(it)
-            if doc and doc not in seen:
-                seen.add(doc)
+            if code and doc and code not in seen:
+                seen.add(code)
                 out.append(
                     {
                         "kind": kind,
-                        "code": code or None,
+                        "code": code,
                         "name": it.get("indexName"),
                         "series": series,
                         "category": it.get("categoryName"),
@@ -229,16 +229,27 @@ async def fetch_document_manifest(kind: str) -> list[dict]:
     return out
 
 
-async def fetch_document_catalog() -> list[dict]:
-    """Aggregate every published HSI PDF (factsheets, methodologies, brochures)."""
-    out: list[dict] = []
+async def fetch_index_documents() -> dict[str, dict]:
+    """Map each index to its published documents.
+
+    ``{code: {"code", "name", "docs": [{"kind", "label", "file"}]}}`` — one entry
+    per index, grouping its factsheet, methodology and brochure together.
+    """
+    index_map: dict[str, dict] = {}
     for kind, (_, label) in _DOC_MANIFESTS.items():
         try:
-            for entry in await fetch_document_manifest(kind):
-                out.append({**entry, "label": label})
+            entries = await fetch_document_manifest(kind)
         except Exception:  # noqa: BLE001,S112 — one bad manifest shouldn't sink the rest
             continue
-    return out
+        for e in entries:
+            code = e.get("code")
+            if not code:
+                continue
+            group = index_map.setdefault(
+                code, {"code": code, "name": e.get("name"), "docs": []}
+            )
+            group["docs"].append({"kind": kind, "label": label, "file": e["file"]})
+    return index_map
 
 
 @alru_cache(maxsize=16)

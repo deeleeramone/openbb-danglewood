@@ -21,7 +21,7 @@ jobs:
         shell: bash
         working-directory: providers/yfinance
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: main
 
@@ -80,14 +80,14 @@ jobs:
         shell: bash
         working-directory: providers/yfinance
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: main
 
       # openbb-core/-charting/-platform-api target the unpublished v5 line, so
       # their sources are vendored into the wheel at build time (hatch_build.py).
       - name: Check out OpenBB v5 sources to vendor
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: OpenBB-finance/OpenBB
           ref: v5
@@ -108,7 +108,7 @@ jobs:
           OPENBB_VENDOR_SRC: ${{ github.workspace }}/_openbb_v5
         run: uv build --wheel --no-sources
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: openbb-yfinance-dist
           path: providers/yfinance/dist/
@@ -137,7 +137,7 @@ jobs:
         shell: bash
         working-directory: providers/yfinance
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: main
 
@@ -146,7 +146,7 @@ jobs:
           python-version: ${{ matrix.python_version }}
           allow-prereleases: true
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: openbb-yfinance-dist
           path: providers/yfinance/dist
@@ -171,7 +171,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: openbb-yfinance-dist
           path: dist
@@ -179,3 +179,29 @@ jobs:
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: dist
+
+  tag:
+    name: Tag the published release
+    needs: [version-check, publish]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - name: Create and push the immutable release tag
+        env:
+          VERSION: ${{ needs.version-check.outputs.version }}
+        run: |
+          TAG="openbb-yfinance-v${VERSION}"
+          # Never move a tag that already points at a published release.
+          if git ls-remote --exit-code --tags origin "refs/tags/${TAG}" >/dev/null 2>&1; then
+            echo "::error::Tag ${TAG} already exists — refusing to move a published tag."
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "${TAG}" -m "openbb-yfinance ${VERSION}"
+          git push origin "refs/tags/${TAG}"

@@ -920,23 +920,34 @@ def register_widgets(router) -> None:  # noqa: PLR0915
                     documents.append(doc)
         return documents
 
-    @api.get("/hsi_document_choices", include_in_schema=False)
-    async def hsi_document_choices() -> list[dict[str, Any]]:
-        from openbb_hkex.utils.index_sources import (
-            HSI_BASE,
-            fetch_document_catalog,
+    @api.get("/hsi_index_choices", include_in_schema=False)
+    async def hsi_index_choices() -> list[dict[str, Any]]:
+        from openbb_hkex.utils.index_sources import fetch_index_documents
+
+        indexes = await fetch_index_documents()
+        return sorted(
+            (
+                {
+                    "label": f"{v.get('name')} ({code})" if v.get("name") else code,
+                    "value": code,
+                }
+                for code, v in indexes.items()
+            ),
+            key=lambda o: o["label"],
         )
 
-        out: list[dict[str, Any]] = []
-        for e in await fetch_document_catalog():
-            code = f" ({e['code']})" if e.get("code") else ""
-            out.append(
-                {
-                    "label": f"[{e['label']}] {e.get('name') or ''}{code}".strip(),
-                    "value": f"{HSI_BASE}{e['file']}",
-                }
-            )
-        return out
+    @api.get("/hsi_document_choices", include_in_schema=False)
+    async def hsi_document_choices(index: str = "HSI") -> list[dict[str, Any]]:
+        from openbb_hkex.utils.index_sources import HSI_BASE, fetch_index_documents
+
+        indexes = await fetch_index_documents()
+        entry = indexes.get(index) or indexes.get(index.upper())
+        if not entry:
+            return []
+        return [
+            {"label": d["label"], "value": f"{HSI_BASE}{d['file']}"}
+            for d in entry["docs"]
+        ]
 
     @api.post(
         "/open_hsi_document",
@@ -945,10 +956,10 @@ def register_widgets(router) -> None:  # noqa: PLR0915
                 "type": "multi_file_viewer",
                 "name": "HSI Index Documents",
                 "description": (
-                    "Hang Seng Indexes document library — factsheets, methodologies "
-                    "and brochures for every published index (HSI, HSCEI, HSTECH, "
-                    "Composite, sector, mainland, Stock Connect, total-return and "
-                    "themed series). Search and open one or more as PDFs."
+                    "Hang Seng Indexes document library — pick an index, then open "
+                    "its factsheet, methodology or brochure as a PDF. Covers every "
+                    "published index (HSI, HSCEI, HSTECH, Composite, sector, "
+                    "mainland, Stock Connect, total-return and themed series)."
                 ),
                 "category": "Indices",
                 "subCategory": "Documents",
@@ -956,18 +967,27 @@ def register_widgets(router) -> None:  # noqa: PLR0915
                 "widgetId": "hkex_hsi_documents",
                 "params": [
                     {
+                        "paramName": "index",
+                        "label": "Index",
+                        "description": "Hang Seng index.",
+                        "type": "endpoint",
+                        "value": "HSI",
+                        "optionsEndpoint": f"{base}/hsi_index_choices",
+                        "style": {"popupWidth": 700},
+                    },
+                    {
                         "paramName": "document_url",
                         "label": "Document",
                         "description": (
-                            "Search Hang Seng index factsheets, methodologies and "
-                            "brochures."
+                            "Factsheet, methodology or brochure for the selected index."
                         ),
                         "type": "endpoint",
-                        "value": "https://www.hsi.com.hk/static/uploads/contents/en/dl_centre/factsheets/hsie.pdf",
                         "optionsEndpoint": f"{base}/hsi_document_choices",
+                        "optionsParams": {"index": "$index"},
+                        "show": False,
                         "roles": ["fileSelector"],
                         "multiSelect": True,
-                        "style": {"popupWidth": 900},
+                        "style": {"popupWidth": 500},
                     },
                 ],
                 "gridData": {"w": 40, "h": 30},
