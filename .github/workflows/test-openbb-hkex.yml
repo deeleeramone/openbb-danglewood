@@ -119,8 +119,8 @@ jobs:
 
       - name: Install dev tooling + the built wheel
         run: |
+          uv pip install --system setuptools ty
           uv pip install --system --group dev
-          uv pip install --system ty
           uv pip install --system dist/openbb_hkex-*.whl
 
       - name: Test the installed wheel
