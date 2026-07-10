@@ -182,6 +182,13 @@
         "paramName": "config",
         "defaultValue": null
       }
+    ],
+    "mcp_servers": [
+      {
+        "name": "OpenBB Yahoo Finance",
+        "description": "Yahoo Finance market data (symbol search, price history, quotes, company profiles, screener) and TradingView chart control tools for this app.",
+        "url": "http://127.0.0.1:6900/api/v1/yfinance/mcp"
+      }
     ]
   }
 ]

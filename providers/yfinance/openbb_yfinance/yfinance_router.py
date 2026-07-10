@@ -65,9 +65,6 @@ def _mcp_public_url() -> str:
     return f"http://{host}:{port}{prefix}/yfinance/mcp"
 
 
-_MCP_URL = _mcp_public_url()
-
-
 @router.command(
     model="YfSymbolSearch",
     widget_config={
@@ -438,7 +435,6 @@ router.api_router.add_api_route(
             ],
             "gridData": {"w": 40, "h": 20},
             "refetchInterval": False,
-            "storage": {"mcpUrl": _MCP_URL},
         }
     },
 )
@@ -477,7 +473,6 @@ router.api_router.add_api_route(
             ],
             "gridData": {"w": 20, "h": 20},
             "refetchInterval": False,
-            "storage": {"mcpUrl": _MCP_URL},
         }
     },
 )
@@ -661,7 +656,6 @@ router.api_router.add_api_route(
             ],
             "gridData": {"w": 16, "h": 18},
             "refetchInterval": False,
-            "storage": {"mcpUrl": _MCP_URL},
             "source": ["yFinance"],
         }
     },
@@ -686,10 +680,13 @@ router.api_router.add_api_route(
 from openbb_yfinance.utils.mcp_app import (  # noqa: E402
     mcp_reverse_proxy,
     mcp_tvchart_emit,
+    mcp_tvchart_targets,
 )
 
-# Expose the MCP server on the OpenBB API's own host/port (_MCP_URL) by
-# reverse-proxying to the local subprocess that actually serves streamable-http.
+# Expose the MCP server on the OpenBB API's own host/port by reverse-proxying to
+# the local subprocess that actually serves streamable-http. The Workspace is
+# told where to connect via the app-level ``mcp_servers`` entry in apps.json
+# (see ``build_yfinance_apps``), whose URL is resolved from ``_mcp_public_url``.
 router.api_router.add_api_route(
     path="/mcp",
     endpoint=mcp_reverse_proxy,
@@ -701,5 +698,12 @@ router.api_router.add_api_route(
     path="/mcp/tvchart/emit",
     endpoint=mcp_tvchart_emit,
     methods=["POST"],
+    include_in_schema=False,
+)
+
+router.api_router.add_api_route(
+    path="/mcp/tvchart/targets",
+    endpoint=mcp_tvchart_targets,
+    methods=["GET"],
     include_in_schema=False,
 )

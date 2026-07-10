@@ -106,11 +106,9 @@ def test_list_live_tvchart_targets_collects_inline_widget_ids(monkeypatch):
     monkeypatch.setattr(tvchart_native, "_LIVE_CHARTS", [(app, None)], raising=False)
 
     targets = mcp_app._list_live_tvchart_targets()
-    ids = {t["widget_id"] for t in targets}
-    assert ids == {"w1", "w2"}
-    by_id = {t["widget_id"]: t["chart_id"] for t in targets}
-    assert by_id["w1"] == "cid-1"
-    assert by_id["w2"] == "cid-2"
+    # widget_id now carries the chart id (the client routes events by it).
+    assert {t["chart_id"] for t in targets} == {"cid-1", "cid-2"}
+    assert all(t["widget_id"] == t["chart_id"] for t in targets)
 
 
 def test_emit_to_live_target_injects_resolved_chart_id(monkeypatch):

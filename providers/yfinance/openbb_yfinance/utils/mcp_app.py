@@ -23,32 +23,27 @@ def _list_live_tvchart_targets() -> list[dict[str, Any]]:
             continue
         app = item[0]
 
-        inline_widgets = getattr(app, "_inline_widgets", {}) or {}
         chart_ids = getattr(app, "_obb_chart_ids_by_widget", {}) or {}
         app_chart_id = str(getattr(app, "_obb_chart_id", "") or "")
-        if inline_widgets:
-            for label in inline_widgets:
-                targets.append(
-                    {
-                        "instance_index": index,
-                        "widget_id": str(label),
-                        "chart_id": str(
-                            chart_ids.get(str(label)) or app_chart_id or ""
-                        ),
-                        "app_label": str(getattr(app, "label", "") or ""),
-                    }
-                )
-        else:
-            app_label = str(getattr(app, "label", "") or "")
-            if app_label:
-                targets.append(
-                    {
-                        "instance_index": index,
-                        "widget_id": app_label,
-                        "chart_id": app_chart_id,
-                        "app_label": app_label,
-                    }
-                )
+        inline_widgets = getattr(app, "_inline_widgets", {}) or {}
+        app_label = str(getattr(app, "label", "") or "")
+        # _show() records every chart in _obb_chart_ids_by_widget for browser
+        # (Workspace iframe) and inline widgets alike; _inline_widgets is only
+        # populated for inline/Jupyter, so a browser widget would otherwise be
+        # invisible here. Fall back to the inline registry / app label.
+        labels = list(chart_ids) or list(inline_widgets) or (
+            [app_label] if app_label else []
+        )
+        for label in labels:
+            chart_id = str(chart_ids.get(str(label)) or app_chart_id or "")
+            targets.append(
+                {
+                    "instance_index": index,
+                    "widget_id": chart_id or str(label),
+                    "chart_id": chart_id,
+                    "app_label": app_label or str(label),
+                }
+            )
 
     return targets
 
@@ -61,11 +56,20 @@ def _latest_tvchart_target(widget_id: str = "") -> tuple[Any | None, str]:
 
     for app, _streamer in reversed(getattr(tvchart_native, "_LIVE_CHARTS", [])):
         inline_widgets = getattr(app, "_inline_widgets", {}) or {}
+        chart_ids = getattr(app, "_obb_chart_ids_by_widget", {}) or {}
+        app_chart_id = str(getattr(app, "_obb_chart_id", "") or "")
         if widget_id:
             target = inline_widgets.get(widget_id)
             if target is not None:
                 return target, widget_id
-            if getattr(app, "label", "") == widget_id:
+            # This chart, addressed by chart id, widget label, or app label. A
+            # browser (Workspace iframe) chart is emitted to via the app itself.
+            if (
+                widget_id == app_chart_id
+                or widget_id in chart_ids
+                or widget_id in chart_ids.values()
+                or getattr(app, "label", "") == widget_id
+            ):
                 return app, widget_id
             continue
 
@@ -91,6 +95,8 @@ def _latest_tvchart_chart_id(widget_id: str = "") -> str:  # noqa: PLR0911
         app_chart_id = str(getattr(app, "_obb_chart_id", "") or "")
 
         if widget_id:
+            if widget_id == app_chart_id or widget_id in chart_ids.values():
+                return widget_id
             if widget_id in chart_ids:
                 return str(chart_ids.get(widget_id) or "")
             if widget_id in inline_widgets:
@@ -123,10 +129,16 @@ def _resolved_tvchart_data(
 def _tvchart_event_payload(
     event_type: str, data: dict[str, Any] | None = None, widget_id: str = ""
 ) -> dict[str, Any]:
+    data = data or {}
+    # The client dispatches the event by widget_id; for a tvchart the routing id
+    # is the chart id. Carry it as the widget_id when the caller didn't give one
+    # (resolves only where the live chart is visible — the chart's process).
+    if not widget_id and event_type.startswith("tvchart:"):
+        widget_id = str(data.get("chartId") or _latest_tvchart_chart_id())
     return {
         "event_type": event_type,
         "widget_id": widget_id,
-        "data": data or {},
+        "data": data,
     }
 
 
@@ -186,6 +198,31 @@ def _api_tvchart_bridge_url() -> str:
     return f"http://{host}:{port}{prefix}/yfinance/mcp/tvchart/emit"
 
 
+def _api_tvchart_targets_url() -> str:
+    return _api_tvchart_bridge_url().rsplit("/emit", 1)[0] + "/targets"
+
+
+def _list_targets_via_bridge() -> list[dict[str, Any]]:
+    """List live targets from the chart's process (the API server) over HTTP.
+
+    tvchart tools run in the MCP subprocess, whose ``_LIVE_CHARTS`` is always
+    empty; the charts live in the API process, so ask it directly.
+    """
+    import json
+    import urllib.error
+    import urllib.request
+
+    req = urllib.request.Request(_api_tvchart_targets_url(), method="GET")  # noqa: S310
+    try:
+        with urllib.request.urlopen(req, timeout=2.5) as resp:  # noqa: S310
+            result = json.loads(resp.read().decode("utf-8"))
+    except (urllib.error.URLError, ValueError):
+        return []
+    if isinstance(result, dict) and isinstance(result.get("targets"), list):
+        return result["targets"]
+    return []
+
+
 def _emit_via_api_bridge(
     event_type: str, data: dict[str, Any] | None = None, widget_id: str = ""
 ) -> dict[str, Any]:
@@ -239,10 +276,15 @@ def _emit_or_envelope(
     if isinstance(bridged, dict) and bridged.get("dispatched"):
         return bridged
 
-    payload = _tvchart_event_payload(event_type, data, widget_id)
+    # Prefer the bridge's event: it is built in the chart's process, so it
+    # carries the resolved chart id as widget_id. Only rebuild here (MCP process,
+    # where the chart isn't visible) as a last resort.
     bridge_error = ""
+    bridged_event = None
     if isinstance(bridged, dict):
         bridge_error = str(bridged.get("error") or "")
+        bridged_event = bridged.get("event")
+    payload = bridged_event or _tvchart_event_payload(event_type, data, widget_id)
     note = "No live chart target was available; returning event envelope for client dispatch."
     if bridge_error:
         note = f"{note} Bridge error: {bridge_error}"
@@ -383,23 +425,57 @@ def mcp_tvchart_emit_payload(payload: dict[str, Any]) -> dict[str, Any]:
     )
 
 
-async def mcp_tvchart_emit(request: Request) -> Any:
+async def _extract_tvchart_payload(request: Request) -> dict:
+    """Parse the emit body into a plain dict.
+
+    The OpenBB router wraps endpoints as commands and deep-copies their kwargs;
+    a raw starlette ``Request`` recurses under deepcopy (RecursionError → 500),
+    so the JSON body is pulled out via this dependency (like the reverse proxy)
+    rather than taken as an endpoint argument.
+    """
+    import json
+
+    try:
+        payload = json.loads(await request.body() or b"{}")
+    except Exception:
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+async def mcp_tvchart_emit(
+    payload: dict = Depends(_extract_tvchart_payload),
+) -> Any:
     """Handle the bridge HTTP request that emits a tvchart event."""
     from starlette.responses import JSONResponse
 
+    if not payload:
+        return JSONResponse(
+            {"ok": False, "error": "Invalid or empty JSON payload"}, status_code=400
+        )
     try:
-        payload = await request.json()
-    except Exception:
-        return JSONResponse(
-            {"ok": False, "error": "Invalid JSON payload"}, status_code=400
-        )
-    if not isinstance(payload, dict):
-        return JSONResponse(
-            {"ok": False, "error": "Payload must be a JSON object"}, status_code=400
-        )
-    result = mcp_tvchart_emit_payload(payload)
+        result = mcp_tvchart_emit_payload(payload)
+    except Exception as exc:  # noqa: BLE001 - never 500; the resolved chart id still helps the client dispatch
+        data = payload.get("data")
+        result = {
+            "ok": True,
+            "dispatched": False,
+            "event": _tvchart_event_payload(
+                str(payload.get("event_type") or ""),
+                data if isinstance(data, dict) else {},
+                str(payload.get("widget_id") or ""),
+            ),
+            "error": f"emit failed: {exc}",
+        }
     status = 200 if result.get("ok") else 400
     return JSONResponse(result, status_code=status)
+
+
+async def mcp_tvchart_targets() -> Any:
+    """Bridge endpoint (runs in the chart's process): list live tvchart targets."""
+    from starlette.responses import JSONResponse
+
+    targets = _list_live_tvchart_targets()
+    return JSONResponse({"ok": True, "count": len(targets), "targets": targets})
 
 
 def _build_mcp_server() -> Any:
@@ -428,7 +504,9 @@ def _build_mcp_server() -> Any:
         Example response:
         ``{"ok": True, "count": 2, "targets": [{"widget_id": "tvw_a1b2c3", "chart_id": "tvc_1a2b3c"}, {"widget_id": "tvw_d4e5f6", "chart_id": "tvc_4d5e6f"}]}``
         """
-        targets = _list_live_tvchart_targets()
+        # Local list is empty in the MCP subprocess; the charts live in the API
+        # process, so ask it over the bridge.
+        targets = _list_live_tvchart_targets() or _list_targets_via_bridge()
         return {
             "ok": True,
             "count": len(targets),

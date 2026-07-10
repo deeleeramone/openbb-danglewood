@@ -35,7 +35,7 @@ _TICKERS_ENDPOINT = (
     "/yfinance/derivatives/options/get_tickers"
 )
 _SYMBOL_PARAM = {"x-widget_config": {"groupId": "symbol", "style": {"popupWidth": 400}}}
-_CHART_CONFIG = {"scrollZoom": True, "displayModeBar": True, "responsive": True}
+_CHART_CONFIG = {"scrollZoom": True, "displayModeBar": False, "responsive": True}
 
 
 def _symbol_query(description: str = "The underlying ticker symbol.") -> Any:

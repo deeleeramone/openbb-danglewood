@@ -67,8 +67,14 @@ def build_yfinance_apps() -> list[dict]:
     Widget ids are stored in their first-party (standard) form. Any widget whose
     namespace extension is not installed is rewritten to the ``yfinance_`` form
     the hybrid router serves, so the app resolves in both install states.
+
+    The app-level ``mcp_servers`` entry is the single place the MCP server is
+    declared; its URL is resolved here at serve time so it tracks the API's
+    runtime host/port (and any ``OPENBB_YFINANCE_MCP_PUBLIC_*`` override).
     """
     import json
+
+    from openbb_yfinance.yfinance_router import _mcp_public_url
 
     try:
         apps = json.loads(_APPS_JSON.read_text(encoding="utf-8"))
@@ -76,10 +82,13 @@ def build_yfinance_apps() -> list[dict]:
         return []
 
     installed = _installed_namespaces()
+    mcp_url = _mcp_public_url()
     for app in apps:
         for tab in (app.get("tabs") or {}).values():
             for widget in tab.get("layout") or []:
                 widget_id = widget.get("i")
                 if isinstance(widget_id, str):
                     widget["i"] = _remap_widget_id(widget_id, installed)
+        for server in app.get("mcp_servers") or []:
+            server["url"] = mcp_url
     return apps

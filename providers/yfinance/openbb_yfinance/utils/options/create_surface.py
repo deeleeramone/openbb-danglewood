@@ -106,7 +106,7 @@ def create_surface(  # noqa: PLR0912
     if volume:
         label += " Excluding Untraded Contracts"
 
-    theme = kwargs.get("theme", "light")
+    theme = kwargs.get("theme", "dark")
     fig = surface3d(
         X=df["dte"],
         Y=df["strike"],
@@ -120,18 +120,30 @@ def create_surface(  # noqa: PLR0912
 
     df.expiration = df.expiration.astype(str)
     output: Any = OBBject(results=df_to_basemodel(df))
-    output.charting._charting_settings.chart_style = theme
-    fig = output.charting._set_chart_style(fig)
+
+    # Follow the requested theme explicitly. Transparent surfaces let the
+    # widget's own (themed) background show through, with theme-colored text,
+    # axes and grid so the 3D scene tracks ?theme=dark/light.
     text_color = "white" if theme == "dark" else "black"
+    grid_color = "rgba(255,255,255,0.15)" if theme == "dark" else "rgba(0,0,0,0.15)"
+    wall_color = "rgba(255,255,255,0.04)" if theme == "dark" else "rgba(0,0,0,0.04)"
+    scene_axis = dict(
+        color=text_color, gridcolor=grid_color, backgroundcolor=wall_color
+    )
     fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color=text_color),
+        title=dict(font=dict(color=text_color)),
+        scene=dict(xaxis=scene_axis, yaxis=scene_axis, zaxis=scene_axis),
         hoverlabel=dict(
-            bgcolor="#0E0E0E" if text_color == "white" else "#FFFFFF",
+            bgcolor="#0E0E0E" if theme == "dark" else "#FFFFFF",
             bordercolor=text_color,
             font=dict(color=text_color, size=12),
-        )
+        ),
     )
     content = fig.show(
-        config={"scrollZoom": True, "displayModeBar": True}, external=True
+        config={"scrollZoom": True, "displayModeBar": False}, external=True
     ).to_plotly_json()
     output.chart = Chart(fig=fig, content=content, format="plotly")
 
