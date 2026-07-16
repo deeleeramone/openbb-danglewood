@@ -1,0 +1,533 @@
+/* ============================================================================
+   TV Chart UI
+   ============================================================================ */
+
+:root,
+html.dark,
+.pywry-theme-dark,
+.pywry-theme-system {
+    --pywry-tvchart-bg: #0a0a0d;
+    --pywry-tvchart-border: #1c1f26;
+    --pywry-tvchart-border-strong: #262a33;
+    --pywry-tvchart-panel-bg: #0a0a0d;
+    --pywry-tvchart-panel-bg-strong: #050608;
+    --pywry-tvchart-hover: #17191f;
+    --pywry-tvchart-active-bg: rgba(41, 98, 255, 0.16);
+    --pywry-tvchart-active-text: #2962ff;
+    --pywry-tvchart-text: #e6e9f0;
+    --pywry-tvchart-text-muted: #c4c9d4;
+    --pywry-tvchart-text-dim: #a3a8b5;
+    --pywry-tvchart-grid: rgba(255, 255, 255, 0.05);
+    --pywry-tvchart-crosshair: #758696;
+    --pywry-tvchart-crosshair-label-bg: #1b1f27;
+    --pywry-tvchart-up: #089981;
+    --pywry-tvchart-down: #f23645;
+    --pywry-tvchart-border-up: #089981;
+    --pywry-tvchart-border-down: #f23645;
+    --pywry-tvchart-wick-up: #089981;
+    --pywry-tvchart-wick-down: #f23645;
+    --pywry-tvchart-grid-vert: rgba(255, 255, 255, 0.05);
+    --pywry-tvchart-grid-horz: rgba(255, 255, 255, 0.05);
+    --pywry-tvchart-separator: rgba(255, 255, 255, 0.06);
+    --pywry-tvchart-separator-hover: rgba(255, 255, 255, 0.15);
+    --pywry-tvchart-vol-up: rgba(8, 153, 129, 0.35);
+    --pywry-tvchart-volume-down: rgba(242, 54, 69, 0.35);
+    --pywry-tvchart-area-bottom: rgba(8, 153, 129, 0.04);
+    --pywry-tvchart-hlcarea-high: #089981;
+    --pywry-tvchart-hlcarea-low: #f23645;
+    --pywry-tvchart-hlcarea-close: #2962ff;
+    --pywry-tvchart-hlcarea-fill-up: rgba(8, 153, 129, 0.28);
+    --pywry-tvchart-hlcarea-fill-down: rgba(242, 54, 69, 0.28);
+    --pywry-tvchart-baseline-top-fill1: rgba(8, 153, 129, 0.28);
+    --pywry-tvchart-baseline-top-fill2: rgba(8, 153, 129, 0.05);
+    --pywry-tvchart-baseline-bottom-fill1: rgba(242, 54, 69, 0.05);
+    --pywry-tvchart-baseline-bottom-fill2: rgba(242, 54, 69, 0.28);
+    --pywry-tvchart-hidden: rgba(0, 0, 0, 0);
+    --pywry-tvchart-area-top-default: #4c87ff;
+    --pywry-tvchart-area-bottom-default: #10223f;
+    --pywry-tvchart-selected-bg: #e7e7e7;
+    --pywry-tvchart-selected-text: #121722;
+    --pywry-tvchart-overlay: rgba(0, 0, 0, 0.56);
+    --pywry-tvchart-shadow: rgba(0, 0, 0, 0.45);
+    --pywry-tvchart-shadow-lg: rgba(0, 0, 0, 0.58);
+    --pywry-tvchart-legend-border: rgba(76, 135, 255, 0.85);
+    --pywry-tvchart-legend-bg: rgba(10, 10, 13, 0.94);
+    --pywry-tvchart-crosshair-color: rgba(235, 180, 194, 0.8);
+    --pywry-tvchart-vp-down: rgba(220, 110, 220, 0.28);
+    --pywry-tvchart-vp-va-up: rgba(95, 145, 255, 0.50);
+    --pywry-tvchart-vp-va-down: rgba(220, 110, 220, 0.50);
+    --pywry-tvchart-vp-poc: rgba(243, 193, 39, 0.85);
+    --pywry-tvchart-ind-secondary: #f3c127;
+    --pywry-tvchart-ind-tertiary: #9598a1;
+    --pywry-tvchart-ind-positive: #089981;
+    --pywry-tvchart-ind-negative: #f23645;
+    --pywry-tvchart-ind-positive-dim: rgba(8, 153, 129, 0.6);
+    --pywry-tvchart-ind-negative-dim: rgba(242, 54, 69, 0.6);
+}
+html.light,
+.pywry-theme-light {
+    --pywry-tvchart-bg: #ffffff;
+    --pywry-tvchart-border: #d5dbe5;
+    --pywry-tvchart-border-strong: #ccd3df;
+    --pywry-tvchart-panel-bg: #f8fafc;
+    --pywry-tvchart-panel-bg-strong: #ffffff;
+    --pywry-tvchart-hover: #edf2f7;
+    --pywry-tvchart-active-bg: rgba(41, 98, 255, 0.12);
+    --pywry-tvchart-active-text: #2962ff;
+    --pywry-tvchart-text-muted: #1f2530;
+    --pywry-tvchart-text-dim: #4a5160;
+    --pywry-tvchart-grid: rgba(197, 203, 206, 0.5);
+    --pywry-tvchart-crosshair: #9598a1;
+    --pywry-tvchart-crosshair-label-bg: #e1ecf2;
+    --pywry-tvchart-up: #26a69a;
+    --pywry-tvchart-down: #ef5350;
+    --pywry-tvchart-border-up: #26a69a;
+    --pywry-tvchart-border-down: #ef5350;
+    --pywry-tvchart-wick-up: #26a69a;
+    --pywry-tvchart-wick-down: #ef5350;
+    --pywry-tvchart-grid-vert: rgba(197, 203, 206, 0.5);
+    --pywry-tvchart-grid-horz: rgba(197, 203, 206, 0.5);
+    --pywry-tvchart-separator: rgba(0, 0, 0, 0.08);
+    --pywry-tvchart-separator-hover: rgba(0, 0, 0, 0.18);
+    --pywry-tvchart-vol-up: rgba(38, 166, 154, 0.34);
+    --pywry-tvchart-volume-down: rgba(239, 83, 80, 0.34);
+    --pywry-tvchart-area-bottom: rgba(38, 166, 154, 0.04);
+    --pywry-tvchart-hlcarea-high: #26a69a;
+    --pywry-tvchart-hlcarea-low: #ef5350;
+    --pywry-tvchart-hlcarea-close: #2962ff;
+    --pywry-tvchart-hlcarea-fill-up: rgba(38, 166, 154, 0.28);
+    --pywry-tvchart-hlcarea-fill-down: rgba(239, 83, 80, 0.28);
+    --pywry-tvchart-baseline-top-fill1: rgba(38, 166, 154, 0.28);
+    --pywry-tvchart-baseline-top-fill2: rgba(38, 166, 154, 0.05);
+    --pywry-tvchart-baseline-bottom-fill1: rgba(239, 83, 80, 0.05);
+    --pywry-tvchart-baseline-bottom-fill2: rgba(239, 83, 80, 0.28);
+    --pywry-tvchart-hidden: rgba(0, 0, 0, 0);
+    --pywry-tvchart-area-top-default: #2962ff;
+    --pywry-tvchart-area-bottom-default: #e3ecff;
+    --pywry-tvchart-selected-bg: #1f2937;
+    --pywry-tvchart-selected-text: #ffffff;
+    --pywry-tvchart-overlay: rgba(245, 248, 252, 0.64);
+    --pywry-tvchart-shadow: rgba(15, 23, 42, 0.12);
+    --pywry-tvchart-shadow-lg: rgba(15, 23, 42, 0.2);
+    --pywry-tvchart-legend-border: rgba(41, 98, 255, 0.6);
+    --pywry-tvchart-legend-bg: rgba(255, 255, 255, 0.92);
+    --pywry-tvchart-crosshair-color: #9598a1;
+    --pywry-tvchart-vp-down: rgba(180, 70, 200, 0.22);
+    --pywry-tvchart-vp-va-up: rgba(41, 98, 255, 0.45);
+    --pywry-tvchart-vp-va-down: rgba(180, 70, 200, 0.45);
+    --pywry-tvchart-vp-poc: rgba(31, 41, 55, 0.85);
+    --pywry-tvchart-ind-secondary: #f09614;
+    --pywry-tvchart-ind-tertiary: #6b7280;
+    --pywry-tvchart-ind-positive: #26a69a;
+    --pywry-tvchart-ind-negative: #ef5350;
+    --pywry-tvchart-ind-positive-dim: rgba(38, 166, 154, 0.6);
+    --pywry-tvchart-ind-negative-dim: rgba(239, 83, 80, 0.6);
+}
+
+.tv-settings-overlay,
+.tv-indicators-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 12000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--pywry-tvchart-overlay);
+    pointer-events: auto;
+}
+.tv-compare-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--pywry-tvchart-border-strong);
+    padding: 14px 16px 10px;
+}
+.tv-compare-header h3 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 600;
+    flex: 1;
+    letter-spacing: -0.02em;
+}
+.tv-compare-search-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--pywry-tvchart-border-strong);
+}
+.tv-compare-search-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--pywry-tvchart-text-muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+}
+.tv-compare-search-icon svg {
+    width: 16px;
+    height: 16px;
+}
+.tv-compare-search-input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--pywry-tvchart-text);
+    font-size: 20px;
+    line-height: 1.2;
+    font-family: inherit;
+}
+.tv-compare-search-input::placeholder {
+    color: color-mix(in srgb, var(--pywry-tvchart-text-muted) 85%, transparent 15%);
+}
+.tv-compare-results {
+    max-height: 210px;
+    overflow-y: hidden;
+    border-bottom: 1px solid var(--pywry-tvchart-border-strong);
+}
+.tv-compare-search-empty {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--pywry-tvchart-text-muted);
+    font-size: 14px;
+    letter-spacing: 0.01em;
+}
+.tv-compare-results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+}
+.tv-compare-result-row {
+    border: none;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    padding: 0 16px;
+    min-height: 76px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid color-mix(in srgb, var(--pywry-tvchart-border) 72%, transparent);
+}
+.tv-compare-result-row:hover {
+    background: var(--pywry-tvchart-hover);
+}
+.tv-compare-result-identity {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.tv-compare-result-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--pywry-tvchart-hover) 78%, #2d313a 22%);
+    color: var(--pywry-tvchart-text-muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font: 600 18px/1 var(--pywry-font-family);
+    flex: 0 0 auto;
+    text-transform: uppercase;
+}
+.tv-compare-result-copy {
+    min-width: 0;
+    flex: 1;
+}
+.tv-compare-result-top {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+.tv-compare-result-symbol {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: #2962ff;
+}
+.tv-compare-result-meta {
+    margin-left: auto;
+    font-size: 14px;
+    text-align: right;
+    color: var(--pywry-tvchart-text-muted);
+}
+.tv-compare-result-sub {
+    margin-top: 2px;
+    font-size: 13px;
+    color: color-mix(in srgb, var(--pywry-tvchart-text-muted) 85%, #ffffff 15%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.tv-compare-result-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 120ms ease;
+}
+.tv-compare-result-row:hover .tv-compare-result-actions,
+.tv-compare-result-row:focus-within .tv-compare-result-actions {
+    opacity: 1;
+    pointer-events: auto;
+}
+.tv-compare-result-action {
+    min-height: 34px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1px solid color-mix(in srgb, var(--pywry-tvchart-border-strong) 90%, white 10%);
+    background: color-mix(in srgb, var(--pywry-tvchart-panel-bg) 92%, #0f1117 8%);
+    color: var(--pywry-tvchart-text);
+    font: 500 13px/1 var(--pywry-font-family);
+    cursor: pointer;
+    white-space: nowrap;
+}
+.tv-compare-result-action:hover {
+    background: color-mix(in srgb, var(--pywry-tvchart-hover) 84%, #ffffff 16%);
+}
+.tv-compare-result-action-primary {
+    box-shadow: inset 0 0 0 2px #2962ff;
+}
+/* ---------------------------------------------------------------------------
+   Symbol Search Dialog
+   --------------------------------------------------------------------------- */
+
+.tv-symbol-search-panel {
+    background: var(--pywry-tvchart-panel-bg);
+    border-radius: 6px;
+    color: var(--pywry-tvchart-text);
+    position: relative;
+    z-index: 12001;
+    border: 1px solid var(--pywry-tvchart-border);
+    box-shadow: 0 16px 44px var(--pywry-tvchart-shadow-lg);
+    width: 560px;
+    max-width: calc(100% - 32px);
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.tv-symbol-search-filters {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--pywry-tvchart-border-strong);
+}
+.tv-symbol-search-filter-select {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid var(--pywry-tvchart-border);
+    border-radius: 4px;
+    background: var(--pywry-tvchart-panel-bg);
+    color: var(--pywry-tvchart-text);
+    font-size: 13px;
+    padding: 5px 8px;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+}
+.tv-symbol-search-filter-select:focus {
+    border-color: #2962ff;
+}
+.tv-symbol-search-results {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 80px;
+}
+.tv-symbol-search-result-row {
+    cursor: pointer;
+}
+.tv-symbol-search-result-row:hover {
+    background: var(--pywry-tvchart-hover);
+}
+.tv-settings-close {
+    background: none;
+    border: none;
+    color: var(--pywry-tvchart-text-muted);
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+.tv-settings-close:hover {
+    background: var(--pywry-tvchart-hover);
+    color: var(--pywry-tvchart-text);
+}
+.tv-settings-close svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+/* -----------------------------------------------------------------------
+   Widget-scoped overrides — when the chart is inside a .pywry-widget
+   (anywidget / inline mode), overlays must use position:absolute so they
+   are contained within the widget rather than escaping to the viewport.
+   These rules intentionally do NOT fire in native-window mode where
+   document.body is the only container and position:fixed is correct.
+   ----------------------------------------------------------------------- */
+.pywry-widget .tv-settings-overlay,
+.pywry-widget .tv-indicators-overlay,
+.pywry-widget .tv-date-range-overlay {
+    position: absolute;
+    inset: 0;
+}
+.pywry-widget .tv-settings-panel,
+.pywry-widget .tv-indicators-panel,
+.pywry-widget .tv-symbol-search-panel,
+.pywry-widget .tv-compare-panel {
+    max-height: calc(100% - 32px);
+}
+.pywry-widget .tv-symbol-search-results {
+    max-height: none;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+/* Keep all TV chart scrollbars on the library visual system (no OS default bars). */
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-sidebar,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-content-pane,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-body,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-section-body,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-textarea,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-indicators-list,
+.pywry-widget:not(.pywry-custom-scrollbar) .tvchart-layout-list,
+.pywry-widget:not(.pywry-custom-scrollbar) .tvchart-layout-modal-body,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-symbol-search-results {
+    scrollbar-width: thin;
+    scrollbar-color: var(--pywry-scrollbar-thumb, rgba(155, 155, 155, 0.5)) transparent;
+}
+/* Settings/modals/flyouts can be mounted on document.body, so style those containers directly too. */
+.tv-settings-sidebar,
+.tv-settings-content-pane,
+.tv-settings-body,
+.tv-settings-section-body,
+.tv-settings-textarea,
+.tv-indicators-list,
+.tvchart-layout-list,
+.tvchart-layout-modal-body,
+.pywry-tool-flyout,
+.tv-symbol-search-results {
+    scrollbar-width: thin;
+    scrollbar-color: var(--pywry-scrollbar-thumb, rgba(155, 155, 155, 0.5)) transparent;
+}
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-sidebar::-webkit-scrollbar,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-content-pane::-webkit-scrollbar,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-body::-webkit-scrollbar,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-section-body::-webkit-scrollbar,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-textarea::-webkit-scrollbar,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-indicators-list::-webkit-scrollbar,
+.pywry-widget:not(.pywry-custom-scrollbar) .tvchart-layout-list::-webkit-scrollbar,
+.pywry-widget:not(.pywry-custom-scrollbar) .tvchart-layout-modal-body::-webkit-scrollbar,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-symbol-search-results::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+.tv-settings-sidebar::-webkit-scrollbar,
+.tv-settings-content-pane::-webkit-scrollbar,
+.tv-settings-body::-webkit-scrollbar,
+.tv-settings-section-body::-webkit-scrollbar,
+.tv-settings-textarea::-webkit-scrollbar,
+.tv-indicators-list::-webkit-scrollbar,
+.tvchart-layout-list::-webkit-scrollbar,
+.tvchart-layout-modal-body::-webkit-scrollbar,
+.pywry-tool-flyout::-webkit-scrollbar,
+.tv-symbol-search-results::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-sidebar::-webkit-scrollbar-track,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-content-pane::-webkit-scrollbar-track,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-body::-webkit-scrollbar-track,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-section-body::-webkit-scrollbar-track,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-textarea::-webkit-scrollbar-track,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-indicators-list::-webkit-scrollbar-track,
+.pywry-widget:not(.pywry-custom-scrollbar) .tvchart-layout-list::-webkit-scrollbar-track,
+.pywry-widget:not(.pywry-custom-scrollbar) .tvchart-layout-modal-body::-webkit-scrollbar-track,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-symbol-search-results::-webkit-scrollbar-track {
+    background: transparent;
+}
+.tv-settings-sidebar::-webkit-scrollbar-track,
+.tv-settings-content-pane::-webkit-scrollbar-track,
+.tv-settings-body::-webkit-scrollbar-track,
+.tv-settings-section-body::-webkit-scrollbar-track,
+.tv-settings-textarea::-webkit-scrollbar-track,
+.tv-indicators-list::-webkit-scrollbar-track,
+.tvchart-layout-list::-webkit-scrollbar-track,
+.tvchart-layout-modal-body::-webkit-scrollbar-track,
+.pywry-tool-flyout::-webkit-scrollbar-track,
+.tv-symbol-search-results::-webkit-scrollbar-track {
+    background: transparent;
+}
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-sidebar::-webkit-scrollbar-thumb,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-content-pane::-webkit-scrollbar-thumb,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-body::-webkit-scrollbar-thumb,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-section-body::-webkit-scrollbar-thumb,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-textarea::-webkit-scrollbar-thumb,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-indicators-list::-webkit-scrollbar-thumb,
+.pywry-widget:not(.pywry-custom-scrollbar) .tvchart-layout-list::-webkit-scrollbar-thumb,
+.pywry-widget:not(.pywry-custom-scrollbar) .tvchart-layout-modal-body::-webkit-scrollbar-thumb,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-symbol-search-results::-webkit-scrollbar-thumb {
+    background: var(--pywry-scrollbar-thumb, rgba(155, 155, 155, 0.5));
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+.tv-settings-sidebar::-webkit-scrollbar-thumb,
+.tv-settings-content-pane::-webkit-scrollbar-thumb,
+.tv-settings-body::-webkit-scrollbar-thumb,
+.tv-settings-section-body::-webkit-scrollbar-thumb,
+.tv-settings-textarea::-webkit-scrollbar-thumb,
+.tv-indicators-list::-webkit-scrollbar-thumb,
+.tvchart-layout-list::-webkit-scrollbar-thumb,
+.tvchart-layout-modal-body::-webkit-scrollbar-thumb,
+.pywry-tool-flyout::-webkit-scrollbar-thumb,
+.tv-symbol-search-results::-webkit-scrollbar-thumb {
+    background: var(--pywry-scrollbar-thumb, rgba(155, 155, 155, 0.5));
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-sidebar::-webkit-scrollbar-thumb:hover,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-content-pane::-webkit-scrollbar-thumb:hover,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-body::-webkit-scrollbar-thumb:hover,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-section-body::-webkit-scrollbar-thumb:hover,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-settings-textarea::-webkit-scrollbar-thumb:hover,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-indicators-list::-webkit-scrollbar-thumb:hover,
+.pywry-widget:not(.pywry-custom-scrollbar) .tvchart-layout-list::-webkit-scrollbar-thumb:hover,
+.pywry-widget:not(.pywry-custom-scrollbar) .tvchart-layout-modal-body::-webkit-scrollbar-thumb:hover,
+.pywry-widget:not(.pywry-custom-scrollbar) .tv-symbol-search-results::-webkit-scrollbar-thumb:hover {
+    background: var(--pywry-scrollbar-thumb-hover, rgba(175, 175, 175, 0.7));
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+.tv-settings-sidebar::-webkit-scrollbar-thumb:hover,
+.tv-settings-content-pane::-webkit-scrollbar-thumb:hover,
+.tv-settings-body::-webkit-scrollbar-thumb:hover,
+.tv-settings-section-body::-webkit-scrollbar-thumb:hover,
+.tv-settings-textarea::-webkit-scrollbar-thumb:hover,
+.tv-indicators-list::-webkit-scrollbar-thumb:hover,
+.tvchart-layout-list::-webkit-scrollbar-thumb:hover,
+.tvchart-layout-modal-body::-webkit-scrollbar-thumb:hover,
+.pywry-tool-flyout::-webkit-scrollbar-thumb:hover,
+.tv-symbol-search-results::-webkit-scrollbar-thumb:hover {
+    background: var(--pywry-scrollbar-thumb-hover, rgba(175, 175, 175, 0.7));
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}

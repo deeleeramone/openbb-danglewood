@@ -425,7 +425,7 @@ def mcp_tvchart_emit_payload(payload: dict[str, Any]) -> dict[str, Any]:
     )
 
 
-async def _extract_tvchart_payload(request: Request) -> dict:
+async def _extract_emit_payload(request: Request) -> dict:
     """Parse the emit body into a plain dict.
 
     The OpenBB router wraps endpoints as commands and deep-copies their kwargs;
@@ -443,7 +443,7 @@ async def _extract_tvchart_payload(request: Request) -> dict:
 
 
 async def mcp_tvchart_emit(
-    payload: dict = Depends(_extract_tvchart_payload),
+    payload: dict = Depends(_extract_emit_payload),
 ) -> Any:
     """Handle the bridge HTTP request that emits a tvchart event."""
     from starlette.responses import JSONResponse
@@ -478,6 +478,231 @@ async def mcp_tvchart_targets() -> Any:
     return JSONResponse({"ok": True, "count": len(targets), "targets": targets})
 
 
+def _list_live_rrg_targets() -> list[dict[str, Any]]:
+    try:
+        from openbb_yfinance.utils import relative_rotation
+    except Exception:
+        return []
+
+    targets: list[dict[str, Any]] = []
+    for index, item in enumerate(getattr(relative_rotation, "_LIVE_RRG", [])):
+        if not isinstance(item, (list, tuple)) or len(item) < 2:
+            continue
+        meta = item[1] if isinstance(item[1], dict) else {}
+        widget_id = str(meta.get("widget_id") or "")
+        if not widget_id:
+            continue
+        targets.append({"instance_index": index, "widget_id": widget_id})
+    return targets
+
+
+def _latest_rrg_target(widget_id: str | None = None) -> tuple[Any | None, str | None]:
+    try:
+        from openbb_yfinance.utils import relative_rotation
+    except Exception:
+        return None, None
+
+    for item in reversed(getattr(relative_rotation, "_LIVE_RRG", [])):
+        if not isinstance(item, (list, tuple)) or len(item) < 2:
+            continue
+        widget = item[0]
+        meta = item[1] if isinstance(item[1], dict) else {}
+        wid = str(meta.get("widget_id") or "")
+        if not wid:
+            continue
+        if widget_id:
+            if wid == widget_id:
+                return widget, wid
+            continue
+        return widget, wid
+    return None, None
+
+
+def _rrg_event_payload(
+    event_type: str,
+    data: dict[str, Any] | None = None,
+    widget_id: str | None = None,
+) -> dict[str, Any]:
+    if not widget_id:
+        _target, widget_id = _latest_rrg_target()
+    return {"event_type": event_type, "widget_id": widget_id, "data": data or {}}
+
+
+def _emit_rrg_to_live_target(
+    event_type: str,
+    data: dict[str, Any] | None = None,
+    widget_id: str | None = None,
+) -> dict[str, Any]:
+    target, resolved_widget_id = _latest_rrg_target(widget_id)
+    payload = _rrg_event_payload(event_type, data or {}, widget_id or resolved_widget_id)
+    if target is None:
+        return {
+            "ok": True,
+            "dispatched": False,
+            "event": payload,
+            "note": "No live RRG target was available in this process.",
+        }
+    if resolved_widget_id and not payload["widget_id"]:
+        payload["widget_id"] = resolved_widget_id
+    try:
+        target.emit(payload["event_type"], payload["data"])
+    except Exception as exc:
+        return {"ok": False, "dispatched": False, "event": payload, "error": str(exc)}
+    return {"ok": True, "dispatched": True, "event": payload}
+
+
+def _api_rrg_bridge_url() -> str:
+    import os
+
+    public_mcp = os.environ.get("OPENBB_YFINANCE_MCP_PUBLIC_URL", "").strip()
+    if public_mcp:
+        return f"{public_mcp.rstrip('/')}/rrg/emit"
+    host = os.environ.get("OPENBB_YFINANCE_MCP_PUBLIC_HOST", "127.0.0.1")
+    port = os.environ.get("OPENBB_API_PORT", "6900")
+    return f"http://{host}:{port}{_api_prefix()}/yfinance/mcp/rrg/emit"
+
+
+def _api_rrg_targets_url() -> str:
+    return _api_rrg_bridge_url().rsplit("/emit", 1)[0] + "/targets"
+
+
+def _list_rrg_targets_via_bridge() -> list[dict[str, Any]]:
+    import json
+    import urllib.error
+    import urllib.request
+
+    req = urllib.request.Request(_api_rrg_targets_url(), method="GET")  # noqa: S310
+    try:
+        with urllib.request.urlopen(req, timeout=2.5) as resp:  # noqa: S310
+            result = json.loads(resp.read().decode("utf-8"))
+    except (urllib.error.URLError, ValueError):
+        return []
+    if isinstance(result, dict) and isinstance(result.get("targets"), list):
+        return result["targets"]
+    return []
+
+
+def _emit_rrg_via_api_bridge(
+    event_type: str,
+    data: dict[str, Any] | None = None,
+    widget_id: str | None = None,
+) -> dict[str, Any]:
+    import json
+    import urllib.error
+    import urllib.request
+
+    payload = _rrg_event_payload(event_type, data or {}, widget_id)
+    body = json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(  # noqa: S310
+        _api_rrg_bridge_url(),
+        data=body,
+        headers={"content-type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=2.5) as resp:  # noqa: S310
+            response_text = resp.read().decode("utf-8")
+    except urllib.error.URLError as exc:
+        return {
+            "ok": False,
+            "dispatched": False,
+            "event": payload,
+            "error": f"Bridge request failed: {exc}",
+        }
+    try:
+        bridge_result = json.loads(response_text)
+    except Exception:
+        bridge_result = {
+            "ok": False,
+            "dispatched": False,
+            "event": payload,
+            "error": "Bridge returned non-JSON payload.",
+        }
+    if isinstance(bridge_result, dict):
+        bridge_result.setdefault("event", payload)
+    return bridge_result
+
+
+def _emit_rrg_or_envelope(
+    event_type: str,
+    data: dict[str, Any] | None = None,
+    widget_id: str | None = None,
+) -> dict[str, Any]:
+    local = _emit_rrg_to_live_target(event_type, data, widget_id)
+    if local.get("dispatched"):
+        return local
+
+    bridged = _emit_rrg_via_api_bridge(event_type, data, widget_id)
+    if isinstance(bridged, dict) and bridged.get("dispatched"):
+        return bridged
+
+    bridge_error = ""
+    bridged_event = None
+    if isinstance(bridged, dict):
+        bridge_error = str(bridged.get("error") or "")
+        bridged_event = bridged.get("event")
+    payload = bridged_event or _rrg_event_payload(event_type, data, widget_id)
+    note = "No live RRG target was available; returning event envelope for client dispatch."
+    if bridge_error:
+        note = f"{note} Bridge error: {bridge_error}"
+    return {"ok": True, "dispatched": False, "event": payload, "note": note}
+
+
+def mcp_rrg_emit_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    """Validate an RRG emit payload and dispatch it to the live widget."""
+    event_type = str(payload.get("event_type") or "")
+    data = payload.get("data")
+    widget_id = payload.get("widget_id") or None
+
+    if not event_type.startswith("rrg:"):
+        return {
+            "ok": False,
+            "dispatched": False,
+            "event": _rrg_event_payload(
+                event_type, data if isinstance(data, dict) else {}, widget_id
+            ),
+            "error": "event_type must start with 'rrg:'",
+        }
+
+    return _emit_rrg_to_live_target(
+        event_type, data if isinstance(data, dict) else {}, widget_id
+    )
+
+
+async def mcp_rrg_emit(payload: dict = Depends(_extract_emit_payload)) -> Any:
+    """Handle the bridge HTTP request that emits an RRG event."""
+    from starlette.responses import JSONResponse
+
+    if not payload:
+        return JSONResponse(
+            {"ok": False, "error": "Invalid or empty JSON payload"}, status_code=400
+        )
+    try:
+        result = mcp_rrg_emit_payload(payload)
+    except Exception as exc:  # noqa: BLE001
+        data = payload.get("data")
+        result = {
+            "ok": True,
+            "dispatched": False,
+            "event": _rrg_event_payload(
+                str(payload.get("event_type") or ""),
+                data if isinstance(data, dict) else {},
+                payload.get("widget_id") or None,
+            ),
+            "error": f"emit failed: {exc}",
+        }
+    status = 200 if result.get("ok") else 400
+    return JSONResponse(result, status_code=status)
+
+
+async def mcp_rrg_targets() -> Any:
+    """Bridge endpoint (runs in the API process): list live RRG targets."""
+    from starlette.responses import JSONResponse
+
+    targets = _list_live_rrg_targets()
+    return JSONResponse({"ok": True, "count": len(targets), "targets": targets})
+
+
 def _build_mcp_server() -> Any:
     """Build the FastMCP server and register the Yahoo Finance tools."""
     from fastmcp import FastMCP
@@ -490,7 +715,9 @@ def _build_mcp_server() -> Any:
             " questions about the symbol shown on the TradingView chart, to look up"
             " new symbols, and to enumerate a region/exchange/sector/industry or fund"
             " issuer/style universe with the screener. TV chart control tools emit"
-            " tvchart:* events with payloads aligned to PyWry's event system."
+            " tvchart:* events with payloads aligned to PyWry's event system. Relative"
+            " Rotation Graph (rrg_*) tools drive the RRG widget's sidebar (symbols,"
+            " benchmark, study, momentum periods, tails) and recompute the graph."
         ),
     )
 
@@ -1285,6 +1512,99 @@ def _build_mcp_server() -> Any:
                 params[key] = value
         rows: Any = await YFinanceEquityScreenerFetcher.fetch_data(params, {})
         return [r.model_dump(exclude_none=True) for r in rows]
+
+    @mcp.tool
+    def rrg_list_targets() -> dict:
+        """List active Relative Rotation Graph widgets to address by widget_id.
+
+        Example response:
+        ``{"ok": True, "count": 1, "targets": [{"instance_index": 0, "widget_id": "rrg_ab12cd34ef56"}]}``
+        """
+        targets = _list_live_rrg_targets() or _list_rrg_targets_via_bridge()
+        return {"ok": True, "count": len(targets), "targets": targets}
+
+    @mcp.tool
+    def rrg_set_inputs(
+        symbols: list[str] | str | None = None,
+        benchmark: str | None = None,
+        study: str | None = None,
+        date: str | None = None,
+        long_period: int | None = None,
+        short_period: int | None = None,
+        window: int | None = None,
+        trading_periods: int | None = None,
+        show_tails: bool | None = None,
+        tail_periods: int | None = None,
+        tail_interval: str | None = None,
+        recompute: bool = True,
+        widget_id: str | None = None,
+    ) -> dict:
+        """Set the RRG sidebar inputs and (by default) recompute the graph.
+
+        Only the provided fields change. ``symbols`` accepts a list or a
+        comma-separated string; ``study`` is price/volume/volatility;
+        ``tail_interval`` is week/month. Leave ``widget_id`` unset to target the
+        most-recent live RRG widget.
+
+        Example response:
+        ``{"ok": True, "dispatched": True, "event": {"event_type": "rrg:set-inputs", "widget_id": "rrg_ab12cd34ef56", "data": {"study": "volatility", "recompute": True}}}``
+        """
+        data: dict[str, Any] = {}
+        if symbols is not None:
+            data["symbols"] = symbols
+        for key, value in (
+            ("benchmark", benchmark),
+            ("study", study),
+            ("date", date),
+            ("long_period", long_period),
+            ("short_period", short_period),
+            ("window", window),
+            ("trading_periods", trading_periods),
+            ("show_tails", show_tails),
+            ("tail_periods", tail_periods),
+            ("tail_interval", tail_interval),
+        ):
+            if value is not None:
+                data[key] = value
+        data["recompute"] = bool(recompute)
+        return _emit_rrg_or_envelope("rrg:set-inputs", data, widget_id)
+
+    @mcp.tool
+    def rrg_recompute(widget_id: str | None = None) -> dict:
+        """Recompute the RRG with the widget's current sidebar inputs.
+
+        Emits ``rrg:recompute``. Leave ``widget_id`` unset to target the
+        most-recent live RRG widget.
+
+        Example response:
+        ``{"ok": True, "dispatched": True, "event": {"event_type": "rrg:recompute", "widget_id": "rrg_ab12cd34ef56", "data": {}}}``
+        """
+        return _emit_rrg_or_envelope("rrg:recompute", {}, widget_id)
+
+    @mcp.tool
+    def rrg_send_event(
+        event_type: str, data: dict | None = None, widget_id: str | None = None
+    ) -> dict:
+        """Emit an arbitrary ``rrg:*`` event to a Relative Rotation widget.
+
+        ``event_type`` must start with ``rrg:``. Leave ``widget_id`` unset to
+        target the most-recent live RRG widget.
+
+        Example response:
+        ``{"ok": True, "dispatched": True, "event": {"event_type": "rrg:recompute", "widget_id": "rrg_ab12cd34ef56", "data": {}}}``
+        """
+        if not str(event_type).startswith("rrg:"):
+            return {
+                "ok": False,
+                "dispatched": False,
+                "event": _rrg_event_payload(
+                    str(event_type), data if isinstance(data, dict) else {}, widget_id
+                ),
+                "error": "event_type must start with 'rrg:'",
+            }
+        return _emit_rrg_or_envelope(
+            event_type, data if isinstance(data, dict) else {}, widget_id
+        )
 
     return mcp
 

@@ -431,6 +431,11 @@ router.api_router.add_api_route(
                         {"label": i, "value": i}
                         for i in ("1m", "5m", "15m", "30m", "1h", "1d", "1w", "1M")
                     ],
+                    "show": False,
+                },
+                {
+                    "paramName": "theme",
+                    "show": False,
                 },
             ],
             "gridData": {"w": 40, "h": 20},
@@ -469,6 +474,10 @@ router.api_router.add_api_route(
                     "label": "Symbol",
                     "value": "AAPL",
                     "description": "The ticker symbol.",
+                },
+                {
+                    "paramName": "theme",
+                    "show": False,
                 },
             ],
             "gridData": {"w": 20, "h": 20},
@@ -652,7 +661,11 @@ router.api_router.add_api_route(
                     "value": "",
                     "description": "The screener configuration emitted by the builder.",
                     "show": False,
-                }
+                },
+                {
+                    "paramName": "theme",
+                    "show": False,
+                },
             ],
             "gridData": {"w": 16, "h": 18},
             "refetchInterval": False,
@@ -677,8 +690,120 @@ router.api_router.add_api_route(
 )
 
 
+async def rrg_page(theme: str = "dark") -> HTMLResponse:
+    """Serve the interactive Relative Rotation Graph iframe."""
+    from openbb_yfinance.utils.relative_rotation import rrg_widget_html
+
+    return HTMLResponse(content=await rrg_widget_html(theme=theme))
+
+
+async def rrg_data(
+    symbols: str | None = None,
+    benchmark: str = "SPY",
+    study: str = "price",
+    date: str | None = None,
+    long_period: int = 252,
+    short_period: int = 21,
+    window: int = 21,
+    trading_periods: int = 252,
+    show_tails: bool = True,
+    tail_periods: int = 30,
+    tail_interval: str = "week",
+    theme: str = "dark",
+) -> JSONResponse:
+    """Compute the RRG figure and the three tables."""
+    from openbb_yfinance.utils.relative_rotation import compute_rrg
+
+    try:
+        result = await compute_rrg(
+            theme=theme,
+            symbols=symbols,
+            benchmark=benchmark,
+            study=study,
+            date=date,
+            long_period=long_period,
+            short_period=short_period,
+            window=window,
+            trading_periods=trading_periods,
+            show_tails=show_tails,
+            tail_periods=tail_periods,
+            tail_interval=tail_interval,
+        )
+    except Exception as exc:  # noqa: BLE001 - surfaced in the iframe, not a 500
+        return JSONResponse(content={"error": str(exc)})
+    return JSONResponse(content=result)
+
+
+async def rrg_search(
+    query: str | None = None, limit: int = 30, asset_type: str | None = None
+) -> JSONResponse:
+    """Symbol search for the RRG sidebar."""
+    import asyncio
+
+    from openbb_yfinance.utils.search_helpers import yf_symbol_search
+
+    if not query or not query.strip():
+        return JSONResponse(content=[])
+    try:
+        if asset_type and asset_type != "all":
+            rows = await asyncio.to_thread(yf_symbol_search, query, limit, asset_type)
+        else:
+            rows = await asyncio.to_thread(yf_symbol_search, query, limit)
+    except Exception:  # noqa: BLE001 - autocomplete is best-effort
+        return JSONResponse(content=[])
+    return JSONResponse(content=rows)
+
+
+router.api_router.add_api_route(
+    path="/rrg/view",
+    endpoint=rrg_page,
+    methods=["GET"],
+    response_class=HTMLResponse,
+    include_in_schema=True,
+    openapi_extra={
+        "widget_config": {
+            "name": "Relative Rotation Graph (Yahoo Finance)",
+            "description": "Interactive Relative Rotation Graph — RS-Ratio vs "
+            "RS-Momentum against a benchmark — with an in-widget sidebar and the "
+            "three tables that build it (Study Data, RS-Ratio, RS-Momentum).",
+            "type": "iframe",
+            "category": "Equity",
+            "subCategory": "Technical",
+            "widgetId": "yfinance_rrg_obb",
+            "gridData": {"w": 40, "h": 24},
+            "refetchInterval": False,
+            "source": ["yFinance"],
+            "params": [
+                {
+                    "paramName": "theme",
+                    "show": False,
+                },
+            ],
+        }
+    },
+)
+
+router.api_router.add_api_route(
+    path="/rrg/data",
+    endpoint=rrg_data,
+    methods=["GET"],
+    response_class=JSONResponse,
+    include_in_schema=False,
+)
+
+router.api_router.add_api_route(
+    path="/rrg/search",
+    endpoint=rrg_search,
+    methods=["GET"],
+    response_class=JSONResponse,
+    include_in_schema=False,
+)
+
+
 from openbb_yfinance.utils.mcp_app import (  # noqa: E402
     mcp_reverse_proxy,
+    mcp_rrg_emit,
+    mcp_rrg_targets,
     mcp_tvchart_emit,
     mcp_tvchart_targets,
 )
@@ -704,6 +829,20 @@ router.api_router.add_api_route(
 router.api_router.add_api_route(
     path="/mcp/tvchart/targets",
     endpoint=mcp_tvchart_targets,
+    methods=["GET"],
+    include_in_schema=False,
+)
+
+router.api_router.add_api_route(
+    path="/mcp/rrg/emit",
+    endpoint=mcp_rrg_emit,
+    methods=["POST"],
+    include_in_schema=False,
+)
+
+router.api_router.add_api_route(
+    path="/mcp/rrg/targets",
+    endpoint=mcp_rrg_targets,
     methods=["GET"],
     include_in_schema=False,
 )

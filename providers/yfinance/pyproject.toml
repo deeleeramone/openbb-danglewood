@@ -32,6 +32,9 @@ dependencies = [
     # --- from openbb-charting 3.0.0 ---
     "pandas-ta-openbb>=0.4.24,<0.5",
     "plotly>=6.3.1,<7",
+    "scikit-learn>=1.6.0",
+    "scipy>=1.11",
+    "statsmodels>=0.14",
 ]
 
 [project.entry-points."openbb_provider_extension"]

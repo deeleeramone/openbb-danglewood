@@ -96,6 +96,7 @@ jobs:
             openbb_platform/core
             openbb_platform/obbject_extensions/charting
             openbb_platform/extensions/platform_api
+            openbb_platform/extensions/technical
 
       - uses: actions/setup-python@v6
         with:

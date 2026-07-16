@@ -759,7 +759,12 @@ def test_apps_tabs_curated():
     app = apps[0]
     assert app["name"] == "Yahoo Finance"
     assert app["allowCustomization"] is True
-    assert list(app["tabs"]) == ["asset-overview", "screener", "options"]
+    assert list(app["tabs"]) == [
+        "asset-overview",
+        "screener",
+        "options",
+        "relative-rotation",
+    ]
     for tab in app["tabs"].values():
         assert tab["id"] and tab["name"] and tab["layout"]
 

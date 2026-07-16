@@ -23,6 +23,7 @@ _VENDOR = {
     "openbb_core": "openbb_platform/core/openbb_core",
     "openbb_charting": "openbb_platform/obbject_extensions/charting/openbb_charting",
     "openbb_platform_api": "openbb_platform/extensions/platform_api/openbb_platform_api",
+    "openbb_technical": "openbb_platform/extensions/technical/openbb_technical",
 }
 _VENDOR_ENV = "OPENBB_VENDOR_SRC"
 _SKIP_ENV = "OPENBB_VENDOR_SKIP"
