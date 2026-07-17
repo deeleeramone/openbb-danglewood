@@ -1,6 +1,9 @@
 """Native / Jupyter screener builder powered by PyWry and the yfinance screener."""
 
+import logging
 from typing import Any
+
+_logger = logging.getLogger(__name__)
 
 
 def _run_screen(config: dict, limit: int | None) -> list[dict]:
@@ -49,10 +52,15 @@ def make_screener_callbacks(app: Any) -> dict:
         limit = None if requested <= 0 else requested
         try:
             rows = _run_screen(config, limit)
-        except Exception as exc:  # noqa: BLE001 - surfaced to the UI status line
+        except Exception:  # noqa: BLE001 - surfaced to the UI status line
+            _logger.exception("Screener run failed")
             app.emit(
                 "screener:results",
-                {"error": str(exc), "rows": [], "isDefault": is_default},
+                {
+                    "error": "Unable to run the screener with this configuration.",
+                    "rows": [],
+                    "isDefault": is_default,
+                },
             )
             return
         asset = str(config.get("type") or "equity").lower()
@@ -79,8 +87,12 @@ def make_screener_callbacks(app: Any) -> dict:
 
         try:
             app.emit("screener:templates", {"templates": list_presets()})
-        except Exception as exc:  # noqa: BLE001 - surfaced to the UI status line
-            app.emit("screener:templates", {"templates": [], "error": str(exc)})
+        except Exception:  # noqa: BLE001 - surfaced to the UI status line
+            _logger.exception("Listing screener templates failed")
+            app.emit(
+                "screener:templates",
+                {"templates": [], "error": "Unable to load templates."},
+            )
 
     def on_template_load(data: dict[str, Any], *_: Any) -> None:
         from openbb_yfinance.utils.screener_presets import load_preset_config
@@ -91,8 +103,9 @@ def make_screener_callbacks(app: Any) -> dict:
                 "screener:template-loaded",
                 {"config": load_preset_config(name), "name": name},
             )
-        except (FileNotFoundError, ValueError) as exc:
-            app.emit("screener:template-loaded", {"error": str(exc)})
+        except (FileNotFoundError, ValueError):
+            _logger.exception("Loading screener template failed")
+            app.emit("screener:template-loaded", {"error": "Template not found."})
 
     def on_template_save(data: dict[str, Any], *_: Any) -> None:
         from openbb_yfinance.utils.screener_presets import list_presets, save_preset
@@ -103,8 +116,11 @@ def make_screener_callbacks(app: Any) -> dict:
             config = {}
         try:
             saved = save_preset(str(data.get("name") or ""), config)
-        except (ValueError, OSError) as exc:
-            app.emit("screener:template-saved", {"error": str(exc)})
+        except (ValueError, OSError):
+            _logger.exception("Saving screener template failed")
+            app.emit(
+                "screener:template-saved", {"error": "Unable to save the template."}
+            )
             return
         app.emit(
             "screener:template-saved",
@@ -116,8 +132,11 @@ def make_screener_callbacks(app: Any) -> dict:
 
         try:
             delete_preset(str(data.get("name") or ""))
-        except (FileNotFoundError, ValueError, OSError) as exc:
-            app.emit("screener:template-deleted", {"error": str(exc)})
+        except (FileNotFoundError, ValueError, OSError):
+            _logger.exception("Deleting screener template failed")
+            app.emit(
+                "screener:template-deleted", {"error": "Unable to delete the template."}
+            )
             return
         app.emit("screener:template-deleted", {"ok": True, "templates": list_presets()})
 

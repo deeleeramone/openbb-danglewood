@@ -365,7 +365,7 @@ def test_screener_builder_run_rejects_bad_json_offline():
 
     bad = asyncio.run(screener_builder_run(config="{not json"))
     assert bad.status_code == 400
-    assert "Invalid config JSON" in _json.loads(bytes(bad.body))["error"]
+    assert "not valid JSON" in _json.loads(bytes(bad.body))["error"]
 
 
 def test_prune_empty_columns_drops_fully_empty_fields():

@@ -6,6 +6,7 @@ plain routes that return ``json.loads(fig.to_json())`` per the OpenBB Workspace
 plotly-chart widget spec.
 """
 
+import logging
 from datetime import date as dateType
 from typing import Annotated, Any, Literal
 
@@ -23,6 +24,8 @@ from openbb_core.app.router import Router
 from openbb_core.app.service.system_service import SystemService
 from openbb_core.provider.abstract.data import Data
 from pydantic import Field
+
+_logger = logging.getLogger(__name__)
 
 router = Router(prefix="", description="Yahoo Finance derivatives data.")
 options_router = Router(prefix="/options", description="Options analysis.")
@@ -228,7 +231,10 @@ async def _chart_json(builder, symbol: str, theme: str, raw: bool, **kwargs):
     try:
         data = await load_symbol(symbol)
     except OpenBBError as exc:
-        raise HTTPException(status_code=404, detail=str(exc)) from exc
+        _logger.exception("Loading options data for %s failed", symbol)
+        raise HTTPException(
+            status_code=404, detail="No options data found for the requested symbol."
+        ) from exc
 
     output = builder(data, theme=theme, **kwargs)
     if raw:

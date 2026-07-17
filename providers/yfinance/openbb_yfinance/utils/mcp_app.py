@@ -2,12 +2,15 @@
 through the OpenBB API so the Workspace connects on the API's own host/port.
 """
 
+import logging
 import threading
 import uuid
 from typing import Any
 
 from fastapi import Depends
 from starlette.requests import Request
+
+_logger = logging.getLogger(__name__)
 
 
 def _list_live_tvchart_targets() -> list[dict[str, Any]]:
@@ -163,12 +166,13 @@ def _emit_to_live_target(
         payload["widget_id"] = resolved_widget_id
     try:
         target.emit(payload["event_type"], payload["data"])
-    except Exception as exc:
+    except Exception:  # noqa: BLE001 - reported back to the MCP caller
+        _logger.exception("Dispatching tvchart event failed")
         return {
             "ok": False,
             "dispatched": False,
             "event": payload,
-            "error": str(exc),
+            "error": "Failed to dispatch the event to the live chart.",
         }
 
     return {
@@ -245,12 +249,13 @@ def _emit_via_api_bridge(
     try:
         with urllib.request.urlopen(req, timeout=2.5) as resp:  # noqa: S310
             response_text = resp.read().decode("utf-8")
-    except urllib.error.URLError as exc:
+    except urllib.error.URLError:
+        _logger.exception("tvchart bridge request failed")
         return {
             "ok": False,
             "dispatched": False,
             "event": payload,
-            "error": f"Bridge request failed: {exc}",
+            "error": "Bridge request failed.",
         }
 
     try:
@@ -456,7 +461,8 @@ async def mcp_tvchart_emit(
         )
     try:
         result = mcp_tvchart_emit_payload(payload)
-    except Exception as exc:  # noqa: BLE001 - never 500; the resolved chart id still helps the client dispatch
+    except Exception:  # noqa: BLE001 - never 500; the resolved chart id still helps the client dispatch
+        _logger.exception("tvchart emit failed")
         data = payload.get("data")
         result = {
             "ok": True,
@@ -466,7 +472,7 @@ async def mcp_tvchart_emit(
                 data if isinstance(data, dict) else {},
                 str(payload.get("widget_id") or ""),
             ),
-            "error": f"emit failed: {exc}",
+            "error": "Failed to dispatch the event.",
         }
     status = 200 if result.get("ok") else 400
     return JSONResponse(result, status_code=status)
@@ -550,8 +556,14 @@ def _emit_rrg_to_live_target(
         payload["widget_id"] = resolved_widget_id
     try:
         target.emit(payload["event_type"], payload["data"])
-    except Exception as exc:
-        return {"ok": False, "dispatched": False, "event": payload, "error": str(exc)}
+    except Exception:  # noqa: BLE001 - reported back to the MCP caller
+        _logger.exception("Dispatching RRG event failed")
+        return {
+            "ok": False,
+            "dispatched": False,
+            "event": payload,
+            "error": "Failed to dispatch the event to the live RRG widget.",
+        }
     return {"ok": True, "dispatched": True, "event": payload}
 
 
@@ -606,12 +618,13 @@ def _emit_rrg_via_api_bridge(
     try:
         with urllib.request.urlopen(req, timeout=2.5) as resp:  # noqa: S310
             response_text = resp.read().decode("utf-8")
-    except urllib.error.URLError as exc:
+    except urllib.error.URLError:
+        _logger.exception("RRG bridge request failed")
         return {
             "ok": False,
             "dispatched": False,
             "event": payload,
-            "error": f"Bridge request failed: {exc}",
+            "error": "Bridge request failed.",
         }
     try:
         bridge_result = json.loads(response_text)
@@ -683,7 +696,8 @@ async def mcp_rrg_emit(payload: dict = Depends(_extract_emit_payload)) -> Any:
         )
     try:
         result = mcp_rrg_emit_payload(payload)
-    except Exception as exc:  # noqa: BLE001
+    except Exception:  # noqa: BLE001
+        _logger.exception("RRG emit failed")
         data = payload.get("data")
         result = {
             "ok": True,
@@ -693,7 +707,7 @@ async def mcp_rrg_emit(payload: dict = Depends(_extract_emit_payload)) -> Any:
                 data if isinstance(data, dict) else {},
                 payload.get("widget_id") or None,
             ),
-            "error": f"emit failed: {exc}",
+            "error": "Failed to dispatch the event.",
         }
     status = 200 if result.get("ok") else 400
     return JSONResponse(result, status_code=status)
@@ -1770,9 +1784,10 @@ async def mcp_reverse_proxy(data: dict = Depends(_extract_mcp_request)) -> Any:
             data=data["body"] or None,
             params=data["query"],
         )
-    except aiohttp.ClientError as exc:
+    except aiohttp.ClientError:
+        _logger.exception("MCP proxy request failed")
         await session.close()
-        return JSONResponse({"error": f"MCP proxy error: {exc}"}, status_code=502)
+        return JSONResponse({"error": "MCP proxy error."}, status_code=502)
 
     out_headers = {
         k: v for k, v in upstream.headers.items() if k.lower() not in _DROP_RESP_HEADERS
