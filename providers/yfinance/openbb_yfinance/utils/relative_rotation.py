@@ -5,12 +5,16 @@ from __future__ import annotations
 import asyncio
 import contextlib
 import json
+import logging
 import math
 import re
 import uuid
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
+
+_logger = logging.getLogger(__name__)
+_ERROR_MESSAGE = "Unable to compute the relative rotation graph."
 
 _BRIDGE_JS = Path(__file__).resolve().parent.parent / "assets" / "rrg_bridge.js"
 _SEARCH_JS = Path(__file__).resolve().parent.parent / "assets" / "rrg_search.js"
@@ -28,8 +32,18 @@ _STATE: dict[str, dict] = {}
 _MAX_LIVE = 16
 
 SPDRS = [
-    "XLB", "XLC", "XLE", "XLF", "XLI", "XLK",
-    "XLP", "XHB", "XLU", "XLV", "XLY", "XLRE",
+    "XLB",
+    "XLC",
+    "XLE",
+    "XLF",
+    "XLI",
+    "XLK",
+    "XLP",
+    "XHB",
+    "XLU",
+    "XLV",
+    "XLY",
+    "XLRE",
 ]
 
 _FIGURE_CONFIG = {
@@ -61,7 +75,12 @@ _TRADING_DAYS_PER_WEEK = 5
 _INTERVAL_FREQ = {"week": "W", "month": "ME"}
 _INTERVAL_FACTOR = {"day": 1, "week": 5, "month": 21}
 _PERIOD_DEFAULTS = {
-    "day": {"long_period": 252, "short_period": 21, "window": 21, "trading_periods": 252},
+    "day": {
+        "long_period": 252,
+        "short_period": 21,
+        "window": 21,
+        "trading_periods": 252,
+    },
     "week": {"long_period": 52, "short_period": 4, "window": 4, "trading_periods": 52},
     "month": {"long_period": 12, "short_period": 1, "window": 3, "trading_periods": 12},
 }
@@ -147,7 +166,9 @@ def coerce_inputs(raw: dict[str, Any]) -> dict[str, Any]:
             return value
         return str(value).strip().lower() in ("1", "true", "yes", "on")
 
-    symbols = parse_symbols(raw.get("symbols")) if raw.get("symbols") else base["symbols"]
+    symbols = (
+        parse_symbols(raw.get("symbols")) if raw.get("symbols") else base["symbols"]
+    )
     study = str(raw.get("study") or base["study"]).lower()
     date = str(raw.get("date") or "").strip() or None
     return {
@@ -427,8 +448,12 @@ def _figure(ratios_df: Any, momentum_df: Any, inputs: dict, theme: str) -> dict:
 
     if inputs["show_tails"]:
         fig = create_rrg_with_tails(
-            ratios_df, momentum_df, inputs["study"], inputs["benchmark"],
-            inputs["tail_periods"], inputs["tail_interval"],
+            ratios_df,
+            momentum_df,
+            inputs["study"],
+            inputs["benchmark"],
+            inputs["tail_periods"],
+            inputs["tail_interval"],
         )
     else:
         chart_date = to_datetime(inputs["date"]).date() if inputs["date"] else None
@@ -461,7 +486,11 @@ async def _compute(inputs: dict, theme: str, cached: dict | None = None) -> dict
     def _build() -> tuple:
         res = _relative_rotation(prices, inputs)
         ratios_df, momentum_df = _rs_frames(res, inputs)
-        return res, _figure(ratios_df, momentum_df, inputs, theme), _tables(res, ratios_df, momentum_df)
+        return (
+            res,
+            _figure(ratios_df, momentum_df, inputs, theme),
+            _tables(res, ratios_df, momentum_df),
+        )
 
     res, figure, tables = await asyncio.to_thread(_build)
     return {
@@ -519,23 +548,31 @@ def _build_toolbar(inputs: dict) -> Any:
         collapsible=True,
         items=[
             TextInput(
-                component_id="symbols", label="Symbols", event="rrg:input",
+                component_id="symbols",
+                label="Symbols",
+                event="rrg:input",
                 value=",".join(inputs["symbols"]),
                 description=_DESCRIPTIONS["symbols"],
             ),
             TextInput(
-                component_id="benchmark", label="Benchmark", event="rrg:input",
+                component_id="benchmark",
+                label="Benchmark",
+                event="rrg:input",
                 value=inputs["benchmark"],
                 description=_DESCRIPTIONS["benchmark"],
             ),
             DateInput(
-                component_id="date", label="Target End Date", event="rrg:input",
+                component_id="date",
+                label="Target End Date",
+                event="rrg:input",
                 value=inputs["date"] or "",
                 description=_DESCRIPTIONS["date"],
             ),
             rule(),
             Select(
-                component_id="study", label="Study", event="rrg:input",
+                component_id="study",
+                label="Study",
+                event="rrg:input",
                 options=[Option(label=s.capitalize(), value=s) for s in _STUDIES],
                 selected=inputs["study"],
                 description=_DESCRIPTIONS["study"],
@@ -549,13 +586,21 @@ def _build_toolbar(inputs: dict) -> Any:
                         style="display:flex;flex-direction:row;gap:8px;width:100%;",
                         children=[
                             NumberInput(
-                                component_id="window", label="Window", event="rrg:input",
-                                value=inputs["window"], min=1, max=500,
+                                component_id="window",
+                                label="Window",
+                                event="rrg:input",
+                                value=inputs["window"],
+                                min=1,
+                                max=500,
                                 description=_DESCRIPTIONS["window"],
                             ),
                             NumberInput(
-                                component_id="trading_periods", label="Periods / Year", event="rrg:input",
-                                value=inputs["trading_periods"], min=1, max=1000,
+                                component_id="trading_periods",
+                                label="Periods / Year",
+                                event="rrg:input",
+                                value=inputs["trading_periods"],
+                                min=1,
+                                max=1000,
                                 description=_DESCRIPTIONS["trading_periods"],
                             ),
                         ],
@@ -568,26 +613,39 @@ def _build_toolbar(inputs: dict) -> Any:
                 style="display:flex;flex-direction:row;gap:8px;width:100%;",
                 children=[
                     NumberInput(
-                        component_id="long_period", label="Long", event="rrg:input",
-                        value=inputs["long_period"], min=1, max=1000,
+                        component_id="long_period",
+                        label="Long",
+                        event="rrg:input",
+                        value=inputs["long_period"],
+                        min=1,
+                        max=1000,
                         description=_DESCRIPTIONS["long_period"],
                     ),
                     NumberInput(
-                        component_id="short_period", label="Short", event="rrg:input",
-                        value=inputs["short_period"], min=1, max=500,
+                        component_id="short_period",
+                        label="Short",
+                        event="rrg:input",
+                        value=inputs["short_period"],
+                        min=1,
+                        max=500,
                         description=_DESCRIPTIONS["short_period"],
                     ),
                 ],
             ),
             rule(),
             Button(
-                component_id="rrg-submit", label="Fetch Data", event="rrg:submit",
-                variant="primary", style="width:100%;",
+                component_id="rrg-submit",
+                label="Fetch Data",
+                event="rrg:submit",
+                variant="primary",
+                style="width:100%;",
                 description=_DESCRIPTIONS["rrg-submit"],
             ),
             rule(),
             Checkbox(
-                component_id="show_tails", label="Show Tails", event="rrg:input",
+                component_id="show_tails",
+                label="Show Tails",
+                event="rrg:input",
                 value=inputs["show_tails"],
                 description=_DESCRIPTIONS["show_tails"],
             ),
@@ -599,13 +657,22 @@ def _build_toolbar(inputs: dict) -> Any:
                         style="display:flex;flex-direction:row;gap:8px;width:100%;",
                         children=[
                             NumberInput(
-                                component_id="tail_periods", label="Periods", event="rrg:input",
-                                value=inputs["tail_periods"], min=1, max=200,
+                                component_id="tail_periods",
+                                label="Periods",
+                                event="rrg:input",
+                                value=inputs["tail_periods"],
+                                min=1,
+                                max=200,
                                 description=_DESCRIPTIONS["tail_periods"],
                             ),
                             Select(
-                                component_id="tail_interval", label="Interval", event="rrg:input",
-                                options=[Option(label=t.capitalize(), value=t) for t in _TAIL_INTERVALS],
+                                component_id="tail_interval",
+                                label="Interval",
+                                event="rrg:input",
+                                options=[
+                                    Option(label=t.capitalize(), value=t)
+                                    for t in _TAIL_INTERVALS
+                                ],
                                 selected=inputs["tail_interval"],
                                 description=_DESCRIPTIONS["tail_interval"],
                             ),
@@ -668,8 +735,9 @@ def _recompute(widget_id: str) -> None:
     async def _work() -> None:
         try:
             result = await _compute(inputs, state["theme"], cached=state)
-        except Exception as exc:  # noqa: BLE001 - surfaced to the widget, not a 500
-            widget.emit("rrg:status", {"error": str(exc)})
+        except Exception:
+            _logger.exception("RRG recompute failed")
+            widget.emit("rrg:status", {"error": _ERROR_MESSAGE})
             return
         state["prices"] = result["prices"]
         state["fetch_key"] = result["fetch_key"]
@@ -761,7 +829,9 @@ def _callbacks(widget_id: str) -> dict:
                 }
             },
         )
-        state["widget"].emit("rrg:inputs", {"study": merged["study"], "show_tails": merged["show_tails"]})
+        state["widget"].emit(
+            "rrg:inputs", {"study": merged["study"], "show_tails": merged["show_tails"]}
+        )
         if data.get("recompute", True):
             _recompute(widget_id)
 
@@ -809,8 +879,9 @@ async def rrg_widget_html(theme: str = "dark", **raw: Any) -> str:
         figure, tables = result["figure"], result["tables"]
         prices, fetch_key = result["prices"], result["fetch_key"]
         backfill = result["backfill"]
-    except Exception as exc:  # noqa: BLE001 - surfaced in the widget, not a 500
-        error = str(exc)
+    except Exception:
+        _logger.exception("RRG initial render failed")
+        error = _ERROR_MESSAGE
 
     frames = figure.get("frames") or []
     html = generate_plotly_html(
@@ -835,7 +906,9 @@ async def rrg_widget_html(theme: str = "dark", **raw: Any) -> str:
         else html + extra
     )
 
-    widget = InlineWidget(html=html, widget_id=widget_id, browser_only=True, token=token)
+    widget = InlineWidget(
+        html=html, widget_id=widget_id, browser_only=True, token=token
+    )
     _STATE[widget_id] = {
         "widget": widget,
         "inputs": inputs,

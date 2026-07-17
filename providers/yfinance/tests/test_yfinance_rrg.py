@@ -77,8 +77,18 @@ def test_build_toolbar_uses_pywry_components():
                 collect(children)
 
     collect(toolbar.items)
-    for cid in ("symbols", "benchmark", "study", "long_period", "short_period",
-                "window", "trading_periods", "show_tails", "tail_periods", "tail_interval"):
+    for cid in (
+        "symbols",
+        "benchmark",
+        "study",
+        "long_period",
+        "short_period",
+        "window",
+        "trading_periods",
+        "show_tails",
+        "tail_periods",
+        "tail_interval",
+    ):
         assert cid in ids
     assert any(getattr(item, "label", "") == "Fetch Data" for item in toolbar.items)
 
@@ -123,7 +133,12 @@ def test_rrg_bridge_pushes_tables_over_ws_without_workspace_refresh():
 def test_rrg_search_modal_reuses_tvchart_dialog():
     js = rr._SEARCH_JS.read_text(encoding="utf-8")
     css = rr._SEARCH_CSS.read_text(encoding="utf-8")
-    for cls in ("tv-settings-overlay", "tv-symbol-search-panel", "tv-compare-search-input", "tv-compare-result-row"):
+    for cls in (
+        "tv-settings-overlay",
+        "tv-symbol-search-panel",
+        "tv-compare-search-input",
+        "tv-compare-result-row",
+    ):
         assert cls in js
         assert cls in css
     assert "/search?query=" in js
@@ -181,11 +196,24 @@ def test_study_and_tails_emit_visibility_over_the_event_system():
         state["widget"].emit = lambda event, data: emitted.append((event, data))
         on_input = inline._state.widgets[widget_id]["callbacks"]["rrg:input"]
 
-        await asyncio.to_thread(on_input, {"componentId": "study", "value": "volatility"}, "rrg:input", widget_id)
-        assert ("toolbar:set-value", {"componentId": "rrg-vol-group", "style": ""}) in emitted
+        await asyncio.to_thread(
+            on_input,
+            {"componentId": "study", "value": "volatility"},
+            "rrg:input",
+            widget_id,
+        )
+        assert (
+            "toolbar:set-value",
+            {"componentId": "rrg-vol-group", "style": ""},
+        ) in emitted
 
         emitted.clear()
-        await asyncio.to_thread(on_input, {"componentId": "show_tails", "value": False}, "rrg:input", widget_id)
+        await asyncio.to_thread(
+            on_input,
+            {"componentId": "show_tails", "value": False},
+            "rrg:input",
+            widget_id,
+        )
         assert (
             "toolbar:set-value",
             {"componentId": "rrg-tail-group", "style": "display:none;"},
@@ -246,11 +274,20 @@ def test_changing_interval_resets_periods_to_that_interval_default():
         on_input = inline._state.widgets[widget_id]["callbacks"]["rrg:input"]
 
         await asyncio.to_thread(
-            on_input, {"componentId": "tail_interval", "value": "month"}, "rrg:input", widget_id
+            on_input,
+            {"componentId": "tail_interval", "value": "month"},
+            "rrg:input",
+            widget_id,
         )
         assert state["inputs"]["tail_periods"] == rr._TAIL_PERIODS["month"]
-        assert state["inputs"]["long_period"] == rr._PERIOD_DEFAULTS["month"]["long_period"]
-        assert state["inputs"]["short_period"] == rr._PERIOD_DEFAULTS["month"]["short_period"]
+        assert (
+            state["inputs"]["long_period"]
+            == rr._PERIOD_DEFAULTS["month"]["long_period"]
+        )
+        assert (
+            state["inputs"]["short_period"]
+            == rr._PERIOD_DEFAULTS["month"]["short_period"]
+        )
         # the interval's params are pushed back to the UI, like tail_periods
         values = [d["values"] for e, d in emitted if e == "toolbar:set-values"]
         assert values
@@ -265,7 +302,9 @@ def test_changing_interval_resets_periods_to_that_interval_default():
 def test_tail_group_hidden_unless_show_tails():
     base = rr.default_inputs()
     assert _group_style(base, "rrg-tail-group") == ""
-    assert _group_style({**base, "show_tails": False}, "rrg-tail-group") == "display:none;"
+    assert (
+        _group_style({**base, "show_tails": False}, "rrg-tail-group") == "display:none;"
+    )
 
 
 def test_rrg_ui_bridges_frames_and_loading():
@@ -335,7 +374,12 @@ def test_list_live_rrg_targets_uses_real_widget_ids():
 
 def test_rrg_tools_registered():
     src = inspect.getsource(mcp_app)
-    for name in ("rrg_list_targets", "rrg_set_inputs", "rrg_recompute", "rrg_send_event"):
+    for name in (
+        "rrg_list_targets",
+        "rrg_set_inputs",
+        "rrg_recompute",
+        "rrg_send_event",
+    ):
         assert f"def {name}(" in src
 
 
@@ -439,8 +483,13 @@ def test_interval_resamples_prices_and_scales_params_on_3yr_data():
 
     async def main():
         inputs = rr.coerce_inputs(
-            {"show_tails": True, "symbols": "XLK,XLF,XLE", "benchmark": "SPY",
-             "tail_interval": "month", "tail_periods": 24}
+            {
+                "show_tails": True,
+                "symbols": "XLK,XLF,XLE",
+                "benchmark": "SPY",
+                "tail_interval": "month",
+                "tail_periods": 24,
+            }
         )
         # ~3 years of daily data, not decades
         assert rr._backfill_weeks(24, "month") == 156

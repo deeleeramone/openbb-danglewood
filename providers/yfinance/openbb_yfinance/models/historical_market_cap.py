@@ -84,7 +84,9 @@ class YFinanceHistoricalMarketCapFetcher(
         else:
             # Fall back to a single current shares count when no series exists.
             info = ticker.get_info() or {}
-            outstanding = info.get("sharesOutstanding") or info.get("impliedSharesOutstanding")
+            outstanding = info.get("sharesOutstanding") or info.get(
+                "impliedSharesOutstanding"
+            )
             if not outstanding:
                 raise OpenBBError(
                     f"No shares outstanding data found for {query.symbol}"

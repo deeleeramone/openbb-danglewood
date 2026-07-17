@@ -31,8 +31,10 @@ def _list_live_tvchart_targets() -> list[dict[str, Any]]:
         # (Workspace iframe) and inline widgets alike; _inline_widgets is only
         # populated for inline/Jupyter, so a browser widget would otherwise be
         # invisible here. Fall back to the inline registry / app label.
-        labels = list(chart_ids) or list(inline_widgets) or (
-            [app_label] if app_label else []
+        labels = (
+            list(chart_ids)
+            or list(inline_widgets)
+            or ([app_label] if app_label else [])
         )
         for label in labels:
             chart_id = str(chart_ids.get(str(label)) or app_chart_id or "")
@@ -534,7 +536,9 @@ def _emit_rrg_to_live_target(
     widget_id: str | None = None,
 ) -> dict[str, Any]:
     target, resolved_widget_id = _latest_rrg_target(widget_id)
-    payload = _rrg_event_payload(event_type, data or {}, widget_id or resolved_widget_id)
+    payload = _rrg_event_payload(
+        event_type, data or {}, widget_id or resolved_widget_id
+    )
     if target is None:
         return {
             "ok": True,

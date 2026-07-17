@@ -1,5 +1,9 @@
 """Yahoo Finance hybrid router."""
 
+import logging
+
+_logger = logging.getLogger(__name__)
+
 from fastapi.responses import HTMLResponse, JSONResponse
 from openbb_core.app.model.command_context import CommandContext
 from openbb_core.app.model.example import APIEx, PythonEx
@@ -519,9 +523,13 @@ async def screener_builder_run(config: str = "", limit: int = 100) -> JSONRespon
 
     try:
         cfg = json.loads(config) if config else {}
-    except (ValueError, TypeError) as exc:
+    except (ValueError, TypeError):
+        _logger.exception("Invalid screener config JSON")
         return JSONResponse(
-            content={"error": f"Invalid config JSON: {exc}", "rows": []},
+            content={
+                "error": "The screener configuration is not valid JSON.",
+                "rows": [],
+            },
             status_code=400,
         )
 
@@ -540,8 +548,14 @@ async def screener_builder_run(config: str = "", limit: int = 100) -> JSONRespon
             rows = await get_custom_screener(
                 screener_body_from_config(cfg), screener_limit, keep_illiquid=True
             )
-    except (EmptyDataError, OpenBBError, ValueError) as exc:
-        return JSONResponse(content={"error": str(exc), "rows": []})
+    except (EmptyDataError, OpenBBError, ValueError):
+        _logger.exception("Screener query failed")
+        return JSONResponse(
+            content={
+                "error": "Unable to run the screener with this configuration.",
+                "rows": [],
+            }
+        )
 
     asset = str(cfg.get("type") or "equity").lower()
     column_defs = _COLUMN_DEFS_BY_ASSET.get(asset) or _COLUMN_DEFS_BY_ASSET["equity"]
@@ -556,8 +570,11 @@ async def screener_builder_templates() -> JSONResponse:
 
     try:
         return JSONResponse(content={"templates": list_presets()})
-    except Exception as exc:  # noqa: BLE001 - templates are best-effort
-        return JSONResponse(content={"templates": [], "error": str(exc)})
+    except Exception:  # noqa: BLE001 - templates are best-effort
+        _logger.exception("Listing screener templates failed")
+        return JSONResponse(
+            content={"templates": [], "error": "Unable to load templates."}
+        )
 
 
 async def screener_builder_template_load(name: str = "") -> JSONResponse:
@@ -566,8 +583,9 @@ async def screener_builder_template_load(name: str = "") -> JSONResponse:
 
     try:
         return JSONResponse(content={"config": load_preset_config(name)})
-    except (FileNotFoundError, ValueError) as exc:
-        return JSONResponse(content={"error": str(exc)}, status_code=404)
+    except (FileNotFoundError, ValueError):
+        _logger.exception("Loading screener template failed")
+        return JSONResponse(content={"error": "Template not found."}, status_code=404)
 
 
 async def screener_builder_template_save(
@@ -580,9 +598,11 @@ async def screener_builder_template_save(
 
     try:
         cfg = json.loads(config) if config else {}
-    except (ValueError, TypeError) as exc:
+    except (ValueError, TypeError):
+        _logger.exception("Invalid screener config JSON")
         return JSONResponse(
-            content={"error": f"Invalid config JSON: {exc}"}, status_code=400
+            content={"error": "The screener configuration is not valid JSON."},
+            status_code=400,
         )
     if not isinstance(cfg, dict):
         return JSONResponse(
@@ -590,8 +610,11 @@ async def screener_builder_template_save(
         )
     try:
         saved = save_preset(name, cfg)
-    except (ValueError, OSError) as exc:
-        return JSONResponse(content={"error": str(exc)}, status_code=400)
+    except (ValueError, OSError):
+        _logger.exception("Saving screener template failed")
+        return JSONResponse(
+            content={"error": "Unable to save the template."}, status_code=400
+        )
     return JSONResponse(
         content={"ok": True, "name": saved["name"], "templates": list_presets()}
     )
@@ -603,10 +626,14 @@ async def screener_builder_template_delete(name: str = "") -> JSONResponse:
 
     try:
         delete_preset(name)
-    except FileNotFoundError as exc:
-        return JSONResponse(content={"error": str(exc)}, status_code=404)
-    except (ValueError, OSError) as exc:
-        return JSONResponse(content={"error": str(exc)}, status_code=400)
+    except FileNotFoundError:
+        _logger.exception("Deleting screener template failed")
+        return JSONResponse(content={"error": "Template not found."}, status_code=404)
+    except (ValueError, OSError):
+        _logger.exception("Deleting screener template failed")
+        return JSONResponse(
+            content={"error": "Unable to delete the template."}, status_code=400
+        )
     return JSONResponse(content={"ok": True, "templates": list_presets()})
 
 
@@ -729,8 +756,11 @@ async def rrg_data(
             tail_periods=tail_periods,
             tail_interval=tail_interval,
         )
-    except Exception as exc:  # noqa: BLE001 - surfaced in the iframe, not a 500
-        return JSONResponse(content={"error": str(exc)})
+    except Exception:
+        _logger.exception("RRG data computation failed")
+        return JSONResponse(
+            content={"error": "Unable to compute the relative rotation graph."}
+        )
     return JSONResponse(content=result)
 
 
