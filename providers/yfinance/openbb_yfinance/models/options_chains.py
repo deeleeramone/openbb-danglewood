@@ -81,7 +81,7 @@ class YFinanceOptionsChainsFetcher(
 
             for expiration in expirations:
                 exp = datetime.strptime(expiration, "%Y-%m-%d").date()
-                now = datetime.now().date()
+                now = datetime.now(tz=timezone("America/New_York")).date()
                 dte = (exp - now).days
                 chain_data = t.option_chain(expiration, tz=tz)
                 calls = chain_data[0]
