@@ -85,6 +85,25 @@ from openbb_yfinance.models.share_statistics import YFinanceShareStatisticsFetch
 from openbb_yfinance.models.symbol_search import YFinanceSymbolSearchFetcher
 from openbb_yfinance.models.yf_news import YFinanceNewsFetcher
 
+
+def _disable_yfinance_disk_caches() -> None:
+    """Disable yfinance's on-disk tz/cookie/ISIN caches. Each is a peewee SqliteDatabase
+    that opens a per-thread connection; the provider fetches across thread pools, so those
+    connections leak (ResourceWarning: unclosed database) when the workers exit. The dummy
+    caches fall back to values yfinance already derives from each response.
+    """
+    try:
+        from yfinance import cache as yf_cache
+
+        yf_cache._TzCacheManager._tz_cache = yf_cache._TzCacheDummy()
+        yf_cache._CookieCacheManager._Cookie_cache = yf_cache._CookieCacheDummy()
+        yf_cache._ISINCacheManager._isin_cache = yf_cache._ISINCacheDummy()
+    except Exception:  # noqa: BLE001, S110 - best-effort; never block provider import
+        pass
+
+
+_disable_yfinance_disk_caches()
+
 EQUITY_INSTALLED = find_spec("openbb_equity") is not None
 ETF_INSTALLED = find_spec("openbb_etf") is not None
 DERIVATIVES_INSTALLED = find_spec("openbb_derivatives") is not None

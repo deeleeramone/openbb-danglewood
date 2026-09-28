@@ -3,13 +3,11 @@
 # bootstrap.sh — provision openbb-yfinance in a clean environment and run the
 # Workspace API server or a native PyWry app.
 #
-# openbb-yfinance targets the unpublished v5 line of openbb-core/-charting/
-# -platform-api. Two install modes:
+# Two install modes:
 #
-#   --editable (default)  install the v5 packages from a local OpenBB checkout
-#                         (source-live dev), plus openbb-yfinance editable.
-#   --wheel               build the self-contained wheel (v5 sources vendored
-#                         in) and install that — what gets published.
+#   --editable (default)  install openbb-yfinance editable (source-live dev).
+#   --wheel                build the wheel and install that — what gets
+#                          published.
 #
 # After install the static `openbb` package is (re)built with `openbb-build`,
 # using the SAME interpreter the package was installed into. Wheels have no
@@ -27,9 +25,8 @@
 # Options:
 #   --python <ver>      Python for the venv            (default: 3.11)
 #   --venv <path>       venv location                  (default: <provider>/.venv)
-#   --vendor-src <path> OpenBB v5 checkout             (default: auto-detect)
 #   --editable          dev install (default)
-#   --wheel             build + install the vendored wheel
+#   --wheel             build + install the wheel
 #   --port <n>          server port                    (default: 6900)
 #   --theme <dark|light> native-window theme           (default: dark)
 #   --no-build          skip openbb-build
@@ -42,7 +39,6 @@ PROVIDER_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 PYVER="3.11"
 VENV="$PROVIDER_DIR/.venv"
-VENDOR_SRC="${OPENBB_VENDOR_SRC:-}"
 MODE="editable"
 PORT="6900"
 THEME="dark"
@@ -50,13 +46,12 @@ DO_BUILD=1
 CMD="server"
 SYMBOL="AAPL"
 
-usage() { sed -n '2,46p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,32p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
 
 while [ $# -gt 0 ]; do
     case "$1" in
         --python)     PYVER="$2"; shift 2 ;;
         --venv)       VENV="$2"; shift 2 ;;
-        --vendor-src) VENDOR_SRC="$2"; shift 2 ;;
         --editable)   MODE="editable"; shift ;;
         --wheel)      MODE="wheel"; shift ;;
         --port)       PORT="$2"; shift 2 ;;
@@ -73,35 +68,20 @@ done
 command -v uv >/dev/null 2>&1 || {
     echo "error: 'uv' is required — https://docs.astral.sh/uv/" >&2; exit 1; }
 
-# Locate an OpenBB v5 checkout (needed to vendor the wheel or install editable).
-if [ -z "$VENDOR_SRC" ]; then
-    for c in "$PROVIDER_DIR/../../../OpenBB" "$HOME/github/OpenBB"; do
-        if [ -d "$c/openbb_platform" ]; then VENDOR_SRC="$(cd "$c" && pwd)"; break; fi
-    done
-fi
-if [ -z "$VENDOR_SRC" ] || [ ! -d "$VENDOR_SRC/openbb_platform" ]; then
-    echo "error: OpenBB v5 checkout not found — pass --vendor-src <path>" >&2; exit 1
-fi
-
 echo "==> venv (python $PYVER) at $VENV"
 uv venv --python "$PYVER" "$VENV"
 PY="$VENV/bin/python"
 [ -f "$PY" ] || PY="$VENV/Scripts/python.exe"  # Windows layout
 
 if [ "$MODE" = "wheel" ]; then
-    echo "==> building the self-contained wheel (vendoring v5 from $VENDOR_SRC)"
+    echo "==> building the wheel"
     rm -rf "$PROVIDER_DIR/dist"
-    OPENBB_VENDOR_SRC="$VENDOR_SRC" uv build --wheel --no-sources "$PROVIDER_DIR"
+    uv build --wheel "$PROVIDER_DIR"
     echo "==> installing the wheel"
     uv pip install --python "$PY" "$PROVIDER_DIR"/dist/openbb_yfinance-*.whl
 else
-    echo "==> installing v5 openbb-* (editable) from $VENDOR_SRC"
-    uv pip install --python "$PY" \
-        -e "$VENDOR_SRC/openbb_platform/core" \
-        -e "$VENDOR_SRC/openbb_platform/obbject_extensions/charting" \
-        -e "$VENDOR_SRC/openbb_platform/extensions/platform_api"
-    echo "==> installing openbb-yfinance (editable, no vendoring)"
-    OPENBB_VENDOR_SKIP=1 uv pip install --python "$PY" -e "$PROVIDER_DIR"
+    echo "==> installing openbb-yfinance (editable)"
+    uv pip install --python "$PY" -e "$PROVIDER_DIR"
 fi
 
 if [ "$DO_BUILD" -eq 1 ]; then
