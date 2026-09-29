@@ -426,20 +426,32 @@ def _build_session_string(
 
     instrument = (metadata.get("instrumentType") or "").upper()
 
-    if reg_start and reg_end and (reg_end - reg_start) >= 82800:
-        if instrument == "FUTURE":
-            return _build_futures_session(metadata)
-        return "24x7", "", "24x7", "", "", None
+    if reg_start and reg_end:
+        duration = reg_end - reg_start
+        if hasattr(duration, "total_seconds"):
+            duration = duration.total_seconds()
+        if duration >= 82800:
+            if instrument == "FUTURE":
+                return _build_futures_session(metadata)
+            return "24x7", "", "24x7", "", "", None
 
     tz_name = metadata.get("exchangeTimezoneName", "UTC")
     zi = ZoneInfo(tz_name)
 
-    def _fmt(ts_start: int, ts_end: int) -> str:
-        if not ts_start or not ts_end or ts_end <= ts_start:
+    def _fmt(ts_start: int | datetime, ts_end: int | datetime) -> str:
+        if not ts_start or not ts_end:
             return ""
-        s = datetime.fromtimestamp(ts_start, tz=zi)
-        e = datetime.fromtimestamp(ts_end, tz=zi)
-        return f"{s:%H%M}-{e:%H%M}"
+        s = (
+            ts_start
+            if isinstance(ts_start, datetime)
+            else datetime.fromtimestamp(ts_start, tz=zi)
+        )
+        e = (
+            ts_end
+            if isinstance(ts_end, datetime)
+            else datetime.fromtimestamp(ts_end, tz=zi)
+        )
+        return f"{s:%H%M}-{e:%H%M}" if e > s else ""
 
     pre_str = _fmt(pre_period.get("start", 0), pre_period.get("end", 0))
     reg_str = _fmt(reg_start, reg_end)
@@ -529,8 +541,8 @@ def yf_symbol_info(symbol: str) -> dict[str, Any] | None:
     if pre_ts and reg_start_ts and reg_end_ts and post_ts:
         zi = ZoneInfo(exchange_tz)
 
-        def _to_minutes(ts: int) -> int:
-            dt = datetime.fromtimestamp(ts, tz=zi)
+        def _to_minutes(ts: int | datetime) -> int:
+            dt = ts if isinstance(ts, datetime) else datetime.fromtimestamp(ts, tz=zi)
             return dt.hour * 60 + dt.minute
 
         session_bounds_cache[symbol.upper()] = (
