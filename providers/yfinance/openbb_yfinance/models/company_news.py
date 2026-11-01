@@ -57,7 +57,7 @@ class YFinanceCompanyNewsFetcher(
         from warnings import warn
 
         from openbb_core.provider.utils.errors import EmptyDataError
-        from yfinance import Ticker
+        from yfinance import Search
 
         symbols = [s.strip() for s in query.symbol.split(",") if s.strip()]
         results: list[dict] = []
@@ -67,29 +67,23 @@ class YFinanceCompanyNewsFetcher(
             if not isinstance(item, dict):
                 return None
 
-            content = item.get("content")
-            if not isinstance(content, dict):
+            title = item.get("title")
+            url = item.get("link")
+            publisher = item.get("publisher")
+            provider_publish_time = item.get("providerPublishTime")
+
+            if not (sym and title and url and provider_publish_time):
                 return None
 
-            title = content.get("title") or content.get("summary")
-            url = None
-            ctu = content.get("clickThroughUrl")
-            if isinstance(ctu, dict):
-                url = ctu.get("url")
-            if not url:
-                can = content.get("canonicalUrl")
-                if isinstance(can, dict):
-                    url = can.get("url")
-            if not url:
-                url = content.get("previewUrl")
+            from datetime import datetime, timezone
 
-            date = content.get("pubDate") or content.get("displayTime")
-
-            provider = content.get("provider")
-            source = provider.get("displayName") if isinstance(provider, dict) else None
-            summary = content.get("summary") or content.get("description") or ""
-
-            if not (sym and title and url and date):
+            try:
+                date = datetime.fromtimestamp(
+                    provider_publish_time, tz=timezone.utc
+                ).isoformat()
+            except Exception:
+                date = None
+            if not date:
                 return None
 
             normalized: dict[str, Any] = {
@@ -97,24 +91,26 @@ class YFinanceCompanyNewsFetcher(
                 "title": title,
                 "url": url,
                 "date": date,
-                "source": source,
+                "source": publisher,
             }
-            if summary:
-                normalized["summary"] = summary
-                normalized["text"] = summary
 
-            if item.get("id"):
-                normalized["id"] = item["id"]
-            elif content.get("id"):
-                normalized["id"] = content["id"]
+            if item.get("uuid"):
+                normalized["id"] = item["uuid"]
 
             return normalized
 
         def _fetch_news(sym: str) -> list[dict]:
             """Fetch the data in a worker thread."""
-            raw = Ticker(sym).get_news() or []
+            try:
+                search = Search(sym)
+                raw = search.news or []
+            except Exception:
+                raw = []
             out: list[dict] = []
             for item in raw:
+                related = item.get("relatedTickers") or []
+                if sym not in related:
+                    continue
                 norm = _normalize_news_item(item, sym)
                 if norm:
                     out.append(norm)

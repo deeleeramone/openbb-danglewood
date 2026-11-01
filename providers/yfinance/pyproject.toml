@@ -1,6 +1,6 @@
 [project]
 name = "openbb-yfinance"
-version = "2.1.0"
+version = "2.1.1"
 description = "yfinance extension for OpenBB"
 authors = [{ name = "DeeLeeRamone", email = "85772166+deeleeramone@users.noreply.github.com" }]
 license = { text = "AGPL-3.0-only" }
