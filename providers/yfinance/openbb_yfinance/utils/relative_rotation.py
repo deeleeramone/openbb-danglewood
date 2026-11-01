@@ -262,7 +262,6 @@ def _figure_config() -> dict:
     return PlotlyConfig(
         scroll_zoom=True,
         responsive=True,
-        display_logo=False,
         display_mode_bar=False,
         template_dark={"layout": _template_layout(True)},
         template_light={"layout": _template_layout(False)},
